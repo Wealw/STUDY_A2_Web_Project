@@ -9,6 +9,10 @@ security:
         main:
             anonymous: true
 
+            logout:
+                path: /logout
+                target: /
+
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
 
@@ -20,3 +24,4 @@ security:
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
+

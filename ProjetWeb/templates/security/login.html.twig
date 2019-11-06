@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Se Connecter | BDE.CESI' %}
+
+{% block body %}
+    <h1>Connection</h1>
+
+    <div class="form">
+        <h3 class="form">FORMULAIRE DE CONNECTION</h3>
+        <form action="{{ path('security.login') }}">
+            <div class="group off">
+                <div>
+                    <input type="text">
+                    <label for="">E-mail</label>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

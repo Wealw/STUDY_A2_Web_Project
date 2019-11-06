@@ -4,6 +4,8 @@
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
         <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/flex.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/form.css') }}">
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
@@ -16,7 +18,13 @@
                     </ul>
                 </nav>
             </div>
-            <div></div>
+            <div class="row align_center">
+                {% if app.user %}
+                {% else %}
+                    <a href="" class="header">INSCRIPTION</a>
+                    <a href="{{ path('security.login') }}" class="header contained">CONNECTION</a>
+                {% endif %}
+            </div>
         </header>
         <div class="container">
             {% block body %}{% endblock %}
