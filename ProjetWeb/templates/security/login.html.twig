@@ -14,6 +14,17 @@
                     <label for="">E-mail</label>
                 </div>
             </div>
+            <div class="group off">
+                <div>
+                    <input type="password">
+                    <label for="">Mot de passe</label>
+                </div>
+            </div>
+            <button type="submit" class="contained">CONNECTION</button>
         </form>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('assets/js/form.js') }}"></script>
 {% endblock %}
