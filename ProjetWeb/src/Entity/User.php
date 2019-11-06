@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Serializable;
 
@@ -20,16 +21,19 @@ class User implements UserInterface, Serializable
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Range(min="2", max="255")
      */
     private $firstName;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Range(min="2", max="255")
      */
     private $lastName;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Email(message="L'email renseigné n'est pas valide")
      */
     private $email;
 
@@ -37,6 +41,11 @@ class User implements UserInterface, Serializable
      * @ORM\Column(type="string", length=255)
      */
     private $password;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $createdAt;
 
     public function getId(): ?int
     {
@@ -178,5 +187,17 @@ class User implements UserInterface, Serializable
             $this->email,
             $this->password
         ) = unserialize($serialized, ['allowed_classes' => false]);
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
     }
 }
