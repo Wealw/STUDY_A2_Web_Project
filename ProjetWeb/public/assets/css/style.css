@@ -112,7 +112,7 @@ a.nav-link {
 }
 
 nav ul li a.active {
-    color: #3F51B5;
+    color: #4D75B1;
 }
 
 .blue {
@@ -120,7 +120,7 @@ nav ul li a.active {
     align-items: center;
     background-color: #ffffff;
     border-radius: 2px;
-    color: #3F51B5;
+    color: #4D75B1;
     height: 36px;
     padding: 0 8px;
     min-width: 64px;
@@ -133,7 +133,7 @@ nav ul li a.active {
 .contained {
     display: flex;
     align-items: center;
-    background-color: #3F51B5;
+    background-color: #4D75B1;
     border-radius: 2px;
     color: #ffffff;
     height: 36px;
@@ -175,7 +175,7 @@ ul.pagination li.disabled {
 ul.pagination li.page-item {
     margin: 0;
     padding: 16px;
-    background-color: #3F51B5;
+    background-color: #4D75B1;
 }
 
 ul.pagination li.asides {
@@ -192,7 +192,7 @@ ul.pagination li.asides a:focus {
 ul.pagination li.asides a, ul.pagination li.asides span {
     display: flex;
     align-items: center;
-    color: #3F51B5;
+    color: #4D75B1;
     height: 51px;
     font-family: "Roboto-Medium", sans-serif;
     padding: 0 16px;
