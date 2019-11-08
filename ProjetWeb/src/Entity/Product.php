@@ -54,9 +54,15 @@ class Product
      */
     private $command;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\CommandProduct", mappedBy="product", orphanRemoval=true)
+     */
+    private $commandProducts;
+
     public function __construct()
     {
         $this->command = new ArrayCollection();
+        $this->commandProducts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -157,6 +163,37 @@ class Product
     {
         if ($this->command->contains($command)) {
             $this->command->removeElement($command);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|CommandProduct[]
+     */
+    public function getCommandProducts(): Collection
+    {
+        return $this->commandProducts;
+    }
+
+    public function addCommandProduct(CommandProduct $commandProduct): self
+    {
+        if (!$this->commandProducts->contains($commandProduct)) {
+            $this->commandProducts[] = $commandProduct;
+            $commandProduct->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommandProduct(CommandProduct $commandProduct): self
+    {
+        if ($this->commandProducts->contains($commandProduct)) {
+            $this->commandProducts->removeElement($commandProduct);
+            // set the owning side to null (unless already changed)
+            if ($commandProduct->getProduct() === $this) {
+                $commandProduct->setProduct(null);
+            }
         }
 
         return $this;
