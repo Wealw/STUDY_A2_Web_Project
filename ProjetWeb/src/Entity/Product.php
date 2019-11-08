@@ -50,18 +50,12 @@ class Product
     private $productType;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Command", inversedBy="products")
-     */
-    private $command;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\CommandProduct", mappedBy="product", orphanRemoval=true)
      */
     private $commandProducts;
 
     public function __construct()
     {
-        $this->command = new ArrayCollection();
         $this->commandProducts = new ArrayCollection();
     }
 
@@ -138,32 +132,6 @@ class Product
     public function setProductType(?ProductType $productType): self
     {
         $this->productType = $productType;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Command[]
-     */
-    public function getCommand(): Collection
-    {
-        return $this->command;
-    }
-
-    public function addCommand(Command $command): self
-    {
-        if (!$this->command->contains($command)) {
-            $this->command[] = $command;
-        }
-
-        return $this;
-    }
-
-    public function removeCommand(Command $command): self
-    {
-        if ($this->command->contains($command)) {
-            $this->command->removeElement($command);
-        }
 
         return $this;
     }

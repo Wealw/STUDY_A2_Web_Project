@@ -29,18 +29,12 @@ class Command
     private $commandUserId;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Product", mappedBy="command")
-     */
-    private $products;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\CommandProduct", mappedBy="command", orphanRemoval=true)
      */
     private $commandProducts;
 
     public function __construct()
     {
-        $this->products = new ArrayCollection();
         $this->commandProducts = new ArrayCollection();
     }
 
@@ -69,34 +63,6 @@ class Command
     public function setCommandUserId(int $commandUserId): self
     {
         $this->commandUserId = $commandUserId;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Product[]
-     */
-    public function getProducts(): Collection
-    {
-        return $this->products;
-    }
-
-    public function addProduct(Product $product): self
-    {
-        if (!$this->products->contains($product)) {
-            $this->products[] = $product;
-            $product->addCommand($this);
-        }
-
-        return $this;
-    }
-
-    public function removeProduct(Product $product): self
-    {
-        if ($this->products->contains($product)) {
-            $this->products->removeElement($product);
-            $product->removeCommand($this);
-        }
 
         return $this;
     }
