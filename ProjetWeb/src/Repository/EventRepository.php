@@ -19,6 +19,16 @@ class EventRepository extends ServiceEntityRepository
         parent::__construct($registry, Event::class);
     }
 
+
+    public function findLatestVisible() {
+        return $this->createQueryBuilder('e')
+            ->andWhere('e.event_is_visible = 1')
+            ->orderBy('e.event_created_at', 'DESC')
+            ->setMaxResults(12)
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Event[] Returns an array of Event objects
     //  */

@@ -39,12 +39,12 @@ class EventTypeFixtures extends Fixture
                 $date = $this->faker->dateTimeInInterval('-1 month', '+10 months');
 
                 $event
-                    ->setEventName($this->faker->name)
+                    ->setEventName($this->faker->word)
                     ->setEventDescription($this->faker->sentences(8, true))
                     ->setEventImagePath($this->faker->imageUrl())
                     ->setEventLocation($this->faker->city)
                     ->setEventPrice($this->faker->numberBetween(0, 30))
-                    ->setEventDate($this->faker->dateTimeInInterval('-1 year', '+11 months'))
+                    ->setEventDate($this->faker->dateTimeInInterval($date, '+5 months'))
                     ->setEventCreatedAt($this->faker->dateTimeInInterval($date, '-1 month'))
                     ->setEventModifiedAt(null)
                     ->setEventCreatedBy($this->faker->numberBetween(1, 12))
