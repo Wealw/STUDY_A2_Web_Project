@@ -1,19 +1,20 @@
 <?php
 
+
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
 use Symfony\Component\Routing\Annotation\Route;
 
-class HomeController extends AbstractController
+class HomeController
 {
 
     /**
-     * @Route("/", name="home.index")
+     * @Route("/", name="index")
      */
     public function index()
     {
-        return $this->render('home/index.html.twig');
+
     }
 
 }

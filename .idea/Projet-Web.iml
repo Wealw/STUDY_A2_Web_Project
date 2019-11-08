@@ -26,6 +26,7 @@
       <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/easycorp/easy-log-handler" />
       <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/egulias/email-validator" />
       <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/fig/link-util" />
+      <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/fzaninotto/faker" />
       <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/imagine/imagine" />
       <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/jdorn/sql-formatter" />
       <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/liip/imagine-bundle" />
