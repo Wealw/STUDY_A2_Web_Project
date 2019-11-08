@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -46,6 +48,16 @@ class Product
      * @ORM\JoinColumn(nullable=false)
      */
     private $productType;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Command", inversedBy="products")
+     */
+    private $command;
+
+    public function __construct()
+    {
+        $this->command = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -120,6 +132,32 @@ class Product
     public function setProductType(?ProductType $productType): self
     {
         $this->productType = $productType;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Command[]
+     */
+    public function getCommand(): Collection
+    {
+        return $this->command;
+    }
+
+    public function addCommand(Command $command): self
+    {
+        if (!$this->command->contains($command)) {
+            $this->command[] = $command;
+        }
+
+        return $this;
+    }
+
+    public function removeCommand(Command $command): self
+    {
+        if ($this->command->contains($command)) {
+            $this->command->removeElement($command);
+        }
 
         return $this;
     }
