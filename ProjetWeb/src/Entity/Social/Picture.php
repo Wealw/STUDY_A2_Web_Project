@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity;
+namespace App\Entity\Social;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -49,18 +49,18 @@ class Picture
     private $picture_user_id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Event", inversedBy="pictures")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Social\Event", inversedBy="pictures")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $event_id;
+    private $event;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="picture", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Social\Comment", mappedBy="picture", orphanRemoval=true)
      */
     private $comments;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Impression", inversedBy="pictures")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Social\Impression", inversedBy="pictures")
      */
     private $impression;
 
@@ -147,14 +147,14 @@ class Picture
         return $this;
     }
 
-    public function getEventId(): ?Event
+    public function getEvent(): ?Event
     {
-        return $this->event_id;
+        return $this->event;
     }
 
-    public function setEventId(?Event $event_id): self
+    public function setEvent(?Event $event_id): self
     {
-        $this->event_id = $event_id;
+        $this->event = $event_id;
 
         return $this;
     }

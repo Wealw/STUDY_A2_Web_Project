@@ -3,18 +3,22 @@
 {% block body %}
     <h1>Projet Weeb</h1>
 
-    <div class="grid-4">
-        {% for event in next_events %}
-            <div class="card">
-                <div class="card_header">
-                    {{ event.eventName }}
+    <section>
+        <h2>Les événements :</h2>
+        <div class="grid-4">
+            {% for event in next_events %}
+                <div class="card">
+                    <div class="card_header">
+                        {{ event.eventName }}
+                    </div>
+                    <div class="card_body">
+                        <img src="{{ event.eventImagePath }}" alt="">
+                    </div>
                 </div>
-                <div class="card_body">
-                    <img src="{{ event.eventImagePath }}" alt="">
-                </div>
-            </div>
-        {% endfor %}
-    </div>
+            {% endfor %}
+        </div>
+    </section>
+
 
 
 {% endblock %}

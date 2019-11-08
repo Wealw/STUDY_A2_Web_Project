@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity;
+namespace App\Entity\Social;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -69,30 +69,30 @@ class Event
     private $event_is_visible;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\EventType", inversedBy="events")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Social\EventType", inversedBy="events")
      * @ORM\JoinColumn(nullable=false)
      */
     private $event_type;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Picture", mappedBy="event_id", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Social\Picture", mappedBy="event_id", orphanRemoval=true)
      */
     private $pictures;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Participation", mappedBy="event", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Social\Participation", mappedBy="event", orphanRemoval=true)
      */
     private $event;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Impression", inversedBy="events")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Social\Impression", inversedBy="events")
      */
     private $impression;
 
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
      */
-    private $event_periode;
+    private $event_period;
 
     public function __construct()
     {
@@ -250,7 +250,7 @@ class Event
     {
         if (!$this->pictures->contains($picture)) {
             $this->pictures[] = $picture;
-            $picture->setEventId($this);
+            $picture->setEvent($this);
         }
 
         return $this;
@@ -261,8 +261,8 @@ class Event
         if ($this->pictures->contains($picture)) {
             $this->pictures->removeElement($picture);
             // set the owning side to null (unless already changed)
-            if ($picture->getEventId() === $this) {
-                $picture->setEventId(null);
+            if ($picture->getEvent() === $this) {
+                $picture->setEvent(null);
             }
         }
 
@@ -326,14 +326,14 @@ class Event
         return $this;
     }
 
-    public function getEventPeriode(): ?string
+    public function getEventPeriod(): ?string
     {
-        return $this->event_periode;
+        return $this->event_period;
     }
 
-    public function setEventPeriode(?string $event_periode): self
+    public function setEventPeriod(?string $event_period): self
     {
-        $this->event_periode = $event_periode;
+        $this->event_period = $event_period;
 
         return $this;
     }

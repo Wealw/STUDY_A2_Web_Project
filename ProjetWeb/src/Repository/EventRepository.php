@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\Event;
+use App\Entity\Social\Event;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -27,6 +27,20 @@ class EventRepository extends ServiceEntityRepository
             ->setMaxResults(12)
             ->getQuery()
             ->getResult();
+    }
+
+
+
+    public function findNextVisible()
+    {
+        $now = (new \DateTime())->format('Y-m-d 00:00:00');
+        return $this->createQueryBuilder('e')
+        ->andWhere('e.event_is_visible = 1')
+        ->andWhere("e.event_date > $now")
+        ->orderBy('e.event_date', 'ASC')
+        ->setMaxResults(12)
+        ->getQuery()
+        ->getResult();
     }
 
     // /**

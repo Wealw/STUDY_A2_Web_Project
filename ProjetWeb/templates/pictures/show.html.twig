@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Photo</h1>
+
+    <section>
+        <div class="row">
+            <div>
+                <img src="{{ picture.picturePath }}" alt="">
+            </div>
+            <div class="p">{{ picture.pictureDescription }}</div>
+        </div>
+        <div class="section_footer">
+
+        </div>
+    </section>
+{% endblock %}

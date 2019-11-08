@@ -1,19 +1,45 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
-    <h1>Projet Weeb</h1>
+{% block title 'Evénement | ' ~ event.eventName %}
 
-    <div class="grid-4">
-        {% for event in next_events %}
-            <div class="card">
-                <div class="card_header">
-                    {{ event.eventName }}
-                </div>
-                <div class="card_body">
+{% block body %}
+    <h1>Evénement - {{ event.eventName }}</h1>
+
+    <section>
+        <aside>
+
+        </aside>
+        <article>
+            <div class="card_header">
+                {{ event.eventName }}
+            </div>
+            <div class="card_body row">
+                <div>
                     <img src="{{ event.eventImagePath }}" alt="">
                 </div>
+                <div>
+                    <p>{{ event.eventDescription }}</p>
+                </div>
             </div>
-        {% endfor %}
-    </div>
+            <div class="card_footer">
+
+            </div>
+        </article>
+    </section>
+    <section>
+        <h2>Images : </h2>
+        <div class="grid-4">
+            {% for picture in pictures %}
+                <div class="card">
+                    <div class="card_body">
+                        <img src="{{ picture.picturePath }}" alt="">
+                    </div>
+                    <div class="card_footer">
+                        <a href="{{ path('pictures.show', {'id': picture.id}) }}" class="contained">COMMENTER</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
 
 {% endblock %}

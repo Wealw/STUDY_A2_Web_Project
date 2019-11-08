@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity;
+namespace App\Entity\Social;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -39,13 +39,13 @@ class Comment
     private $comment_user_id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Picture", inversedBy="comments")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Social\Picture", inversedBy="comments")
      * @ORM\JoinColumn(nullable=false)
      */
     private $picture;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Impression", inversedBy="comments")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Social\Impression", inversedBy="comments")
      */
     private $impression;
 

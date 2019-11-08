@@ -27,7 +27,7 @@ class HomeController extends AbstractController
      */
     public function index()
     {
-        $nextEvents = $this->eventRepository->findLatestVisible();
+        $nextEvents = $this->eventRepository->findNextVisible();
 
         dump($nextEvents);
 
