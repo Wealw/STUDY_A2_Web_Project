@@ -29,18 +29,25 @@ class EventRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-
-
     public function findNextVisible()
     {
         $now = (new \DateTime())->format('Y-m-d 00:00:00');
         return $this->createQueryBuilder('e')
         ->andWhere('e.event_is_visible = 1')
-        ->andWhere("e.event_date > $now")
+        ->andWhere("e.event_date > '$now' ")
         ->orderBy('e.event_date', 'ASC')
         ->setMaxResults(12)
         ->getQuery()
         ->getResult();
+    }
+
+    public function findBetween(\DateTimeInterface $start, \DateTimeInterface $end)
+    {
+        return $this->createQueryBuilder('e')
+            ->andWhere("e.event_date BETWEEN '{$start->format('Y-m-d 00:00:00')}' AND '{$end->format('Y-m-d 23:59:59')}'")
+            ->orderBy('e.event_date', 'ASC')
+            ->getQuery()
+            ->getResult();
     }
 
     // /**

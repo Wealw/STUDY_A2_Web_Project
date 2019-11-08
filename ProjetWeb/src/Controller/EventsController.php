@@ -38,9 +38,12 @@ class EventsController extends AbstractController
      */
     public function index(): Response
     {
+        $events = $this->repository->findNextVisible();
 
 
-        return $this->render("events/index.html.twig");
+        return $this->render("events/index.html.twig", [
+            'events' => $events
+        ]);
     }
 
     /**

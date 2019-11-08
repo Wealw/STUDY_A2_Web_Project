@@ -217,3 +217,8 @@ div.card_body img {
     height: auto;
     width: 100%;
 }
+
+div.calendar {
+    display: grid;
+    grid-template-columns: 7fr 7fr 7fr 7fr 7fr 7fr 7fr;
+}

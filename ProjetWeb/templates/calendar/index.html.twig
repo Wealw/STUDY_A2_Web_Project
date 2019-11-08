@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Calendrier - BDE.CESI' %}
+
+{% block body %}
+
+    <h1>Calendrier</h1>
+    <div class="calendar">
+        {% for i in 0..weeks-1 %}
+            {% for k, day in days %}
+                {% set date = start | date_modify("+" ~ (k + i *7) ~ " days") %}
+                {% set today = date | date('Y-m-d') %}
+                {{ today }}
+                <div class="calendar_item">
+                    <div class="calendar_day">{{ date | date('d-m-Y') }}</div>
+                    <div>
+                    </div>
+                    <div class="calendar_event"></div>
+                </div>
+            {% endfor %}
+        {% endfor %}
+    </div>
+{% endblock %}
