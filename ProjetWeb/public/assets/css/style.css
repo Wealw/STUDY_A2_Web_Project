@@ -222,3 +222,20 @@ div.calendar {
     display: grid;
     grid-template-columns: 7fr 7fr 7fr 7fr 7fr 7fr 7fr;
 }
+
+table.admin_list {
+    border-collapse: collapse;
+    width: 50%;
+}
+
+table.admin_list thead tr {
+    background-color: #777777;
+    color: #ffffff;
+    font-size: 20px;
+    height: 56px;
+}
+
+table.admin_list tr {
+    border-top: 2px #777777 solid;
+    height: 56px;
+}

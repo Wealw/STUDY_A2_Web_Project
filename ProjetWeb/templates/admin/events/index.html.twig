@@ -1,1 +1,34 @@
 {% extends 'base.html.twig' %}
+
+{% block title 'Administrer les événements | BDE.CESI' %}
+
+{% block body %}
+
+    <h1>Liste des événements :</h1>
+
+    <table class="admin_list">
+        <thead>
+            <tr>
+                <th>Titre de l'événement</th>
+                <th>Date</th>
+                <th>Auteur</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for event in events %}
+                <tr class="">
+                    <td>{{ event.eventName }}</td>
+                    <td>{{ event.eventDate | date('d-m-Y') }}</td>
+                    <td>{{ event.eventCreatedBy }}</td>
+                    <td class="row">
+                        <a href="{{ path('events.show', {id: event.Id}) }}" class="contained">VOIR</a>
+                        <span class="separate_buttons"></span>
+                        <a href="" class="contained danger">SUPPRIMER</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
