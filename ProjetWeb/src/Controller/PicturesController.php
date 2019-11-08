@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\CommentRepository;
 use App\Repository\PictureRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,15 +15,21 @@ class PicturesController extends AbstractController
      * @var PictureRepository
      */
     private $repository;
+    /**
+     * @var CommentRepository
+     */
+    private $commentRepository;
 
 
     /**
      * PicturesController constructor.
      * @param PictureRepository $repository
+     * @param CommentRepository $commentRepository
      */
-    public function __construct(PictureRepository $repository)
+    public function __construct(PictureRepository $repository, CommentRepository $commentRepository)
     {
         $this->repository = $repository;
+        $this->commentRepository = $commentRepository;
     }
 
     /**
