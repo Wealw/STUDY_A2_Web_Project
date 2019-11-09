@@ -277,6 +277,17 @@ p.event_description {
     text-align: justify;
 }
 
+div.search_type {
+    border: 2px solid #4D75B1;
+    border-radius: 4px;
+    padding: 0 12px 12px;
+}
+
+div.search_type h3 {
+    color: #4D75B1;
+    font-size: 24px;
+    margin: 12px 0;
+}
 
 .contained i.material-icons {
     font-size: 24px;

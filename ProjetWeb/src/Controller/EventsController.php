@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Social\EventSearch;
+use App\Form\EventSearchType;
 use App\Repository\EventRepository;
 use App\Repository\PictureRepository;
 use Knp\Component\Pager\PaginatorInterface;
@@ -42,15 +44,20 @@ class EventsController extends AbstractController
      */
     public function index(PaginatorInterface $paginator, Request $request): Response
     {
+        $search = new EventSearch();
+        $form = $this->createForm(EventSearchType::class, $search);
+        $form->handleRequest($request);
+
         $events = $paginator->paginate(
-            $this->repository->findRequestVisible(),
+            $this->repository->findRequestVisible($search),
             $request->query->getInt('page', 1),
             12
         );
 
 
         return $this->render("events/index.html.twig", [
-            'events' => $events
+            'events' => $events,
+            'form' => $form->createView()
         ]);
     }
 

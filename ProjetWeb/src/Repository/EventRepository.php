@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Social\Event;
+use App\Entity\Social\EventSearch;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\Query;
@@ -23,12 +24,19 @@ class EventRepository extends ServiceEntityRepository
     /**
      * @return Query
      */
-    public function findRequestVisible(): Query
+    public function findRequestVisible(EventSearch $search): Query
     {
-        return $this->createQueryBuilder('e')
+        $query = $this->createQueryBuilder('e')
             ->andWhere('e.event_is_visible = 1')
-            ->orderBy('e.event_created_at', 'DESC')
-            ->getQuery();
+            ->orderBy('e.event_created_at', 'DESC');
+
+        if ($search->getMaxPrice()) {
+            $query = $query
+                ->andWhere('e.event_price <= :maxPrice')
+                ->setParameter('maxPrice', $search->getMaxPrice());
+        }
+
+        return $query->getQuery();
     }
 
     /**

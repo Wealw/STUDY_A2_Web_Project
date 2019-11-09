@@ -5,6 +5,7 @@ namespace App\Entity\Social;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\EventRepository")
@@ -20,6 +21,7 @@ class Event
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Assert\Length(min="3", max="50")
      */
     private $event_name;
 
@@ -40,16 +42,19 @@ class Event
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Assert\Range(min="0", max="100")
      */
     private $event_price;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\DateTime()
      */
     private $event_date;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\DateTime()
      */
     private $event_created_at;
 
@@ -60,11 +65,13 @@ class Event
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Positive
      */
     private $event_created_by;
 
     /**
      * @ORM\Column(type="boolean")
+     * @Assert\PositiveOrZero
      */
     private $event_is_visible;
 

@@ -1,11 +1,22 @@
 {% extends 'base.html.twig' %}
 
+{% block title 'Les événement | BDE.CESI' %}
+
 {% block body %}
 
     <h1>Les événements</h1>
     <section>
-        <div class="options">
-            <div class="row justify_between">
+        <div class="search_type" style="margin-bottom: 32px">
+            <h3>Personnaliser la recherche</h3>
+            <div class="row justify_between align_center">
+                <div>
+                    {{ form_start(form) }}
+                        <div class="group off half">
+                            {{ form_rest(form) }}
+                        </div>
+                    <button type="submit" class="contained"><i class="material-icons">search</i></button>
+                    {{ form_end(form) }}
+                </div>
                 <a href="{{ path('admin.events.new') }}" class="contained"><i class="material-icons">add</i> NOUVEL ÉVÉNEMENT</a>
             </div>
         </div>
@@ -20,6 +31,7 @@
                         <p class="event_date">Date de l'événement : {{ event.eventDate | date('d-m-Y') }} à {{ event.eventDate | date('H:i') }}</p>
                         <p class="event_description">{{ event.eventDescription | nl2br }}</p>
                         <div class="row">
+                            <p>Prix : {{ event.eventPrice }}€</p>
                             {% if app.user %}
                                 <a href="" class="blue">S'INSCRIRE</a>
                                 <span class="separate_buttons"></span>
@@ -35,4 +47,8 @@
         </div>
     </section>
 
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('assets/js/form.js') }}"></script>
 {% endblock %}
