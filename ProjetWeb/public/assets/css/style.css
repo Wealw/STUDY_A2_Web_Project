@@ -262,3 +262,50 @@ a i.material-icons {
     font-size: 32px;
     padding: 2px 8px;
 }
+
+
+div.carousel_container div.item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+
+div.carousel {
+    position: relative;
+    overflow: hidden;
+}
+
+div.carousel__container {
+    transition: all 0.8s ease;
+    transform: translate3d(0, 0, 0);
+}
+
+div.carousel__container::after {
+    position: relative;
+    content: ' ';
+    clear: both;
+    display: table;
+}
+
+div.carousel__item {
+    float: left;
+    overflow: hidden;
+}
+
+div.item_header {
+    display: flex;
+    justify-content: flex-start;
+
+    color: #4D75B1;
+    font-family: Roboto-Medium, sans-serif;
+    font-size: 20px;
+    height: 36px;
+    text-transform: uppercase;
+}
+
+div.item_footer {
+    padding: 8px;
+    text-align: justify;
+}
