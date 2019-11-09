@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity;
+namespace App\Entity\Merch;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -44,13 +44,13 @@ class Product
     private $productImagePath;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\ProductType", inversedBy="products")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Merch\ProductType", inversedBy="products")
      * @ORM\JoinColumn(nullable=false)
      */
     private $productType;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\CommandProduct", mappedBy="product", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Merch\CommandProduct", mappedBy="product", orphanRemoval=true)
      */
     private $commandProducts;
 

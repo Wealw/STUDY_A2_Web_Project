@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity;
+namespace App\Entity\Merch;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -16,14 +16,14 @@ class CommandProduct
 
     /**
      * @ORM\Id()
-     * @ORM\ManyToOne(targetEntity="App\Entity\Command", inversedBy="commandProducts")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Merch\Command", inversedBy="commandProducts")
      * @ORM\JoinColumn(nullable=false)
      */
     private $command;
 
     /**
      * @ORM\Id()
-     * @ORM\ManyToOne(targetEntity="App\Entity\Product", inversedBy="commandProducts")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Merch\Product", inversedBy="commandProducts")
      * @ORM\JoinColumn(nullable=false)
      */
     private $product;

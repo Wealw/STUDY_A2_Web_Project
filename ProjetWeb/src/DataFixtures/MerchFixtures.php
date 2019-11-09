@@ -2,10 +2,10 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Command;
-use App\Entity\CommandProduct;
-use App\Entity\Product;
-use App\Entity\ProductType;
+use App\Entity\Merch\Command;
+use App\Entity\Merch\CommandProduct;
+use App\Entity\Merch\Product;
+use App\Entity\Merch\ProductType;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Factory;

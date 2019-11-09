@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity;
+namespace App\Entity\Merch;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -29,7 +29,7 @@ class Command
     private $commandUserId;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\CommandProduct", mappedBy="command", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Merch\CommandProduct", mappedBy="command", orphanRemoval=true)
      */
     private $commandProducts;
 
