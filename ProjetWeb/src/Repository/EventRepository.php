@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Social\Event;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query;
 
 /**
  * @method Event|null find($id, $lockMode = null, $lockVersion = null)
@@ -19,8 +20,22 @@ class EventRepository extends ServiceEntityRepository
         parent::__construct($registry, Event::class);
     }
 
+    /**
+     * @return Query
+     */
+    public function findRequestVisible(): Query
+    {
+        return $this->createQueryBuilder('e')
+            ->andWhere('e.event_is_visible = 1')
+            ->orderBy('e.event_created_at', 'DESC')
+            ->getQuery();
+    }
 
-    public function findLatestVisible() {
+    /**
+     * @return mixed
+     */
+    public function findLatestVisible()
+    {
         return $this->createQueryBuilder('e')
             ->andWhere('e.event_is_visible = 1')
             ->orderBy('e.event_created_at', 'DESC')

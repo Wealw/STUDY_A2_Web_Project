@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Repository\EventRepository;
 use App\Repository\PictureRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -34,11 +36,17 @@ class EventsController extends AbstractController
 
     /**
      * @Route("/events", name="events.index")
+     * @param PaginatorInterface $paginator
+     * @param Request $request
      * @return Response
      */
-    public function index(): Response
+    public function index(PaginatorInterface $paginator, Request $request): Response
     {
-        $events = $this->repository->findNextVisible();
+        $events = $paginator->paginate(
+            $this->repository->findRequestVisible(),
+            $request->query->getInt('page', 1),
+            12
+        );
 
 
         return $this->render("events/index.html.twig", [

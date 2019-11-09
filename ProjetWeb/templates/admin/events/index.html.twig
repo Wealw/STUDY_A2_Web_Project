@@ -19,12 +19,16 @@
             {% for event in events %}
                 <tr class="">
                     <td>{{ event.eventName }}</td>
-                    <td>{{ event.eventDate | date('d-m-Y') }}</td>
+                    <td>{{ event.eventDate | date('d F Y') }}</td>
                     <td>{{ event.eventCreatedBy }}</td>
                     <td class="row">
                         <a href="{{ path('events.show', {id: event.Id}) }}" class="contained">VOIR</a>
                         <span class="separate_buttons"></span>
-                        <a href="" class="contained danger">SUPPRIMER</a>
+                        <form method="post" action="{{ path('admin.events.delete', {id: event.id}) }}">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ event.id) }}">
+                            <button class="contained danger">SUPPRIMER</button>
+                        </form>
                     </td>
                 </tr>
             {% endfor %}

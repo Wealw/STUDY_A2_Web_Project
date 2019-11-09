@@ -16,12 +16,22 @@
                     <div class="card_body">
                         <img src="{{ event.eventImagePath }}" alt="">
                     </div>
-                    <div class="card_footer">
-                        <a href=""></a>
-                        <a href="{{ path('events.show', {id: event.Id}) }}" class="contained">VOIR</a>
+                    <div class="card_footer column">
+                        <p class="event_date">Date de l'événement : {{ event.eventDate | date('d-m-Y') }} à {{ event.eventDate | date('H:i') }}</p>
+                        <p class="event_description">{{ event.eventDescription | nl2br }}</p>
+                        <div class="row">
+                            {% if app.user %}
+                                <a href="" class="blue">S'INSCRIRE</a>
+                                <span class="separate_buttons"></span>
+                            {% endif %}
+                            <a href="{{ path('events.show', {id: event.Id}) }}" class="contained">VOIR</a>
+                        </div>
                     </div>
                 </div>
             {% endfor %}
+        </div>
+        <div class="pagination">
+            {{ knp_pagination_render(events) }}
         </div>
     </section>
 

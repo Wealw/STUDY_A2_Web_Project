@@ -27,6 +27,10 @@ class AdminPicturesController extends AbstractController
      */
     public function index() {
         $pictures = $this->repository->findAll();
+
+        return $this->render("admin/pictures/index.html.twig", [
+           'pictures' => $pictures
+        ]);
     }
 
     /**

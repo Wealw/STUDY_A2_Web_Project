@@ -264,6 +264,18 @@ a.option i.material-icons {
     padding: 2px 8px;
 }
 
+p.event_date {
+    margin: 0;
+}
+
+p.event_description {
+    color: #555555;
+    font-family: Roboto, sans-serif;
+    height: 79px;
+    margin: 8px 0 0;
+    overflow: hidden;
+    text-align: justify;
+}
 
 
 .contained i.material-icons {
