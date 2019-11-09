@@ -2,13 +2,15 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Command;
+use App\Entity\CommandProduct;
 use App\Entity\Product;
 use App\Entity\ProductType;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Factory;
 
-class ProductTypeFixtures extends Fixture
+class MerchFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
@@ -19,9 +21,14 @@ class ProductTypeFixtures extends Fixture
             $productType = new ProductType();
             $productType
                 ->setProductTypeName($faker->word);
-
+            $command = new Command();
+            $command
+                ->setCommandOrderedAt($faker->dateTime)
+                ->setCommandUserId($faker->numberBetween(0,100));
             $manager->persist($productType);
-            for($j = 0; $j < $faker->numberBetween(0, 7); $j++)
+            $manager->persist($command);
+            $rand = 5;
+            for($j = 0; $j < $faker->numberBetween(1, 15); $j++)
             {
                 $product = new Product();
                 $product
@@ -32,6 +39,16 @@ class ProductTypeFixtures extends Fixture
                     ->setProductImagePath($faker->imageUrl())
                     ->setProductType($productType);
                 $manager->persist($product);
+                if($rand > 3)
+                {
+                    $commandProduct = new CommandProduct();
+                    $commandProduct
+                        ->setCommand($command)
+                        ->setProduct($product)
+                        ->setQuantity($faker->numberBetween(1, 15));
+                    $manager->persist($commandProduct);
+                }
+                $rand = $faker->numberBetween(0,10);
             }
         }
         $manager->flush();
