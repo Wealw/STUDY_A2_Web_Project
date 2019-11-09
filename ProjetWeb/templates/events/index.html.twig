@@ -2,9 +2,12 @@
 
 {% block body %}
 
+    <h1>Les événements</h1>
     <section>
         <div class="options">
-
+            <div class="row justify_between">
+                <a href="{{ path('admin.events.new') }}" class="contained"><i class="material-icons">add</i> NOUVEL ÉVÉNEMENT</a>
+            </div>
         </div>
         <div class="content grid-4">
             {% for event in events %}

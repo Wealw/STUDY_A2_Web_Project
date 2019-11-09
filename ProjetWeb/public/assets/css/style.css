@@ -257,10 +257,22 @@ table.admin_list tr {
     height: 56px;
 }
 
-a i.material-icons {
+a.option i.material-icons {
     color: #666666;
-    font-size: 32px;
+    font-size: 28px;
+    margin: 0 4px;
     padding: 2px 8px;
+}
+
+
+
+.contained i.material-icons {
+    font-size: 24px;
+    margin: -2px 8px 0 -8px;
+}
+
+button.contained i.material-icons {
+    margin: 0 8px 0 -8px;
 }
 
 

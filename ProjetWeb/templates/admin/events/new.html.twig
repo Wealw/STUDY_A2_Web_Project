@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="form">
+        <h3 class="form">NOUVEL ÉVÉNEMENT</h3>
+        {{ form_start(form) }}
+            <div class="group off">{{ form_row(form.event_name) }}</div>
+            <div class="group off">{{ form_row(form.event_description) }}</div>
+            <div class="group off">{{ form_row(form.event_image_path) }}</div>
+            <div class="group off">{{ form_row(form.event_location) }}</div>
+            <div class="group off">{{ form_row(form.event_price) }}</div>
+            {{ form_rest(form) }}
+            <button type="submit" class="contained"><i class="material-icons">add</i> AJOUTER</button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('assets/js/form.js') }}"></script>
+{% endblock %}
