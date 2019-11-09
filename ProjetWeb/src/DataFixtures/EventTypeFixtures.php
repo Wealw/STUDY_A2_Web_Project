@@ -2,11 +2,11 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Comment;
-use App\Entity\Event;
-use App\Entity\EventType;
-use App\Entity\Participation;
-use App\Entity\Picture;
+use App\Entity\Social\Comment;
+use App\Entity\Social\Event;
+use App\Entity\Social\EventType;
+use App\Entity\Social\Participation;
+use App\Entity\Social\Picture;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Factory;
@@ -50,7 +50,7 @@ class EventTypeFixtures extends Fixture
                     ->setEventCreatedBy($this->faker->numberBetween(1, 12))
                     ->setEventIsVisible(1)
                     ->setEventType($eventType)
-                    ->setEventPeriode(null);
+                    ->setEventPeriod(null);
 
                 $manager->persist($event);
 
@@ -66,7 +66,7 @@ class EventTypeFixtures extends Fixture
                         ->setPictureModifiedAt(null)
                         ->setPicturePath($this->faker->imageUrl())
                         ->setPictureUserId($this->faker->numberBetween(1, 12))
-                        ->setEventId($event);
+                        ->setEvent($event);
 
                     $manager->persist($picture);
 

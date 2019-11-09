@@ -10,8 +10,13 @@
             {% for event in events %}
                 <div class="card">
                     <div class="card_header">{{ event.eventName }}</div>
-                    <div class="card_body"></div>
-                    <div class="card_footer"></div>
+                    <div class="card_body">
+                        <img src="{{ event.eventImagePath }}" alt="">
+                    </div>
+                    <div class="card_footer">
+                        <a href=""></a>
+                        <a href="{{ path('events.show', {id: event.Id}) }}" class="contained">VOIR</a>
+                    </div>
                 </div>
             {% endfor %}
         </div>
