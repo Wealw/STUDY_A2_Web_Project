@@ -1,11 +1,10 @@
 <?php
 
-
 namespace App\Controller;
-
 
 use App\Entity\Social\Month;
 use App\Repository\EventRepository;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -31,21 +30,28 @@ class CalendarController extends AbstractController
     public function thisMonth(): Response
     {
         $month = new Month();
+        $thisMonth = new DateTime();
         $weeks = $month->getWeeks();
 
         $start = $month->getStartingDay();
         $start = $start->format('N') == 1 ? $start : $month->getStartingDay()->modify('last monday');
         $lastDay = $start->modify("+" . (6 + 7 * ($weeks -1)) . " days");
 
-        //$events = $this->eventsByDay($start, $lastDay);
-        $events = $this->eventsByDay(new \DateTime('2020-08-01'), new \DateTime('2020-08-31'));
+        $events = $this->eventsByDay($start, $lastDay);
+        //$events = $this->eventsByDay(new \DateTime('2020-08-01'), new \DateTime('2020-08-31'));
+
+        $navigation = $this->getPrevNext($thisMonth->format('m'), $thisMonth->format('Y'));
 
         dump($events);
         return $this->render("calendar/index.html.twig", [
             'weeks' => $weeks,
             'start' => $start,
             'days' => $month->getDays(),
-            'events' => $events
+            'events' => $events,
+            'prevMonth' => $navigation[0],
+            'prevYear' => $navigation[1],
+            'nextMonth' => $navigation[2],
+            'nextYear' => $navigation[3]
         ]);
     }
 
@@ -65,16 +71,57 @@ class CalendarController extends AbstractController
         $start = $start->format('N') == 1 ? $start : $month->getStartingDay()->modify('last monday');
         $lastDay = $start->modify("+" . (6 + 7 * ($weeks -1)) . " days");
 
-        //$events = $this->eventsByDay($start, $lastDay);
-        $events = $this->eventsByDay(new \DateTime('2020-08-01'), new \DateTime('2020-08-31'));
+        $events = $this->eventsByDay($start, $lastDay);
+        //$events = $this->eventsByDay(new \DateTime('2020-08-01'), new \DateTime('2020-08-31'));
+
+        $navigation = $this->getPrevNext($monthNumber, $yearNumber);
 
         dump($events);
         return $this->render("calendar/index.html.twig", [
             'weeks' => $weeks,
             'start' => $start,
             'days' => $month->getDays(),
-            'events' => $events
+            'events' => $events,
+            'prevMonth' => $navigation[0],
+            'prevYear' => $navigation[1],
+            'nextMonth' => $navigation[2],
+            'nextYear' => $navigation[3]
         ]);
+    }
+
+    /**
+     * Retourne les mois et les années précédentes et suivantes
+     * @param $month
+     * @param $year
+     * @return array
+     */
+    private function getPrevNext($month, $year)
+    {
+        if ($month == 1) {
+            $prevMonth = 12;
+            $prevYear = $year - 1;
+        } else {
+            $prevMonth = $month - 1;
+            $prevYear = $year;
+        }
+
+        if ($month == 12) {
+            $nextMonth = 1;
+            $nextYear = $year + 1;
+        } else {
+            $nextMonth = $month + 1;
+            $nextYear = $year;
+        }
+
+        if (strlen($prevMonth) == 1) {
+            $prevMonth = 0 . $prevMonth;
+        }
+
+        if (strlen($nextMonth) == 1) {
+            $nextMonth = 0 . $nextMonth;
+        }
+
+        return [$prevMonth, $prevYear, $nextMonth, $nextYear];
     }
 
     /**

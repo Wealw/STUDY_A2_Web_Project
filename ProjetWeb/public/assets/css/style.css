@@ -240,6 +240,10 @@ div.calendar {
     grid-template-columns: 7fr 7fr 7fr 7fr 7fr 7fr 7fr;
 }
 
+div.calendar_item {
+    border: 1px #AAAAAA solid;
+}
+
 table.admin_list {
     border-collapse: collapse;
     width: 50%;

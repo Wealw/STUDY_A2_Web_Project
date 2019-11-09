@@ -15,11 +15,11 @@ class PicturesController extends AbstractController
      * @var PictureRepository
      */
     private $repository;
+
     /**
      * @var CommentRepository
      */
     private $commentRepository;
-
 
     /**
      * PicturesController constructor.

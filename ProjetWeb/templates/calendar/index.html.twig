@@ -5,15 +5,29 @@
 {% block body %}
 
     <h1>Calendrier</h1>
+    <div class="navigation row" style="margin-bottom: 24px">
+        <a href="{{ path('events.calendar.other', {monthNumber: prevMonth, yearNumber: prevYear}) }}" class="contained"><i class="material-icons">keyboard_arrow_left</i> MOIS PRÉCÉDENT</a>
+        <span class="separate_buttons"></span>
+        <a href="{{ path('events.calendar.other', {monthNumber: nextMonth, yearNumber: nextYear}) }}" class="contained"><i class="material-icons">keyboard_arrow_right</i> MOIS SUIVANT</a>
+    </div>
     <div class="calendar">
         {% for i in 0..weeks-1 %}
             {% for k, day in days %}
                 {% set date = start | date_modify("+" ~ (k + i *7) ~ " days") %}
                 {% set today = date | date('Y-m-d') %}
-                {{ today }}
                 <div class="calendar_item">
                     <div class="calendar_day">{{ date | date('d-m-Y') }}</div>
                     <div>
+                        {% for k, event in events %}
+                            {% if k == today %}
+                                {% set eventsForDay = event %}
+                                {% for event in eventsForDay %}
+                                    <div class="event_iten">
+                                        {{ event.eventDate | date('H:i') }} - <a href="{{ path('events.show', {id: event.id}) }}">{{ event.eventName }}</a>
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                        {% endfor %}
                     </div>
                     <div class="calendar_event"></div>
                 </div>
