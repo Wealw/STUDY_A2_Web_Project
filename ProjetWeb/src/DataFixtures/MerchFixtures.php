@@ -33,11 +33,12 @@ class MerchFixtures extends Fixture
                 $product = new Product();
                 $product
                     ->setProductName($faker->name)
-                    ->setProductDescription($faker->word)
+                    ->setProductDescription($faker->text(350))
                     ->setProductPrice($faker->numberBetween(4,130))
                     ->setProductInventory($faker->numberBetween(0, 160))
                     ->setProductImagePath($faker->imageUrl())
-                    ->setProductType($productType);
+                    ->setProductType($productType)
+                    ->setIsOrderable(true);
                 $manager->persist($product);
                 if($rand > 3)
                 {

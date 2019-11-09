@@ -75,6 +75,10 @@ class Command
         return $this->commandProducts;
     }
 
+    /**
+     * @param CommandProduct $commandProduct
+     * @return $this
+     */
     public function addCommandProduct(CommandProduct $commandProduct): self
     {
         if (!$this->commandProducts->contains($commandProduct)) {
@@ -85,6 +89,10 @@ class Command
         return $this;
     }
 
+    /**
+     * @param CommandProduct $commandProduct
+     * @return $this
+     */
     public function removeCommandProduct(CommandProduct $commandProduct): self
     {
         if ($this->commandProducts->contains($commandProduct)) {

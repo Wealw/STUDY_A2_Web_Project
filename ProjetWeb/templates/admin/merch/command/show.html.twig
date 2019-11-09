@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <a href="{{ path('admin.merch.command.index') }}"><button>Go Back</button></a>
+    <div>
+        N°Commande : {{ command.id }}
+        <div>
+            UserId : {{ command.commandUserId }}
+        </div>
+        {% for commandProduct in commandProducts %}
+            <div>
+                {% for product in products %}
+                    {% if product == commandProduct.product %}
+                        Product : {{ product.productName }} |
+                    {% endif %}
+                {% endfor %}
+                Quantity : {{ commandProduct.quantity }}
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

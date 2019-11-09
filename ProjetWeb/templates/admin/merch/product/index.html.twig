@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <a href="{{ path('admin.merch.index') }}"><button>Go Back</button></a>
+    <a href="{{ path('admin.merch.product.add') }}"><button>Add Product</button></a>
+        {% for product in products %}
+            <div class="product-listing">
+                    <div>
+                        {{ product.productName }}
+                    </div>
+                    <div>
+                        {{ product.productInventory }} Qty.
+                    </div>
+                    <div>
+                        {{ product.productPrice }} €.
+                    </div>
+                    <div>
+                        <a href="{{ path('admin.merch.product.id', {id: product.id}) }}"><button>Edit</button></a>
+                    </div>
+                    <div>
+                        <a href="{{ path('admin.merch.product.orderable', {id: product.id}) }}"><button>Orderable -> false</button></a>
+                    </div>
+            </div>
+        {% endfor %}
+
+{% endblock %}

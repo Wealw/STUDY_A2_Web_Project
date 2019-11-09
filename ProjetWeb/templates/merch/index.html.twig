@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="product-container">
+            {% for product in products %}
+                    {% include 'product/_product.html.twig' %}
+            {% endfor %}
+    </div>
+{% endblock %}

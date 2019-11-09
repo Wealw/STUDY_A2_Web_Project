@@ -54,6 +54,11 @@ class Product
      */
     private $commandProducts;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isOrderable;
+
     public function __construct()
     {
         $this->commandProducts = new ArrayCollection();
@@ -163,6 +168,18 @@ class Product
                 $commandProduct->setProduct(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getIsOrderable(): ?bool
+    {
+        return $this->isOrderable;
+    }
+
+    public function setIsOrderable(bool $isOrderable): self
+    {
+        $this->isOrderable = $isOrderable;
 
         return $this;
     }
