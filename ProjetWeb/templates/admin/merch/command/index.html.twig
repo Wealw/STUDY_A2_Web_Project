@@ -2,14 +2,13 @@
 
 {% block body %}
     <a href="{{ path('admin.merch.index') }}"><button>Go Back</button></a>
-    <a href="{{ path('admin.merch.product.add') }}"><button>Add Product</button></a>
     {% for command in commands %}
         <div class="product-listing">
             <div>
                 {{ command.id }}
             </div>
             <div>
-                {{ command.commandOrderedAt.timestamp }}
+                {{ command.commandOrderedAt | date('d:m:Y - H:i | e') }}
             </div>
             <div>
                 {{ command.commandUserId }}

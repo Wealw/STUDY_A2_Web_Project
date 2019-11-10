@@ -3,18 +3,25 @@
 {% block body %}
     <a href="{{ path('admin.merch.command.index') }}"><button>Go Back</button></a>
     <div>
-        N°Commande : {{ command.id }}
+        Command N° : {{ command.id }}
         <div>
             UserId : {{ command.commandUserId }}
         </div>
         {% for commandProduct in commandProducts %}
-            <div>
+            <div class="product-listing">
                 {% for product in products %}
                     {% if product == commandProduct.product %}
-                        Product : {{ product.productName }} |
+                        <div>
+                            Product : {{ product.productName }}
+                        </div>
+                        <div>
+                            Price per unit : {{ product.productPrice }} €
+                        </div>
                     {% endif %}
                 {% endfor %}
-                Quantity : {{ commandProduct.quantity }}
+                <div>
+                    Quantity : {{ commandProduct.quantity }}
+                </div>
             </div>
         {% endfor %}
     </div>

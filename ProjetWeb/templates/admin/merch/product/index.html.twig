@@ -17,8 +17,12 @@
                     <div>
                         <a href="{{ path('admin.merch.product.id', {id: product.id}) }}"><button>Edit</button></a>
                     </div>
-                    <div>
-                        <a href="{{ path('admin.merch.product.orderable', {id: product.id}) }}"><button>Orderable -> false</button></a>
+                    {% if(product.isOrderable) %}
+                        <div class="green-button">
+                    {% else %}
+                        <div class="red-button">
+                    {% endif %}
+                        <a href="{{ path('admin.merch.product.orderable.invert', {id: product.id}) }}"><button >Orderable</button></a>
                     </div>
             </div>
         {% endfor %}

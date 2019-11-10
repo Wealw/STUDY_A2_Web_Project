@@ -93,6 +93,27 @@
     padding: 10px;
 }
 
+/**/
+
+.green-button button{
+    padding:6px 0 6px 0;
+    font:Bold 13px Arial;
+    background:green;
+    color:white;
+    width:90px;
+    border-radius:2px;
+    border:none;
+}
+
+.red-button button{
+    padding:6px 0 6px 0;
+    font:Bold 13px Arial;
+    background:red;
+    color:white;
+    width:90px;
+    border-radius:2px;
+    border:none;
+}
 
 @media screen and (max-width: 1240px){
     .product-container{

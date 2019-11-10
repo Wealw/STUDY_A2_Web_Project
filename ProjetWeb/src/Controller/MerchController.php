@@ -43,6 +43,10 @@ class MerchController extends AbstractController
      */
     public function show(Product $product) : Response
     {
+        if($product->getIsOrderable() === false)
+        {
+            return $this->redirectToRoute('merch.index');
+        }
         return $this->render('merch/show.html.twig',
             [
                 'product' => $product
