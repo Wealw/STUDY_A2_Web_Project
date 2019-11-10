@@ -1,6 +1,7 @@
 <div class="group off">{{ form_row(form.event_name) }}</div>
 <div class="group off">{{ form_row(form.event_description) }}</div>
-<div class="group off">{{ form_row(form.event_image_path) }}</div>
+<div class="file off">{{ form_row(form.imageFile) }}</div>
 <div class="group off">{{ form_row(form.event_location) }}</div>
 <div class="group off">{{ form_row(form.event_price) }}</div>
+<div>{{ form_row(form.event_type) }}</div>
 {{ form_rest(form) }}

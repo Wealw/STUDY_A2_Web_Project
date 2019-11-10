@@ -3,10 +3,12 @@
 namespace App\Form;
 
 use App\Entity\Social\EventSearch;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use \App\Entity\Social\EventType;
 
 class EventSearchType extends AbstractType
 {
@@ -16,6 +18,12 @@ class EventSearchType extends AbstractType
             ->add('maxPrice', IntegerType::class, [
                 'required' => false,
                 'label' => 'Prix maximal'
+            ])
+            ->add('category', EntityType::class, [
+                'class' => EventType::class,
+                'required' => false,
+                'label' => 'Catégorie',
+                'choice_label' => 'event_type_name'
             ])
         ;
     }

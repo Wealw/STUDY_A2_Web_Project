@@ -12,6 +12,9 @@
                 <div>
                     {{ form_start(form) }}
                         <div class="group off half">
+                            {{ form_row(form.maxPrice) }}
+                        </div>
+                        <div class="group half select">
                             {{ form_rest(form) }}
                         </div>
                     <button type="submit" class="contained"><i class="material-icons">search</i></button>

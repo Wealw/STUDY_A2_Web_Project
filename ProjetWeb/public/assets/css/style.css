@@ -110,6 +110,13 @@ div.grid-3 {
     margin-bottom: 50px;
 }
 
+div.grid-2 {
+    display: grid;
+    grid-template-columns: 2fr 2fr;
+    grid-gap: 12px;
+    margin-bottom: 50px;
+}
+
 div.card {
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
@@ -265,7 +272,7 @@ div.calendar_item {
 
 table.admin_list {
     border-collapse: collapse;
-    width: 50%;
+    width: 90%;
 }
 
 table.admin_list thead tr {

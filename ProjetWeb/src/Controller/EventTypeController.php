@@ -5,6 +5,7 @@ namespace App\Controller;
 
 
 use App\Entity\Social\EventType;
+use App\Repository\EventRepository;
 use App\Repository\EventTypeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -36,16 +37,6 @@ class EventTypeController extends AbstractController
         return $this->render("events/categories/index.html.twig", [
             'categories' => $categories
         ]);
-    }
-
-    /**
-     * @Route("/events/categories/{id}", name="events.categories.show")
-     * @param EventType $eventType
-     * @return Response
-     */
-    public function show(EventType $eventType): Response
-    {
-
     }
 
 }

@@ -5,10 +5,15 @@ namespace App\Entity\Social;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Vich\UploaderBundle\Twig\Extension\UploaderExtension;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\EventRepository")
+ * @Vich\Uploadable()
  */
 class Event
 {
@@ -18,6 +23,12 @@ class Event
      * @ORM\Column(type="integer")
      */
     private $id;
+
+    /**
+     * @var File|null
+     * @Vich\UploadableField(mapping="event_image", fileNameProperty="event_image_path")
+     */
+    private $imageFile;
 
     /**
      * @ORM\Column(type="string", length=50)
@@ -31,7 +42,7 @@ class Event
     private $event_description;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $event_image_path;
 
@@ -48,7 +59,6 @@ class Event
 
     /**
      * @ORM\Column(type="datetime")
-     * @Assert\DateTime()
      */
     private $event_date;
 
@@ -106,6 +116,9 @@ class Event
         $this->pictures = new ArrayCollection();
         $this->event = new ArrayCollection();
         $this->impression = new ArrayCollection();
+        $this->event_created_at = new \DateTime();
+        $this->event_created_by = 1;
+        $this->event_is_visible = 1;
     }
 
     public function getId(): ?int
@@ -342,6 +355,28 @@ class Event
     {
         $this->event_period = $event_period;
 
+        return $this;
+    }
+
+    /**
+     * @return File|null
+     */
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    /**
+     * @param File|null $imageFile
+     * @return Event
+     * @throws \Exception
+     */
+    public function setImageFile(?File $imageFile): Event
+    {
+        $this->imageFile = $imageFile;
+        if ($this->imageFile instanceof UploadedFile) {
+            $this->event_modified_at = new \DateTime('now');
+        }
         return $this;
     }
 

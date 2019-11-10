@@ -7,6 +7,7 @@ namespace App\Controller\Admin;
 use App\Entity\Social\Event;
 use App\Form\EventType;
 use App\Repository\EventRepository;
+use App\Repository\EventTypeRepository;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -38,13 +39,17 @@ class AdminEventsController extends AbstractController
 
     /**
      * @Route("/admin/events", name="admin.events.index")
+     * @param EventTypeRepository $eventTypeRepository
+     * @return Response
      */
-    public function index()
+    public function index(EventTypeRepository $eventTypeRepository)
     {
         $events = $this->repository->findAll();
+        $categories = $eventTypeRepository->findAll();
 
         return $this->render("admin/events/index.html.twig", [
-            'events' => $events
+            'events' => $events,
+            'categories' => $categories
         ]);
     }
 

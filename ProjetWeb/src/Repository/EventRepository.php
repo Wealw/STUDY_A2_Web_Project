@@ -22,6 +22,7 @@ class EventRepository extends ServiceEntityRepository
     }
 
     /**
+     * @param EventSearch $search
      * @return Query
      */
     public function findRequestVisible(EventSearch $search): Query
@@ -34,6 +35,12 @@ class EventRepository extends ServiceEntityRepository
             $query = $query
                 ->andWhere('e.event_price <= :maxPrice')
                 ->setParameter('maxPrice', $search->getMaxPrice());
+        }
+
+        if ($search->getCategory()) {
+            $query = $query
+                ->andWhere('e.event_type = :category')
+                ->setParameter('category', $search->getCategory());
         }
 
         return $query->getQuery();

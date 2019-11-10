@@ -4,4 +4,13 @@
 
 {% block body %}
     <h1>Les catégories d'événement</h1>
+
+    <div class="grid-2">
+        {% for category in categories %}
+            <div class="card">
+                <div class="card_header">{{ category.eventTypeName }}</div>
+            </div>
+        {% endfor %}
+    </div>
+
 {% endblock %}

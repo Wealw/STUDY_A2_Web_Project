@@ -8,7 +8,7 @@
     <section class="row">
         <aside class="flex-1 column">
             <p>Type de l'événement :</p>
-            <p><a href="">{{ type.eventTypeName }}</a></p>
+            <p><a href="{{ path('events.index') }}?category={{ type.id }}">{{ type.eventTypeName }}</a></p>
         </aside>
         <article class="flex-3 column">
             <div class="card_header">
@@ -16,7 +16,9 @@
             </div>
             <div class="card_body row">
                 <div>
-                    <img src="{{ event.eventImagePath }}" alt="">
+                    {% if event.eventImagePath %}
+                        <img src="{{ vich_uploader_asset(event, 'imageFile') }}" alt="">
+                    {% endif %}
                 </div>
                 <div>
                     <p>{{ event.eventDescription }}</p>

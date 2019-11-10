@@ -63,14 +63,20 @@
                         <p>{{ comment.commentText }}</p>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row" style="padding: 8px">
                     <a href="" class="option"><i class="material-icons">thumb_up</i></a>
                     <a href="" class="option"><i class="material-icons">thumb_down</i></a>
                     {% if is_granted('ROLE_MODO') %}
-                        <form action="{{ path('report.comment') }}" method="post">
-                            <input type="hidden" name="reportId" value="{{ comment.Id }}">
-                            <button class="contained">SIGNALER</button>
-                        </form>
+                        {% if comment.isVisible == 1 %}
+                            <form method="post" action="{{ path('admin.comments.delete', {id: comment.id}) }}">
+                            <form method="post" action="{{ path('admin.comments.delete', {id: comment.id}) }}">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ comment.id) }}">
+                                <button class="contained danger">SUPPRIMER</button>
+                            </form>
+                        {% else %}
+                            <button disabled class="disabled">SUPPRIMÉ</button>
+                        {% endif %}
                     {% endif %}
                 </div>
             </div>

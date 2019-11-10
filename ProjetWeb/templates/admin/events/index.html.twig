@@ -6,37 +6,65 @@
 
     <h1>Liste des événements :</h1>
 
-    <table class="admin_list">
-        <thead>
-            <tr>
-                <th>Titre de l'événement</th>
-                <th>Date de l'événement</th>
-                <th>Ajouté le</th>
-                <th>Auteur</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for event in events %}
-                <tr class="">
-                    <td><a href="{{ path('events.show', {id: event.Id}) }}">{{ event.eventName }}</a></td>
-                    <td>{{ event.eventDate | date('d F Y H:i') }}</td>
-                    <td>{{ event.eventCreatedAt | date('d F Y') }}</td>
-                    <td>{{ event.eventCreatedBy }}</td>
-                    <td class="row">
-                        {% if event.eventIsVisible == 1 %}
-                            <form method="post" action="{{ path('admin.events.delete', {id: event.id}) }}">
-                                <input type="hidden" name="_method" value="DELETE">
-                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ event.id) }}">
-                                <button class="contained danger">SUPPRIMER</button>
-                            </form>
-                        {% else %}
-                            <button disabled class="disabled">SUPPRIMÉ</button>
-                        {% endif %}
-                    </td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+   <div class="row">
+       <div class="flex-1">
+           <table class="admin_list">
+               <thead>
+               <tr>
+                   <th>Titre de l'événement</th>
+                   <th>Date de l'événement</th>
+                   <th>Ajouté le</th>
+                   <th>Auteur</th>
+                   <th>Actions</th>
+               </tr>
+               </thead>
+               <tbody>
+               {% for event in events %}
+                   <tr class="">
+                       <td><a href="{{ path('events.show', {id: event.Id}) }}">{{ event.eventName }}</a></td>
+                       <td>{{ event.eventDate | date('d F Y H:i') }}</td>
+                       <td>{{ event.eventCreatedAt | date('d F Y') }}</td>
+                       <td>{{ event.eventCreatedBy }}</td>
+                       <td class="row">
+                           {% if event.eventIsVisible == 1 %}
+                               <a href="{{ path('admin.events.edit', {id: event.id}) }}" class="contained">EDITER</a>
+                               <span class="separate_buttons"></span>
+                               <form method="post" action="{{ path('admin.events.delete', {id: event.id}) }}">
+                                   <input type="hidden" name="_method" value="DELETE">
+                                   <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ event.id) }}">
+                                   <button class="contained danger">SUPPRIMER</button>
+                               </form>
+                           {% else %}
+                               <button disabled class="disabled">SUPPRIMÉ</button>
+                           {% endif %}
+                       </td>
+                   </tr>
+               {% endfor %}
+               </tbody>
+           </table>
+       </div>
+       <div class="flex-1">
+           <table class="admin_list">
+               <thead>
+               <tr>
+                   <th>Titre de la catégorie</th>
+                   <th>Nombre d'événements associés</th>
+                   <th>Actions</th>
+               </tr>
+               </thead>
+               <tbody>
+               {% for category in categories %}
+                   <tr class="">
+                       <td><a href="{{ path('events.show', {id: category.id }) }}">{{ category.eventTypeName }}</a></td>
+                       <td>0</td>
+                       <td class="row">
+                           <a href="" class="contained">EDITER</a>
+                       </td>
+                   </tr>
+               {% endfor %}
+               </tbody>
+           </table>
+       </div>
+   </div>
 
 {% endblock %}
