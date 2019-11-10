@@ -272,7 +272,7 @@ div.calendar_item {
 
 table.admin_list {
     border-collapse: collapse;
-    width: 90%;
+    width: 100%;
 }
 
 table.admin_list thead tr {
