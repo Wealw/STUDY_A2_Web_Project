@@ -9,7 +9,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mysql = require('mysql');
 const app = express();
-
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const secret = "942bc48b081cd84a43535096a9d3b4bad2b38749fccd629e475b2ccadb0aef16";
 
 // Connection to the database
 const database = mysql.createConnection({
@@ -30,10 +32,45 @@ app.get('/', function (req, res) {
     return res.send({error: true, message: 'default'})
 });
 
+// Authentication functions
+// Login function
+app.post('/login', function login(req, res) {
+    try {
+        let email = req.body.user_mail;
+        console.log(email);
+        let password = req.body.user_password;
+        let user_id = null;
+        database.query("SELECT user_id, user_password FROM users WHERE user_mail LIKE ?", [email], function (error, results, fields) {
+            if (error) return res.status(404).send();
+            if (!results[0]) return res.status(401).send();
+            console.log(results);
+            results.forEach(function (entry) {
+                bcrypt.compare(password, results[0].user_password, function (err, hash) {
+                    if (error) return res.status(404).send();
+                    if (!results[0]) return res.status(200).send({auth: false, token: null});
+                    if (hash == true) {
+                        var token = jwt.sign({id: entry.user_id}, secret, {
+                            expiresIn: 86400
+                        });
+                        res.status(200).send({auth: true, token: token});
+                    }
+                });
+            });
+            return res.status(200).send({auth: false, token: null});
+        });
+    } catch (e) {
+        return res.status(500).send();
+    }
+
+});
+// Logout function
+app.get('/logout', function (req, res) {
+    res.status(200).send({auth: false, token: null});
+});
 
 // /Users routes
 // List all users
-app.get('/users', function (req, res) {
+app.get('/users', function usersGet(req, res) {
     try {
         database.query('SELECT * FROM users;', function (error, results, fields) {
             if (error) return res.status(404).send();
@@ -44,8 +81,51 @@ app.get('/users', function (req, res) {
     }
 });
 
-// Remove the specified user
-app.delete('/users', function (req, res) {
+// Rewrite all attributes of the specified user
+app.post('/users', function usersPost(req, res) {
+    try {
+        let user_first_name = req.body.user_first_name;
+        let user_last_name = req.body.user_last_name;
+        let user_mail = req.body.user_mail;
+        let user_phone = req.body.user_phone;
+        let user_postal_code = req.body.user_postal_code;
+        let user_address = req.body.user_address;
+        let user_city = req.body.user_city;
+        let user_password = bcrypt.hashSync(req.body.user_password, 8,);
+        let user_image_path = req.body.user_image_path;
+        let center_id = req.body.center_id;
+        let role_id = req.body.role_id;
+        if (!(user_first_name && user_last_name && user_mail && user_phone && user_postal_code && user_address && user_city && user_password && user_image_path && center_id && role_id)) {
+            return res.status(422).send();
+        }
+
+        database.query("INSERT INTO bde_users_api.users (user_first_name, user_last_name, user_mail, user_phone, user_postal_code, user_address, user_city, user_password, user_image_path, created_at, modified_at, center_id, role_id) VALUES (?,?,?,?,?,?,?,?,?,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,?,?);", [user_first_name, user_last_name, user_mail, user_phone, user_postal_code, user_address, user_city, user_password, user_image_path, center_id, role_id], function (error, results, fields) {
+            if (error) return res.status(500).send();
+            return res.status(202).send();
+        });
+    } catch (e) {
+        return res.status(500).send();
+    }
+});
+
+// Inform the client that this method is not allowed
+app.delete('/users', function notAllowed(req, res) {
+    return res.status(405).send();
+});
+
+// Inform the client that this method is not allowed
+app.put('/users', function notAllowed(req, res) {
+    return res.status(405).send();
+});
+
+// Inform the client that this method is not allowed
+app.patch('/users', function notAllowed(req, res) {
+    return res.status(405).send();
+});
+
+/* Implemented but not authorized function for anybody
+// Remove all users
+app.delete('/users', function usersDelete(req, res) {
     try {
         database.query("DELETE FROM users;", function (error, results, fields) {
             if (error) return res.status(404).send();
@@ -56,35 +136,8 @@ app.delete('/users', function (req, res) {
     }
 });
 
-// Rewrite all attributes of the specified user
-app.post('/users', function (req, res) {
-    try {
-        let user_first_name = req.body.user_first_name;
-        let user_last_name = req.body.user_last_name;
-        let user_mail = req.body.user_mail;
-        let user_phone = req.body.user_phone;
-        let user_postal_code = req.body.user_postal_code;
-        let user_address = req.body.user_address;
-        let user_city = req.body.user_city;
-        let user_password = req.body.user_password;
-        let user_image_path = req.body.user_image_path;
-        let center_id = req.body.center_id;
-        let role_id = req.body.role_id;
-        if (!(user_first_name && user_last_name && user_mail && user_phone && user_postal_code && user_address && user_city && user_password && user_image_path && center_id && role_id)) {
-            return res.status(422).send();
-        }
-
-        database.query("INSERT INTO bde_users_api.users (user_first_name, user_last_name, user_mail, user_phone, user_postal_code, user_address, user_city, user_password, user_image_path, created_at, modified_at, center_id, role_id) VALUES (?,?,?,?,?,?,?,?,?,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,?,?);", [user_first_name, user_last_name, user_mail, user_phone, user_postal_code, user_address, user_city, user_password, user_image_path, center_id, role_id], function (error, results, fields) {
-            if (error) return res.status(404).send();
-            return res.status(202).send();
-        });
-    } catch (e) {
-        return res.status(500).send();
-    }
-});
-
 // Modify multiple user
-app.put('/users', function (req, res) {
+app.put('/users', function usersPut(req, res) {
     try {
         //let base_request = 'UPDATE bde_users_api.users SET user_first_name= ? ,user_last_name= ? ,user_mail= ? ,user_phone= ? ,user_postal_code= ? ,user_address= ? ,user_city= ? ,user_password= ? ,user_image_path= ? ,modified_at= CURRENT_TIMESTAMP ,center_id= ? ,role_id= ? WHERE user_id = ? ;';
         database.query('START TRANSACTION;', [], function (error, results, fields) {
@@ -132,7 +185,7 @@ app.put('/users', function (req, res) {
 ;
 
 // Patch multiple user
-app.patch('/users', function (req, res) {
+app.patch('/users', function usersPatch(req, res) {
     try {
         //let base_request = 'UPDATE bde_users_api.users SET user_first_name= ? ,user_last_name= ? ,user_mail= ? ,user_phone= ? ,user_postal_code= ? ,user_address= ? ,user_city= ? ,user_password= ? ,user_image_path= ? ,modified_at= CURRENT_TIMESTAMP ,center_id= ? ,role_id= ? WHERE user_id = ? ;';
         database.query('START TRANSACTION;', [], function (error, results, fields) {
@@ -211,11 +264,7 @@ app.patch('/users', function (req, res) {
                         if (error) return res.status(422).send();
                     });
                 }
-                /*
-                if (!(user_first_name && user_last_name && user_mail && user_phone && user_postal_code && user_address && user_city && user_password && user_image_path && center_id && role_id)) {
-                    return res.status(503).send();
-                }
-                */
+
             }
         );
 
@@ -223,17 +272,17 @@ app.patch('/users', function (req, res) {
             if (error) return res.status(500).send();
             return res.status(202).send();
         })
-    } catch
-        (e) {
-        //console.log(e);
+    } catch{
+        (e)
         return res.status(500).send();
     }
 })
 ;
+*/
 
-
+// User route
 // Give information about one user
-app.get('/users/:id', function (req, res) {
+app.get('/users/:id', function userGet(req, res) {
     try {
         let user_id = req.params.id;
         if (!user_id) return res.status(422).send();
@@ -248,7 +297,7 @@ app.get('/users/:id', function (req, res) {
 });
 
 // Delete the user with the specified id
-app.delete('/users/:id', function (req, res) {
+app.delete('/users/:id', function userDelete(req, res) {
     try {
         let user_id = req.params.id;
         if (!user_id) return res.status(422).send();
@@ -262,12 +311,12 @@ app.delete('/users/:id', function (req, res) {
 });
 
 // Inform the client that this method doesn't exist
-app.post('/users/:id', function (req, res) {
+app.post('/users/:id', function notAllowed(req, res) {
     return res.status(405).send();
 });
 
 //Modify all attributes of a specified user
-app.put('/users/:id', function (req, res) {
+app.put('/users/:id', function userPut(req, res) {
     try {
         let user_id = req.params.id;
         if (!user_id) return res.status(422).send();
@@ -299,7 +348,7 @@ app.put('/users/:id', function (req, res) {
 });
 
 //Patch attributes of the specified user
-app.patch('users/:id', function (req, res) {
+app.patch('users/:id', function userPatch(req, res) {
     try {
         let user_id = req.params.id;
         if (!user_id) return res.status().send();
@@ -358,7 +407,7 @@ app.patch('users/:id', function (req, res) {
                 if (error) return res.status(422).send();
             });
         }
-        let user_image_path = req.body.user_image_path
+        let user_image_path = req.body.user_image_path;
         if (user_image_path) {
             database.query('UPDATE bde_users_api.users SET user_image_path = ? WHERE user_id = ? ;', [user_image_path, user_id], function (error, results, fields) {
                 if (error) return res.status(422).send();
