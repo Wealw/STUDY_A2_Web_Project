@@ -1,10 +1,16 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-
+    {{ form_start(form) }}
+    {{ form_rest(form) }}
+    <button>Rechercher</button>
+    {{ form_end(form) }}
     <div class="product-container">
             {% for product in products %}
                     {% include 'product/_product.html.twig' %}
             {% endfor %}
+    </div>
+    <div>
+        {{ knp_pagination_render(products) }}
     </div>
 {% endblock %}

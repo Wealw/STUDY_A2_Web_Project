@@ -5,8 +5,13 @@ namespace App\Controller;
 
 
 use App\Entity\Merch\Product;
+use App\Entity\Merch\ProductSearch;
+use App\Form\ProductSearchType;
 use App\Repository\ProductRepository;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -25,14 +30,24 @@ class MerchController extends AbstractController
 
     /**
      * @Route("/merch", name="merch.index")
+     * @param Request $request
+     * @param PaginatorInterface $paginator
      * @return Response
      */
-    public function index() : Response
+    public function index(Request $request, PaginatorInterface $paginator) : Response
     {
-        $products = $this->productRepository->findAll();
+        $search = new ProductSearch();
+        $form = $this->createForm(ProductSearchType::class, $search);
+        $form->handleRequest($request);
+        $products = $paginator->paginate(
+            $this->productRepository->findAllVisibleQuery($search),
+            $request->query->getInt('page', 1),
+            10
+        );
         return $this->render('merch/index.html.twig',
             [
-                'products' => $products
+                'products' => $products,
+                'form' => $form->createView()
             ]);
     }
 
