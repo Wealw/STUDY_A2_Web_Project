@@ -103,6 +103,13 @@ div.grid-4 {
     margin-bottom: 50px;
 }
 
+div.grid-3 {
+    display: grid;
+    grid-template-columns: 3fr 3fr 3fr;
+    grid-gap: 12px;
+    margin-bottom: 50px;
+}
+
 div.card {
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
@@ -147,7 +154,7 @@ nav ul li a.active {
     background-color: #E8EAF6;
 }
 
-.contained {
+.contained, .disabled {
     display: flex;
     align-items: center;
     background-color: #4D75B1;
@@ -158,10 +165,22 @@ nav ul li a.active {
     min-width: 64px;
 }
 
+.disabled {
+    background-color: #dddddd;
+    color: #777777;
+}
+
 span.separate_buttons {
     display: block;
     height: 100%;
     width: 8px;
+}
+
+span.separate_content {
+    display: block;
+    background-color: #aaaaaa;
+    height: 1px;
+    width: 100%;
 }
 
 .danger {
@@ -347,4 +366,9 @@ div.item_header {
 div.item_footer {
     padding: 8px;
     text-align: justify;
+}
+
+div.comment {
+    border-radius: 2px;
+    width: 50%;
 }

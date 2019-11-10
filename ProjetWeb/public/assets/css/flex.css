@@ -22,3 +22,8 @@
     display: flex;
     flex: 1;
 }
+
+.flex-3 {
+    display: flex;
+    flex: 3;
+}

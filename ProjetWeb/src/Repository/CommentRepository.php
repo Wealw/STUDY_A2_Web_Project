@@ -19,6 +19,15 @@ class CommentRepository extends ServiceEntityRepository
         parent::__construct($registry, Comment::class);
     }
 
+    public function findCommentsByPictures($id)
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere("c.picture = $id")
+            ->andWhere("c.is_visible = 1")
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Comment[] Returns an array of Comment objects
     //  */

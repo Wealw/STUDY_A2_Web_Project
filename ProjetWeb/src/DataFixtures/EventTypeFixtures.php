@@ -66,6 +66,7 @@ class EventTypeFixtures extends Fixture
                         ->setPictureModifiedAt(null)
                         ->setPicturePath($this->faker->imageUrl())
                         ->setPictureUserId($this->faker->numberBetween(1, 12))
+                        ->setIsVisible(1)
                         ->setEvent($event);
 
                     $manager->persist($picture);
@@ -76,6 +77,7 @@ class EventTypeFixtures extends Fixture
                             ->setCommentText($this->faker->sentences(3, true))
                             ->setCommentPostedAt($this->faker->dateTimeInInterval($datePicture, '+1 week'))
                             ->setCommentUserId($this->faker->numberBetween(1, 12))
+                            ->setIsVisible(1)
                             ->setPicture($picture);
 
                         $manager->persist($comment);

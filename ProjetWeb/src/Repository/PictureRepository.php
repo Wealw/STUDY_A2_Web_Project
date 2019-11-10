@@ -23,15 +23,17 @@ class PictureRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('p')
             ->addOrderBy('p.picture_posted_at', 'DESC')
-            ->setMaxResults(12)
+            ->setMaxResults(6)
             ->getQuery()
             ->getResult();
     }
 
-    public function findRelated($id)
+    public function findRelated($id, $relId)
     {
         return $this->createQueryBuilder('p')
-            ->andWhere('')
+            ->andWhere("p.id <> $id")
+            ->andWhere("p.event = $relId")
+            ->setMaxResults(3)
             ->getQuery()
             ->getResult();
     }
