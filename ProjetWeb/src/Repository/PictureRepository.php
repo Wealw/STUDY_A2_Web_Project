@@ -19,6 +19,28 @@ class PictureRepository extends ServiceEntityRepository
         parent::__construct($registry, Picture::class);
     }
 
+    public function findLatestPosted()
+    {
+        return $this->createQueryBuilder('p')
+            ->addOrderBy('p.picture_posted_at', 'DESC')
+            ->setMaxResults(12)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findRelated($id)
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /*public function getRelatedEvent()
+    {
+        return $this->createQueryBuilder()
+    }*/
+
     // /**
     //  * @return Picture[] Returns an array of Picture objects
     //  */

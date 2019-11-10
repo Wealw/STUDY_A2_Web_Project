@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\CommentRepository;
+use App\Repository\EventRepository;
 use App\Repository\PictureRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,16 +21,22 @@ class PicturesController extends AbstractController
      * @var CommentRepository
      */
     private $commentRepository;
+    /**
+     * @var EventRepository
+     */
+    private $eventRepository;
 
     /**
      * PicturesController constructor.
      * @param PictureRepository $repository
      * @param CommentRepository $commentRepository
+     * @param EventRepository $eventRepository
      */
-    public function __construct(PictureRepository $repository, CommentRepository $commentRepository)
+    public function __construct(PictureRepository $repository, CommentRepository $commentRepository, EventRepository $eventRepository)
     {
         $this->repository = $repository;
         $this->commentRepository = $commentRepository;
+        $this->eventRepository = $eventRepository;
     }
 
     /**
@@ -40,6 +47,12 @@ class PicturesController extends AbstractController
     public function show($id): Response
     {
         $picture = $this->repository->find($id);
+        $eventId = $picture->getEvent()->getId();
+        $event = $this->eventRepository->findBy(['id' => $eventId])[0];
+        $picture->setEvent($event);
+
+
+
         if ($picture === null) {
             return $this->redirectToRoute('events.index', [], 302);
         }

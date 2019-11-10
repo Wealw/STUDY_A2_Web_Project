@@ -16,6 +16,9 @@
                         <li><a href="{{ path('events.index') }}" class="nav-link">Evénements</a></li>
                         <li><a href="" class="nav-link">Produits</a></li>
                         <li><a href="{{ path('events.calendar') }}" class="nav-link">Calendrier</a></li>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <li><a href="{{ path('admin.index') }}" class="nav-link">Administration</a></li>
+                        {% endif %}
                     </ul>
                 </nav>
             </div>

@@ -8,7 +8,7 @@
     <div class="navigation row" style="margin-bottom: 24px">
         <a href="{{ path('events.calendar.other', {monthNumber: prevMonth, yearNumber: prevYear}) }}" class="contained"><i class="material-icons">keyboard_arrow_left</i> MOIS PRÉCÉDENT</a>
         <span class="separate_buttons"></span>
-        <a href="{{ path('events.calendar.other', {monthNumber: nextMonth, yearNumber: nextYear}) }}" class="contained"><i class="material-icons">keyboard_arrow_right</i> MOIS SUIVANT</a>
+        <a href="{{ path('events.calendar.other', {monthNumber: nextMonth, yearNumber: nextYear}) }}" class="contained">MOIS SUIVANT&nbsp <i class="material-icons">keyboard_arrow_right</i></a>
     </div>
     <div class="calendar">
         {% for i in 0..weeks-1 %}
