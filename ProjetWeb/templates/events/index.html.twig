@@ -17,7 +17,9 @@
                     <button type="submit" class="contained"><i class="material-icons">search</i></button>
                     {{ form_end(form) }}
                 </div>
-                <a href="{{ path('admin.events.new') }}" class="contained"><i class="material-icons">add</i> NOUVEL ÉVÉNEMENT</a>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a href="{{ path('admin.events.new') }}" class="contained"><i class="material-icons">add</i> NOUVEL ÉVÉNEMENT</a>
+                {% endif %}
             </div>
         </div>
         <div class="content grid-4">

@@ -154,7 +154,7 @@ nav ul li a.active {
     background-color: #E8EAF6;
 }
 
-.contained, .disabled {
+.contained, button.disabled, a.disabled {
     display: flex;
     align-items: center;
     background-color: #4D75B1;
@@ -165,7 +165,7 @@ nav ul li a.active {
     min-width: 64px;
 }
 
-.disabled {
+button.disabled, a.disabled {
     background-color: #dddddd;
     color: #777777;
 }

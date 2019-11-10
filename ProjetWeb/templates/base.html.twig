@@ -24,9 +24,10 @@
             </div>
             <div class="row align_center">
                 {% if app.user %}
+                    <a href="{{ path('logout') }}" class="header contained">SE DECONNECTER</a>
                 {% else %}
-                    <a href="" class="header">INSCRIPTION</a>
-                    <a href="" class="header contained">CONNECTION</a>
+                    <a href="" class="header">S'INSCRIRE</a>
+                    <a href="{{ path('security.login') }}" class="header contained">SE CONNECTER</a>
                 {% endif %}
             </div>
         </header>

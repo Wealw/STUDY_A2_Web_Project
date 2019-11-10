@@ -5,11 +5,12 @@
 {% block body %}
     <h1>Evénement - {{ event.eventName }}</h1>
 
-    <section>
-        <aside>
-
+    <section class="row">
+        <aside class="flex-1 column">
+            <p>Type de l'événement :</p>
+            <p><a href="">{{ type.eventTypeName }}</a></p>
         </aside>
-        <article>
+        <article class="flex-3 column">
             <div class="card_header">
                 {{ event.eventName }}
             </div>

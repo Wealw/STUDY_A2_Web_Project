@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Social\EventSearch;
 use App\Form\EventSearchType;
 use App\Repository\EventRepository;
+use App\Repository\EventTypeRepository;
 use App\Repository\PictureRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -24,16 +25,22 @@ class EventsController extends AbstractController
      * @var PictureRepository
      */
     private $pictureRepository;
+    /**
+     * @var EventTypeRepository
+     */
+    private $eventTypeRepository;
 
     /**
      * EventsController constructor.
      * @param EventRepository $repository
      * @param PictureRepository $pictureRepository
+     * @param EventTypeRepository $eventTypeRepository
      */
-    public function __construct(EventRepository $repository, PictureRepository $pictureRepository)
+    public function __construct(EventRepository $repository, PictureRepository $pictureRepository, EventTypeRepository $eventTypeRepository)
     {
         $this->repository = $repository;
         $this->pictureRepository = $pictureRepository;
+        $this->eventTypeRepository = $eventTypeRepository;
     }
 
     /**
@@ -75,9 +82,12 @@ class EventsController extends AbstractController
             return $this->redirectToRoute('events.index', [], 302);
         }
 
+        $type = $this->eventTypeRepository->findBy(['id' => $event->getEventType()->getId()])[0];
+
         return $this->render("events/show.html.twig", [
             'event' => $event,
-            'pictures' => $pictures
+            'pictures' => $pictures,
+            'type' => $type
         ]);
     }
 
