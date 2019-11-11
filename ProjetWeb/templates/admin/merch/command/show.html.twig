@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <a href="{{ path('admin.merch.command.index') }}"><button>Go Back</button></a>
+    <div>
+        Command N° : {{ command.id }}
+        <div>
+            UserId : {{ command.commandUserId }}
+        </div>
+        {% for commandProduct in commandProducts %}
+            <div class="product-listing">
+                {% for product in products %}
+                    {% if product == commandProduct.product %}
+                        <div>
+                            Product : {{ product.productName }}
+                        </div>
+                        <div>
+                            Price per unit : {{ product.productPrice }} €
+                        </div>
+                    {% endif %}
+                {% endfor %}
+                <div>
+                    Quantity : {{ commandProduct.quantity }}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

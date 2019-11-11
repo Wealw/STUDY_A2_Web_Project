@@ -1,0 +1,20 @@
+{% if product.isOrderable == true %}
+<div class="product">
+    <div class="product-name">
+            {{ product.productName }}
+    </div>
+    <div class="product-type">
+        ({{ product.productType.productTypeName }})
+    </div>
+
+    <img src = "{{ product.productImagePath }}">
+
+    <div class="product-price">
+        {{ product.productPrice }} €
+    </div>
+    <br><br>
+    <a href="{{ path('merch.show', {id: product.Id}) }}"><button> Check This</button></a>
+</div>
+{% endif %}
+
+

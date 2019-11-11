@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <a href="{{ path('admin.merch.index') }}"><button>Go Back</button></a>
+    <a href="{{ path('admin.merch.type.add') }}"><button>Add Type</button></a>
+    {% for type in types %}
+        <div class="product-listing">
+            <div>
+                {{ type.productTypeName }}
+            </div>
+            <div>
+                <a href="{{ path('admin.merch.type.edit', {id: type.id}) }}"><button>Edit</button></a>
+            </div>
+        </div>
+    {% endfor %}
+
+{% endblock %}
