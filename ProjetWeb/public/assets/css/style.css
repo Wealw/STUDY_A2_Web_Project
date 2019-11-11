@@ -261,6 +261,19 @@ div.card_body img {
     width: 100%;
 }
 
+
+@media screen and (max-width: 1240px){
+    div.container{
+        padding: 0 5vh;
+    }
+}
+
+@media screen and (max-width: 720px){
+    div.container{
+        padding: 0 3vh;
+    }
+}
+
 div.calendar {
     display: grid;
     grid-template-columns: 7fr 7fr 7fr 7fr 7fr 7fr 7fr;

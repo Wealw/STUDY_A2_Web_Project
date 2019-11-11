@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div>{{ product.productName }}</div>
+    <div class="product-shower">
+        <div class="product-image">
+            <img src="{{ product.productImagePath }}">
+        </div>
+        <div class="product-description">
+            {{ product.productDescription}}
+        </div>
+    </div>
+    <div class="product-information">
+        <div>{{ product.productPrice}} €</div>
+        <div>{{ product.productInventory }}</div>
+        <div>{{ product.productType.productTypeName }}</div>
+    </div>
+
+{% endblock %}
+
