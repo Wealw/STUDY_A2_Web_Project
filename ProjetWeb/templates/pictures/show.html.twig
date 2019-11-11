@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Photo</h1>
+
+    <section>
+        <div class="row">
+            <div>
+                <img src="{{ picture.picturePath }}" alt="">
+            </div>
+            <div class="p">{{ picture.pictureDescription }}</div>
+        </div>
+        <div class="section_footer">
+
+        </div>
+    </section>
+
+    <div class="row">
+        <div class="flex-1 column" style="margin-right: 8px">
+            <h2>Evénement</h2>
+            <div class="card">
+                <div class="card_header">{{ picture.event.eventName }}</div>
+                <div class="card_body"></div>
+                <div class="card_footer">
+                    <p>Date de l'événement : {{ picture.event.eventDate | date('d-m-Y H:i') }}</p>
+                    <a href="{{ path('events.show', {id: picture.event.id}) }}" class="contained">VOIR</a>
+                </div>
+            </div>
+        </div>
+        <div class="flex-3 column">
+            <h2>Autres photos de l'événement</h2>
+            <div class="grid-3">
+                {% for picture in picturesRelated %}
+                    <div class="card">
+                        <div class="card_header">{{ picture.pictureName }}</div>
+                        <div class="card_body">
+                            <img src="{{ picture.picturePath }}" alt="">
+                        </div>
+                        <div class="card_footer">
+                            <a href="{{ path('pictures.show', {id: picture.id}) }}" class="contained">VOIR</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="column">
+        <h2>Commentaires :</h2>
+        {% for comment in comments %}
+            <div class="comment card" style="margin-bottom: 16px">
+                <div class="row">
+                    <div>
+                        <img src="https://dummyimage.com/200x200/000/fff" alt="" class="comment_img">
+
+                    </div>
+                    <div>
+                        {% if comment.commentModifiedAt is null %}
+                            <p>Ajouté le : {{ comment.commentPostedAt | date('d-m-Y H:i:s') }}</p>
+                        {% else %}
+                            <p>Modifié le : {{ comment.commentModifiedAt | date('d-m-Y H:i:s') }}</p>
+                        {% endif %}
+                        <span class="separate_content"></span>
+                        <p>{{ comment.commentText }}</p>
+                    </div>
+                </div>
+                <div class="row" style="padding: 8px">
+                    <a href="" class="option"><i class="material-icons">thumb_up</i></a>
+                    <a href="" class="option"><i class="material-icons">thumb_down</i></a>
+                    {% if is_granted('ROLE_MODO') %}
+                        {% if comment.isVisible == 1 %}
+                            <form method="post" action="{{ path('admin.comments.delete', {id: comment.id}) }}">
+                            <form method="post" action="{{ path('admin.comments.delete', {id: comment.id}) }}">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ comment.id) }}">
+                                <button class="contained danger">SUPPRIMER</button>
+                            </form>
+                        {% else %}
+                            <button disabled class="disabled">SUPPRIMÉ</button>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+        {% if app.user %}
+            <div class="add_comment">
+                {{ form_start(form) }}
+                    {{ form_row(form.comment_text) }}
+                    <button type="submit" class="contained">AJOUTER</button>
+                {{ form_end(form) }}
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

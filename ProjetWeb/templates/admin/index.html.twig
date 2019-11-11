@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h1>Page d'administration</h1>
+    <section>
+        <div class="row">
+            <div class="column flex-1">
+                <div>
+                    <div class="row">
+                        <h2>Les événements</h2>
+                        <a href="{{ path('admin.events.index') }}" class="contained">VOIR TOUT</a>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nom de l'événement</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for event in events %}
+                                <tr>
+                                    <td><a href="{{ path('events.show', {id: event.Id}) }}">{{ event.eventName }}</a></td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div>
+                    <div class="row">
+                        <h2>Les images</h2>
+                        <a href="{{ path('admin.pictures.index') }}" class="contained">VOIR TOUT</a>
+                    </div>
+                    <div class="column">
+                        {% for picture in pictures %}
+                            <img src="{{ picture.picturePath }}" alt="" style="height: 100px; width: 120px"><br>
+
+                        {% endfor %}
+                    </div>
+                </div>
+                <div>
+                    <div class="row">
+                        <h2>Les Commentaires</h2>
+                        <a href="{{ path('admin.comments.index') }}" class="contained">VOIR TOUT</a>
+                    </div>
+                </div>
+            </div>
+            <div class="column flex-1">
+                <h2>Les produits</h2>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
+
+{% block javascripts %}
+
+{% endblock %}
+

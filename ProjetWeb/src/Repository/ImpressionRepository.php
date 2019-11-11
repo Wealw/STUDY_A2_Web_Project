@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\Impression;
+use App\Entity\Social\Impression;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 

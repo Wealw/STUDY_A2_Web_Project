@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity;
+namespace App\Entity\Merch;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -24,7 +24,7 @@ class ProductType
     private $productTypeName;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Product", mappedBy="productType", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Merch\Product", mappedBy="productType", orphanRemoval=true)
      */
     private $products;
 

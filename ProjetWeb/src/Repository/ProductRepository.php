@@ -2,9 +2,12 @@
 
 namespace App\Repository;
 
-use App\Entity\Product;
+use App\Entity\Merch\Product;
+use App\Entity\Merch\ProductSearch;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * @method Product|null find($id, $lockMode = null, $lockVersion = null)
@@ -17,6 +20,38 @@ class ProductRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Product::class);
+    }
+
+    /**
+     * @param ProductSearch $search
+     * @return Query
+     */
+    public function findAllVisibleQuery(ProductSearch $search) : Query
+    {
+        $query = $this->findVisibleQuery();
+
+        if($search->getMaxPrice())
+        {
+            $query = $query
+                ->andWhere('p.productPrice <= :maxprice')
+                ->setParameter('maxprice', $search->getMaxPrice());
+        }
+        if($search->getInStock())
+        {
+            $query = $query
+                ->andWhere('p.productInventory > 0');
+        }
+
+        return $query->getQuery();
+    }
+
+    /**
+     * @return QueryBuilder
+     */
+    public function findVisibleQuery() : QueryBuilder
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.isOrderable = true');
     }
 
     // /**

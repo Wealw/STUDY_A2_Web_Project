@@ -1,7 +1,9 @@
 <?php
 
-namespace App\Entity;
+namespace App\Entity\Merch;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -42,10 +44,25 @@ class Product
     private $productImagePath;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\ProductType", inversedBy="products")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Merch\ProductType", inversedBy="products")
      * @ORM\JoinColumn(nullable=false)
      */
     private $productType;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Merch\CommandProduct", mappedBy="product", orphanRemoval=true)
+     */
+    private $commandProducts;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isOrderable;
+
+    public function __construct()
+    {
+        $this->commandProducts = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -120,6 +137,49 @@ class Product
     public function setProductType(?ProductType $productType): self
     {
         $this->productType = $productType;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|CommandProduct[]
+     */
+    public function getCommandProducts(): Collection
+    {
+        return $this->commandProducts;
+    }
+
+    public function addCommandProduct(CommandProduct $commandProduct): self
+    {
+        if (!$this->commandProducts->contains($commandProduct)) {
+            $this->commandProducts[] = $commandProduct;
+            $commandProduct->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommandProduct(CommandProduct $commandProduct): self
+    {
+        if ($this->commandProducts->contains($commandProduct)) {
+            $this->commandProducts->removeElement($commandProduct);
+            // set the owning side to null (unless already changed)
+            if ($commandProduct->getProduct() === $this) {
+                $commandProduct->setProduct(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getIsOrderable(): ?bool
+    {
+        return $this->isOrderable;
+    }
+
+    public function setIsOrderable(bool $isOrderable): self
+    {
+        $this->isOrderable = $isOrderable;
 
         return $this;
     }

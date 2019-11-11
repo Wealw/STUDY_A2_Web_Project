@@ -166,3 +166,20 @@ h4.form {
     font-size: 20px;
     margin: 12px 0;
 }
+
+div.select div {
+    display: flex;
+    align-items: center;
+}
+
+div.select select {
+    border: 1px solid #999999;
+    border-radius: 2px;
+    height: 56px;
+    margin: 0 25px 0 100px;
+    width: 150px;
+}
+
+div.select label {
+    color: #999999;
+}

@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\Command;
+use App\Entity\Merch\Command;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
