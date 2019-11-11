@@ -13,6 +13,7 @@ use App\Repository\EventTypeRepository;
 use Doctrine\Common\Persistence\ObjectManager;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -127,5 +128,17 @@ class AdminEventsController extends AbstractController
         }
         return $this->redirectToRoute("admin.events.index", [], 302);
     }
+
+    /**
+     * @Route("/admin/events/search/{search}", name="admin.events.search")
+     * @param $search
+     * @return JsonResponse
+     */
+    /*public function search($search): JsonResponse
+    {
+        $events = $this->repository->findLike($search);
+
+        return $this->json([$events], 200);
+    }*/
 
 }
