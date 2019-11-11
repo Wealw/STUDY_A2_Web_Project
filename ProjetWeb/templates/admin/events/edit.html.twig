@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="form">
+        <h3 class="form">NOUVEL ÉVÉNEMENT</h3>
+        {{ form_start(form) }}
+        {% include("admin/events/_form.html.twig") %}
+        <button type="submit" class="contained"><i class="material-icons">edit</i> EDITER</button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('assets/js/form.js') }}"></script>
+{% endblock %}

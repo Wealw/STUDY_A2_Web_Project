@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block body %}
+    <a href="{{ path('admin.merch.index') }}"><button>Go Back</button></a>
+    {{ form_start(form) }}
+    {{ form_rest(form) }}
+    <button>Editer</button>
+    {{ form_end(form) }}
+{% endblock %}
+

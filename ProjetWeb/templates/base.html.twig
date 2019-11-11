@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
         <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/css/flex.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/css/form.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/product.css') }}">
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
@@ -13,21 +14,28 @@
             <div>
                 <nav>
                     <ul>
-                        <li><a href=""></a></li>
-                        <li><a href=""></a></li>
+                        <li><a href="{{ path('events.index') }}" class="nav-link">Evénements</a></li>
+                        <li><a href="" class="nav-link">Produits</a></li>
+                        <li><a href="{{ path('events.calendar') }}" class="nav-link">Calendrier</a></li>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <li><a href="{{ path('admin.index') }}" class="nav-link">Administration</a></li>
+                        {% endif %}
                     </ul>
                 </nav>
             </div>
             <div class="row align_center">
                 {% if app.user %}
+                    <a href="{{ path('logout') }}" class="header contained">SE DECONNECTER</a>
                 {% else %}
-                    <a href="" class="header">INSCRIPTION</a>
-                    <a href="{{ path('security.login') }}" class="header contained">CONNECTION</a>
+                    <a href="" class="header">S'INSCRIRE</a>
+                    <a href="{{ path('security.login') }}" class="header contained">SE CONNECTER</a>
                 {% endif %}
             </div>
         </header>
         <div class="container">
-            {% block body %}{% endblock %}
+            {% block body %}
+
+            {% endblock %}
         </div>
         <footer>
 
