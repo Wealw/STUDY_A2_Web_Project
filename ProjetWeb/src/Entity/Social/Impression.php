@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Entity;
+namespace App\Entity\Social;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\EventTypeRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\ImpressionRepository")
  */
-class EventType
+class Impression
 {
     /**
      * @ORM\Id()
@@ -19,12 +19,17 @@ class EventType
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=25)
+     * @ORM\Column(type="integer")
      */
-    private $event_type_name;
+    private $impression_user_id;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Event", mappedBy="event_type_id")
+     * @ORM\Column(type="string", length=50)
+     */
+    private $impression_type;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Social\Event", mappedBy="impression")
      */
     private $events;
 
@@ -38,14 +43,26 @@ class EventType
         return $this->id;
     }
 
-    public function getEventTypeName(): ?string
+    public function getImpressionUserId(): ?int
     {
-        return $this->event_type_name;
+        return $this->impression_user_id;
     }
 
-    public function setEventTypeName(string $event_type_name): self
+    public function setImpressionUserId(int $impression_user_id): self
     {
-        $this->event_type_name = $event_type_name;
+        $this->impression_user_id = $impression_user_id;
+
+        return $this;
+    }
+
+    public function getImpressionType(): ?string
+    {
+        return $this->impression_type;
+    }
+
+    public function setImpressionType(string $impression_type): self
+    {
+        $this->impression_type = $impression_type;
 
         return $this;
     }
@@ -62,7 +79,7 @@ class EventType
     {
         if (!$this->events->contains($event)) {
             $this->events[] = $event;
-            $event->setEventTypeId($this);
+            $event->addImpression($this);
         }
 
         return $this;
@@ -72,12 +89,10 @@ class EventType
     {
         if ($this->events->contains($event)) {
             $this->events->removeElement($event);
-            // set the owning side to null (unless already changed)
-            if ($event->getEventTypeId() === $this) {
-                $event->setEventTypeId(null);
-            }
+            $event->removeImpression($this);
         }
 
         return $this;
     }
+
 }

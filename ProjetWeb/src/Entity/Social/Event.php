@@ -1,13 +1,19 @@
 <?php
 
-namespace App\Entity;
+namespace App\Entity\Social;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Vich\UploaderBundle\Twig\Extension\UploaderExtension;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\EventRepository")
+ * @Vich\Uploadable()
  */
 class Event
 {
@@ -19,7 +25,14 @@ class Event
     private $id;
 
     /**
+     * @var File|null
+     * @Vich\UploadableField(mapping="event_image", fileNameProperty="event_image_path")
+     */
+    private $imageFile;
+
+    /**
      * @ORM\Column(type="string", length=50)
+     * @Assert\Length(min="3", max="50")
      */
     private $event_name;
 
@@ -29,7 +42,7 @@ class Event
     private $event_description;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $event_image_path;
 
@@ -40,6 +53,7 @@ class Event
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Assert\Range(min="0", max="100")
      */
     private $event_price;
 
@@ -50,6 +64,7 @@ class Event
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\DateTime()
      */
     private $event_created_at;
 
@@ -60,45 +75,50 @@ class Event
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Positive
      */
     private $event_created_by;
 
     /**
      * @ORM\Column(type="boolean")
+     * @Assert\PositiveOrZero
      */
     private $event_is_visible;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\EventType", inversedBy="events")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Social\EventType", inversedBy="events")
      * @ORM\JoinColumn(nullable=false)
      */
     private $event_type;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Picture", mappedBy="event_id", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Social\Picture", mappedBy="event_id", orphanRemoval=true)
      */
     private $pictures;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Participation", mappedBy="event", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Social\Participation", mappedBy="event", orphanRemoval=true)
      */
     private $event;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Impression", inversedBy="events")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Social\Impression", inversedBy="events")
      */
     private $impression;
 
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
      */
-    private $event_periode;
+    private $event_period;
 
     public function __construct()
     {
         $this->pictures = new ArrayCollection();
         $this->event = new ArrayCollection();
         $this->impression = new ArrayCollection();
+        $this->event_created_at = new \DateTime();
+        $this->event_created_by = 1;
+        $this->event_is_visible = 1;
     }
 
     public function getId(): ?int
@@ -250,7 +270,7 @@ class Event
     {
         if (!$this->pictures->contains($picture)) {
             $this->pictures[] = $picture;
-            $picture->setEventId($this);
+            $picture->setEvent($this);
         }
 
         return $this;
@@ -261,8 +281,8 @@ class Event
         if ($this->pictures->contains($picture)) {
             $this->pictures->removeElement($picture);
             // set the owning side to null (unless already changed)
-            if ($picture->getEventId() === $this) {
-                $picture->setEventId(null);
+            if ($picture->getEvent() === $this) {
+                $picture->setEvent(null);
             }
         }
 
@@ -326,15 +346,37 @@ class Event
         return $this;
     }
 
-    public function getEventPeriode(): ?string
+    public function getEventPeriod(): ?string
     {
-        return $this->event_periode;
+        return $this->event_period;
     }
 
-    public function setEventPeriode(?string $event_periode): self
+    public function setEventPeriod(?string $event_period): self
     {
-        $this->event_periode = $event_periode;
+        $this->event_period = $event_period;
 
+        return $this;
+    }
+
+    /**
+     * @return File|null
+     */
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    /**
+     * @param File|null $imageFile
+     * @return Event
+     * @throws \Exception
+     */
+    public function setImageFile(?File $imageFile): Event
+    {
+        $this->imageFile = $imageFile;
+        if ($this->imageFile instanceof UploadedFile) {
+            $this->event_modified_at = new \DateTime('now');
+        }
         return $this;
     }
 

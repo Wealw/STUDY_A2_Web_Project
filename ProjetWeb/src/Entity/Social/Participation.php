@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity;
+namespace App\Entity\Social;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -22,7 +22,7 @@ class Participation
     private $participation_user_id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Event", inversedBy="event")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Social\Event", inversedBy="event")
      * @ORM\JoinColumn(nullable=false)
      */
     private $event;

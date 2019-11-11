@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\EventType;
+use App\Entity\Social\EventType;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 

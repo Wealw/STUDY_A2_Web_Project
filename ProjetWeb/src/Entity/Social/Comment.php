@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Entity;
+namespace App\Entity\Social;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CommentRepository")
@@ -25,11 +26,13 @@ class Comment
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\DateTime
      */
     private $comment_posted_at;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Assert\DateTime
      */
     private $comment_modified_at;
 
@@ -39,18 +42,25 @@ class Comment
     private $comment_user_id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Picture", inversedBy="comments")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Social\Picture", inversedBy="comments")
      * @ORM\JoinColumn(nullable=false)
      */
     private $picture;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Impression", inversedBy="comments")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Social\Impression", inversedBy="comments")
      */
     private $impression;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $is_visible;
+
     public function __construct()
     {
+        $this->comment_posted_at = new \DateTime();
+        $this->is_visible = 1;
         $this->impression = new ArrayCollection();
     }
 
@@ -141,6 +151,18 @@ class Comment
         if ($this->impression->contains($impression)) {
             $this->impression->removeElement($impression);
         }
+
+        return $this;
+    }
+
+    public function getIsVisible(): ?bool
+    {
+        return $this->is_visible;
+    }
+
+    public function setIsVisible(bool $is_visible): self
+    {
+        $this->is_visible = $is_visible;
 
         return $this;
     }

@@ -1,9 +1,33 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Hello world</h1>
-    <p>J'en profite pour poser mes couilles :<br>
-    - Pas de footer de plus de 50%<br>
-    - Pas d'outline<br>
-    Voilà c'est tout pour moi xD</p>
+    <h1>Projet Weeb</h1>
+
+    <section>
+        <h2>Les événements :</h2>
+        <div class="carousel_container" id="carousel1">
+            {% for event in next_events %}
+                <div class="item">
+                    <div class="item_header">
+                        {{ event.eventName }}
+                    </div>
+                    <div class="item_body column">
+                        <img src="{{ event.eventImagePath }}" alt="">
+                    </div>
+                    <div class="item_footer">
+                        <p>{{ event.eventDescription }}</p>
+                        <div class="row">
+                            <a href="{{ path('events.show', {id: event.Id}) }}#photos" class="blue">LES PHOTOS</a>
+                            <span class="separate_buttons"></span>
+                            <a href="{{ path('events.show', {id: event.Id}) }}" class="contained">VOIR</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('assets/js/carousel.js') }}"></script>
 {% endblock %}
