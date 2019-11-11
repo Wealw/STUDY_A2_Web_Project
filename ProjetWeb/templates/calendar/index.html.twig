@@ -4,7 +4,7 @@
 
 {% block body %}
 
-    <h1>Calendrier</h1>
+    <h1>Calendrier - {{ start | date('M Y') }}</h1>
     <div class="navigation row" style="margin-bottom: 24px">
         <a href="{{ path('events.calendar.other', {monthNumber: prevMonth, yearNumber: prevYear}) }}" class="contained"><i class="material-icons">keyboard_arrow_left</i> MOIS PRÉCÉDENT</a>
         <span class="separate_buttons"></span>
@@ -22,7 +22,7 @@
                             {% if k == today %}
                                 {% set eventsForDay = event %}
                                 {% for event in eventsForDay %}
-                                    <div class="event_iten">
+                                    <div class="event_item">
                                         {{ event.eventDate | date('H:i') }} - <a href="{{ path('events.show', {id: event.id}) }}">{{ event.eventName }}</a>
                                     </div>
                                 {% endfor %}

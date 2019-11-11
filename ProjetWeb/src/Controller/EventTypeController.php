@@ -4,8 +4,6 @@
 namespace App\Controller;
 
 
-use App\Entity\Social\EventType;
-use App\Repository\EventRepository;
 use App\Repository\EventTypeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;

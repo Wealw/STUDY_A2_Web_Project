@@ -37,7 +37,7 @@
                         <p class="event_description">{{ event.eventDescription | nl2br }}</p>
                         <div class="row">
                             <p>Prix : {{ event.eventPrice }}€</p>
-                            {% if app.user %}
+                            {% if app.user and event.eventDate > today %}
                                 <a href="" class="blue">S'INSCRIRE</a>
                                 <span class="separate_buttons"></span>
                             {% endif %}

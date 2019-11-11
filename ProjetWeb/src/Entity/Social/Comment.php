@@ -59,6 +59,8 @@ class Comment
 
     public function __construct()
     {
+        $this->comment_posted_at = new \DateTime();
+        $this->is_visible = 1;
         $this->impression = new ArrayCollection();
     }
 
