@@ -1,5 +1,15 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    <div class="form">
+        <h3 class="form">NOUVELLE CATÉGORIE</h3>
+        {{ form_start(form) }}
+        <div class="group off">{{ form_row(form.event_type_name) }}</div>
+        <button type="submit" class="contained">CRÉER LA CATÉGORIE</button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
 
+{% block javascripts %}
+    <script src="{{ asset('assets/js/form.js') }}"></script>
 {% endblock %}

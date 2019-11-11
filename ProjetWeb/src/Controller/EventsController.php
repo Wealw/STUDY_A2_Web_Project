@@ -48,12 +48,14 @@ class EventsController extends AbstractController
      * @param PaginatorInterface $paginator
      * @param Request $request
      * @return Response
+     * @throws \Exception
      */
     public function index(PaginatorInterface $paginator, Request $request): Response
     {
         $search = new EventSearch();
         $form = $this->createForm(EventSearchType::class, $search);
         $form->handleRequest($request);
+        $today = new \DateTime();
 
         $events = $paginator->paginate(
             $this->repository->findRequestVisible($search),
@@ -64,7 +66,8 @@ class EventsController extends AbstractController
 
         return $this->render("events/index.html.twig", [
             'events' => $events,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'today' => $today
         ]);
     }
 

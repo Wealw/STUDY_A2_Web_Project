@@ -66,10 +66,10 @@
                    <tbody>
                    {% for category in categories %}
                        <tr class="">
-                           <td><a href="{{ path('events.show', {id: category.id }) }}">{{ category.eventTypeName }}</a></td>
+                           <td><a href="{{ path('events.index') }}?category={{ category.id }}">{{ category.eventTypeName }}</a></td>
                            <td>0</td>
                            <td class="row">
-                               <a href="" class="contained">EDITER</a>
+                               <a href="{{ path('admin.categories.edit', {id: category.id}) }}" class="contained">EDITER</a>
                            </td>
                        </tr>
                    {% endfor %}
