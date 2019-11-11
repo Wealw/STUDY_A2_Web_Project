@@ -112,6 +112,12 @@
       <path value="$PROJECT_DIR$/ProjetWeb/vendor/symfony/test-pack" />
       <path value="$PROJECT_DIR$/ProjetWeb/vendor/symfony/console" />
       <path value="$PROJECT_DIR$/ProjetWeb/vendor/symfony/doctrine-bridge" />
+      <path value="$PROJECT_DIR$/ProjetWeb/vendor/fzaninotto/faker" />
+      <path value="$PROJECT_DIR$/ProjetWeb/vendor/knplabs/knp-paginator-bundle" />
+      <path value="$PROJECT_DIR$/ProjetWeb/vendor/knplabs/knp-components" />
+      <path value="$PROJECT_DIR$/ProjetWeb/vendor/jms/metadata" />
+      <path value="$PROJECT_DIR$/ProjetWeb/vendor/behat/transliterator" />
+      <path value="$PROJECT_DIR$/ProjetWeb/vendor/vich/uploader-bundle" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.1" />

@@ -17,3 +17,13 @@
     display: flex;
     align-items: center;
 }
+
+.flex-1 {
+    display: flex;
+    flex: 1;
+}
+
+.flex-3 {
+    display: flex;
+    flex: 3;
+}
