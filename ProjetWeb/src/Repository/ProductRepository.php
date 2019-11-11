@@ -41,7 +41,12 @@ class ProductRepository extends ServiceEntityRepository
             $query = $query
                 ->andWhere('p.productInventory > 0');
         }
-
+        if($search->getType())
+        {
+            $query = $query
+                ->andWhere('p.productType = :type')
+                ->setParameter('type', $search->getType());
+        }
         return $query->getQuery();
     }
 
