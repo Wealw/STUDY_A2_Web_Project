@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Social\Admin\AdminEventSearch;
 use App\Entity\Social\Event;
 use App\Entity\Social\EventSearch;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -44,6 +45,33 @@ class EventRepository extends ServiceEntityRepository
         }
 
         return $query->getQuery();
+    }
+
+    /**
+     * @param AdminEventSearch $search
+     * @return Query
+     */
+    public function findAdminRequest(AdminEventSearch $search): Query
+    {
+        $query = $this->createQueryBuilder('e')
+            ->andWhere('e.event_is_visible = 1')
+            ->orderBy('e.event_created_at', 'DESC');
+
+        if ($search->getSearch()) {
+            $query = $query
+                ->andWhere("e.event_name LIKE :event")
+                ->setParameter('event', '%' . addcslashes($search->getSearch(), '%_').'%');
+        }
+
+        return $query->getQuery();
+    }
+
+    public function findLike($like) {
+        return $this->createQueryBuilder('e')
+            ->andWhere("e.event_name LIKE :event")
+            ->setParameter('event', '%' . addcslashes($like, '%_').'%')
+            ->getQuery()
+            ->getResult();
     }
 
     /**

@@ -4,11 +4,14 @@
 namespace App\Controller\Admin;
 
 
+use App\Entity\Social\Admin\AdminEventSearch;
 use App\Entity\Social\Event;
+use App\Form\AdminEventSearchType;
 use App\Form\EventType;
 use App\Repository\EventRepository;
 use App\Repository\EventTypeRepository;
 use Doctrine\Common\Persistence\ObjectManager;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -40,16 +43,28 @@ class AdminEventsController extends AbstractController
     /**
      * @Route("/admin/events", name="admin.events.index")
      * @param EventTypeRepository $eventTypeRepository
+     * @param Request $request
+     * @param PaginatorInterface $paginator
      * @return Response
      */
-    public function index(EventTypeRepository $eventTypeRepository)
+    public function index(EventTypeRepository $eventTypeRepository, Request $request, PaginatorInterface $paginator)
     {
-        $events = $this->repository->findAll();
+        $eventSearch = new AdminEventSearch();
+        $form = $this->createForm(AdminEventSearchType::class, $eventSearch);
+        $form->handleRequest($request);
+
+        $events = $paginator->paginate(
+            $this->repository->findAdminRequest($eventSearch),
+            $request->query->getInt('page', 1),
+            12
+        );
+
         $categories = $eventTypeRepository->findAll();
 
         return $this->render("admin/events/index.html.twig", [
             'events' => $events,
-            'categories' => $categories
+            'categories' => $categories,
+            'form' => $form->createView()
         ]);
     }
 

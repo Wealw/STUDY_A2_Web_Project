@@ -92,7 +92,7 @@ class Event
     private $event_type;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Social\Picture", mappedBy="event_id", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Social\Picture", mappedBy="event", orphanRemoval=true)
      */
     private $pictures;
 

@@ -24,7 +24,7 @@ class EventType
     private $event_type_name;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Social\Event", mappedBy="event_type_id")
+     * @ORM\OneToMany(targetEntity="App\Entity\Social\Event", mappedBy="event_type")
      */
     private $events;
 
