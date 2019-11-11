@@ -83,7 +83,10 @@
         {% endfor %}
         {% if app.user %}
             <div class="add_comment">
-                <form action=""></form>
+                {{ form_start(form) }}
+                    {{ form_row(form.comment_text) }}
+                    <button type="submit" class="contained">AJOUTER</button>
+                {{ form_end(form) }}
             </div>
         {% endif %}
     </div>
