@@ -33,6 +33,19 @@ class Impression
      */
     private $events;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Social\Comment", mappedBy="impression")
+     */
+    private $comments;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Social\Picture", mappedBy="impression")
+     */
+    private $pictures;
+
+    /**
+     * Impression constructor.
+     */
     public function __construct()
     {
         $this->events = new ArrayCollection();

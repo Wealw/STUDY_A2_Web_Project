@@ -6,12 +6,20 @@
 
     <h1>Liste des événements :</h1>
 
+
    <div class="row">
        <div class="flex-1">
            <div class="column">
                <div class="row justify_between">
                    <p>Ensemble des événements</p>
                    <a href="{{ path('admin.events.new') }}" class="contained"><i class="material-icons">add</i> AJOUTER UN EVENEMENT</a>
+               </div>
+               <div class="search_type" style="margin-bottom: 32px">
+                   <h3>Personnaliser la recherche</h3>
+                   {{ form_start(form) }}
+                        <div class="group off half search_bar">{{ form_rest(form) }}</div>
+                        <button type="submit" class="contained">RECHERCHER</button>
+                   {{ form_end(form) }}
                </div>
                <table class="admin_list">
                    <thead>
@@ -47,6 +55,9 @@
                    {% endfor %}
                    </tbody>
                </table>
+               <div class="pagination">
+                   {{ knp_pagination_render(events) }}
+               </div>
            </div>
        </div>
        <div class="flex-1">
@@ -79,4 +90,8 @@
        </div>
    </div>
 
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('assets/js/form.js') }}"></script>
 {% endblock %}

@@ -42,8 +42,6 @@ class AdminCommentController extends AbstractController
     {
         $comments = $this->repository->findAll();
 
-        dump($comments);
-
         return $this->render("admin/comment/index.html.twig", [
             'comments' => $comments
         ]);
@@ -59,10 +57,11 @@ class AdminCommentController extends AbstractController
     public function delete(Comment $comment, Request $request): Response
     {
         if ($this->isCsrfTokenValid('delete' . $comment->getId(), $request->get('_token'))) {
-            $comment->setIsVisible(0);
+            $this->em->remove($comment);
+            //$comment->setIsVisible(0);
             $this->em->flush();
         }
-        return $this->redirectToRoute("admin.pictures.index", [], 302);
+        return $this->redirectToRoute("admin.comments.index", [], 302);
     }
 
 }

@@ -86,13 +86,18 @@ class Event
     private $event_is_visible;
 
     /**
+     * @ORM\Column(type="string", length=50, nullable=true)
+     */
+    private $event_period;
+
+    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Social\EventType", inversedBy="events")
      * @ORM\JoinColumn(nullable=false)
      */
     private $event_type;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Social\Picture", mappedBy="event_id", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Social\Picture", mappedBy="event", orphanRemoval=true)
      */
     private $pictures;
 
@@ -105,11 +110,6 @@ class Event
      * @ORM\ManyToMany(targetEntity="App\Entity\Social\Impression", inversedBy="events")
      */
     private $impression;
-
-    /**
-     * @ORM\Column(type="string", length=50, nullable=true)
-     */
-    private $event_period;
 
     public function __construct()
     {

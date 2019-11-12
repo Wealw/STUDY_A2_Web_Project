@@ -55,6 +55,7 @@ class EventsController extends AbstractController
         $search = new EventSearch();
         $form = $this->createForm(EventSearchType::class, $search);
         $form->handleRequest($request);
+
         $today = new \DateTime();
 
         $events = $paginator->paginate(
