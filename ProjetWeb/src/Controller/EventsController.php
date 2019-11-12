@@ -122,11 +122,11 @@ class EventsController extends AbstractController
         if (!$user) {
             return $this->redirectToRoute("events.show", ['id' => $event->getId()], 302);
         }
-
         $userDislike = $impressionRepository->findDislike(1)[0];
         $userLike = $impressionRepository->findLike(1)[0];
 
         dump($userLike->getEvents()->getValues());
+
         dump($event->getImpression()->getValues());
 
         return $this->render("test.html.twig");
