@@ -8,6 +8,7 @@ use App\Entity\Social\Admin\AdminEventSearch;
 use App\Entity\Social\Event;
 use App\Form\AdminEventSearchType;
 use App\Form\EventType;
+use App\Repository\CommentRepository;
 use App\Repository\EventRepository;
 use App\Repository\EventTypeRepository;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -45,20 +46,15 @@ class AdminEventsController extends AbstractController
      * @Route("/admin/events", name="admin.events.index")
      * @param EventTypeRepository $eventTypeRepository
      * @param Request $request
-     * @param PaginatorInterface $paginator
      * @return Response
      */
-    public function index(EventTypeRepository $eventTypeRepository, Request $request, PaginatorInterface $paginator)
+    public function index(EventTypeRepository $eventTypeRepository, Request $request)
     {
         $eventSearch = new AdminEventSearch();
         $form = $this->createForm(AdminEventSearchType::class, $eventSearch);
         $form->handleRequest($request);
 
-        $events = $paginator->paginate(
-            $this->repository->findAdminRequest($eventSearch),
-            $request->query->getInt('page', 1),
-            12
-        );
+        $events = $this->repository->findAll();
 
         $categories = $eventTypeRepository->findAll();
 
@@ -132,13 +128,26 @@ class AdminEventsController extends AbstractController
     /**
      * @Route("/admin/events/search/{search}", name="admin.events.search")
      * @param $search
+     * @param CommentRepository $commentRepository
      * @return JsonResponse
      */
-    /*public function search($search): JsonResponse
+    public function search($search, CommentRepository $commentRepository): JsonResponse
     {
+        $comments = $commentRepository->findLike($search);
         $events = $this->repository->findLike($search);
+        $event = $events[0]->getEventName();
 
-        return $this->json([$events], 200);
-    }*/
+        $jsonEvents = null;
+
+        foreach ($events as $k => $event) {
+            $jsonEvents[$k]['id'] = $events[$k]->getId();
+            $jsonEvents[$k]['event_name'] = $events[$k]->getEventName();
+            $jsonEvents[$k]['event_date'] = $events[$k]->getEventDate();
+            $jsonEvents[$k]['created_at'] = $events[$k]->getEventCreatedAt();
+            $jsonEvents[$k]['created_by'] = $events[$k]->getEventCreatedBy();
+        }
+
+        return $this->json($jsonEvents, 200, ['Content-Type' => 'application/json']);
+    }
 
 }

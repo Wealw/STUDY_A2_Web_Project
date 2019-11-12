@@ -28,6 +28,14 @@ class CommentRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findLike($like) {
+        return $this->createQueryBuilder('c')
+            ->andWhere("c.comment_text LIKE :comment")
+            ->setParameter('comment', '%' . addcslashes($like, '%_').'%')
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Comment[] Returns an array of Comment objects
     //  */

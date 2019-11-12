@@ -22,7 +22,7 @@ class Participation
     private $participation_user_id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Social\Event", inversedBy="event")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Social\Event", inversedBy="participation")
      * @ORM\JoinColumn(nullable=false)
      */
     private $event;

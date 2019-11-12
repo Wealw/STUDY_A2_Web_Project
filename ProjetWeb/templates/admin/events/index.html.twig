@@ -33,7 +33,7 @@
                    </thead>
                    <tbody>
                    {% for event in events %}
-                       <tr class="">
+                       <tr class="admin_event">
                            <td><a href="{{ path('events.show', {id: event.Id}) }}">{{ event.eventName }}</a></td>
                            <td>{{ event.eventDate | date('d F Y H:i') }}</td>
                            <td>{{ event.eventCreatedAt | date('d F Y') }}</td>
@@ -55,9 +55,6 @@
                    {% endfor %}
                    </tbody>
                </table>
-               <div class="pagination">
-                   {{ knp_pagination_render(events) }}
-               </div>
            </div>
        </div>
        <div class="flex-1">
@@ -94,4 +91,5 @@
 
 {% block javascripts %}
     <script src="{{ asset('assets/js/form.js') }}"></script>
+    <script src="{{ asset('assets/js/ajaxSearch.js') }}"></script>
 {% endblock %}

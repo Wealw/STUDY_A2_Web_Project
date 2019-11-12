@@ -104,7 +104,7 @@ class Event
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Social\Participation", mappedBy="event", orphanRemoval=true)
      */
-    private $event;
+    private $participation;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Social\Impression", inversedBy="events")
@@ -114,7 +114,7 @@ class Event
     public function __construct()
     {
         $this->pictures = new ArrayCollection();
-        $this->event = new ArrayCollection();
+        $this->participation = new ArrayCollection();
         $this->impression = new ArrayCollection();
         $this->event_created_at = new \DateTime();
         $this->event_created_by = 1;
@@ -292,25 +292,25 @@ class Event
     /**
      * @return Collection|Participation[]
      */
-    public function getEvent(): Collection
+    public function getParticipation(): Collection
     {
-        return $this->event;
+        return $this->participation;
     }
 
-    public function addEvent(Participation $event): self
+    public function addParticipation(Participation $event): self
     {
-        if (!$this->event->contains($event)) {
-            $this->event[] = $event;
+        if (!$this->participation->contains($event)) {
+            $this->participation[] = $event;
             $event->setEvent($this);
         }
 
         return $this;
     }
 
-    public function removeEvent(Participation $event): self
+    public function removeParticipation(Participation $event): self
     {
-        if ($this->event->contains($event)) {
-            $this->event->removeElement($event);
+        if ($this->participation->contains($event)) {
+            $this->participation->removeElement($event);
             // set the owning side to null (unless already changed)
             if ($event->getEvent() === $this) {
                 $event->setEvent(null);
@@ -379,5 +379,7 @@ class Event
         }
         return $this;
     }
+
+
 
 }
