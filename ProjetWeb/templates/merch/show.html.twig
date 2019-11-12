@@ -4,7 +4,7 @@
     <div>{{ product.productName }}</div>
     <div class="product-shower">
         <div class="product-image">
-            <img src="{{ product.productImagePath }}">
+            <img src = "{{ vich_uploader_asset(product, 'imageFile') }}">
         </div>
         <div class="product-description">
             {{ product.productDescription}}

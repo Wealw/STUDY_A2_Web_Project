@@ -22,6 +22,9 @@ class ProductRepository extends ServiceEntityRepository
         parent::__construct($registry, Product::class);
     }
 
+
+
+
     /**
      * @param ProductSearch $search
      * @return Query
