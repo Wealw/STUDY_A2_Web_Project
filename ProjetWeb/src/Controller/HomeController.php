@@ -29,8 +29,6 @@ class HomeController extends AbstractController
     {
         $nextEvents = $this->eventRepository->findNextVisible();
 
-        dump($nextEvents);
-
         return $this->render('home/index.html.twig', [
             'next_events' => $nextEvents
         ]);

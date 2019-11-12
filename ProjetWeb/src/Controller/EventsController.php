@@ -125,9 +125,37 @@ class EventsController extends AbstractController
         $userDislike = $impressionRepository->findDislike(1)[0];
         $userLike = $impressionRepository->findLike(1)[0];
 
-        dump($userLike->getEvents()->getValues());
+        $eventsLiked = $userLike->getEvents()->getValues();
+        $eventsDisliked = $userDislike->getEvents()->getValues();
+        $eventId = $event->getId();
+        dump($eventsLiked);
 
-        dump($event->getImpression()->getValues());
+        foreach ($eventsLiked as $eventLiked) {
+            if ($eventId === $eventLiked->getId()) {
+                $eventLiked->getId();
+                $action = 'like';
+                $rightEvent = $eventLiked;
+                break;
+            }
+        }
+
+        foreach ($eventsDisliked as $k => $eventDisliked) {
+            if ($eventId === $eventDisliked->getId()) {
+                $eventDisliked->getId();
+                $action = 'dislike';
+                $rightEvent = $eventDisliked;
+                break;
+            }
+        }
+
+        if ($action) {
+
+            if ($action === 'like') {
+                dump('lololol');
+                $userLike->removeEvent($event);
+            }
+
+        }
 
         return $this->render("test.html.twig");
     }
