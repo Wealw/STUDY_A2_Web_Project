@@ -118,10 +118,8 @@ class AdminEventsController extends AbstractController
      */
     public function delete(Event $event, Request $request)
     {
-        if ($this->isCsrfTokenValid('delete' . $event->getId(), $request->get('_token'))) {
-            $event->setEventIsVisible(0);
-            $this->em->flush();
-        }
+        $event->setEventIsVisible(0);
+        $this->em->flush();
         return $this->redirectToRoute("admin.events.index", [], 302);
     }
 
@@ -131,20 +129,19 @@ class AdminEventsController extends AbstractController
      * @param CommentRepository $commentRepository
      * @return JsonResponse
      */
-    public function search($search, CommentRepository $commentRepository): JsonResponse
+    public function search(CommentRepository $commentRepository, $search = null): JsonResponse
     {
         $comments = $commentRepository->findLike($search);
         $events = $this->repository->findLike($search);
-        $event = $events[0]->getEventName();
-
-        $jsonEvents = null;
+        $jsonEvents = [];
 
         foreach ($events as $k => $event) {
             $jsonEvents[$k]['id'] = $events[$k]->getId();
-            $jsonEvents[$k]['event_name'] = $events[$k]->getEventName();
-            $jsonEvents[$k]['event_date'] = $events[$k]->getEventDate();
-            $jsonEvents[$k]['created_at'] = $events[$k]->getEventCreatedAt();
-            $jsonEvents[$k]['created_by'] = $events[$k]->getEventCreatedBy();
+            $jsonEvents[$k]['eventName'] = $events[$k]->getEventName();
+            $jsonEvents[$k]['eventDate'] = $events[$k]->getEventDate()->format('d F Y H:i');
+            $jsonEvents[$k]['createdAt'] = $events[$k]->getEventCreatedAt()->format('d F Y');
+            $jsonEvents[$k]['createdBy'] = $events[$k]->getEventCreatedBy();
+            $jsonEvents[$k]['isVisible'] = $events[$k]->getEventIsVisible();
         }
 
         return $this->json($jsonEvents, 200, ['Content-Type' => 'application/json']);

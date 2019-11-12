@@ -66,11 +66,15 @@ class EventRepository extends ServiceEntityRepository
         return $query->getQuery();
     }
 
-    public function findLike($like) {
-        return $this->createQueryBuilder('e')
-            ->andWhere("e.event_name LIKE :event")
-            ->setParameter('event', '%' . addcslashes($like, '%_').'%')
-            ->getQuery()
+    public function findLike($like = null) {
+        $query = $this->createQueryBuilder('e');
+
+        if ($like) {
+            $query->andWhere("e.event_name LIKE :event")
+                ->setParameter('event', '%' . addcslashes($like, '%_').'%');
+        }
+
+        return $query->getQuery()
             ->getResult();
     }
 

@@ -19,6 +19,31 @@ class ImpressionRepository extends ServiceEntityRepository
         parent::__construct($registry, Impression::class);
     }
 
+    public function findLike($userId)
+    {
+        return $this->createQueryBuilder('i')
+            ->andWhere('i.impression_user_id = :userId')
+            ->setParameter('userId', $userId)
+            ->andWhere("i.impression_type = :like")
+            ->setParameter('like', 'like')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findDislike($userId)
+    {
+        return $this->createQueryBuilder('i')
+            ->andWhere('i.impression_user_id = :userId')
+            ->setParameter('userId', $userId)
+            ->andWhere("i.impression_type = :dislike")
+            ->setParameter('dislike', 'dislike')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getResult();
+    }
+
+
     // /**
     //  * @return Impression[] Returns an array of Impression objects
     //  */

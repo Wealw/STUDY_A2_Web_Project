@@ -7,8 +7,14 @@
 
     <section class="row">
         <aside class="flex-1 column">
-            <p>Type de l'événement :</p>
-            <p><a href="{{ path('events.index') }}?category={{ type.id }}">{{ type.eventTypeName }}</a></p>
+            <div class="card">
+                <p>Type de l'événement :</p>
+                <p><a href="{{ path('events.index') }}?category={{ type.id }}">{{ type.eventTypeName }}</a></p>
+                <div class="row">
+                    <a href=""></a>
+                    <a href=""></a>
+                </div>
+            </div>
         </aside>
         <article class="flex-3 column">
             <div class="card_header">

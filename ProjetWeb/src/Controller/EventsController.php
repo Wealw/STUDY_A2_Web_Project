@@ -2,13 +2,18 @@
 
 namespace App\Controller;
 
+use App\Entity\Social\Event;
 use App\Entity\Social\EventSearch;
+use App\Entity\Social\Impression;
 use App\Form\EventSearchType;
 use App\Repository\EventRepository;
 use App\Repository\EventTypeRepository;
+use App\Repository\ImpressionRepository;
 use App\Repository\PictureRepository;
+use Doctrine\Common\Persistence\ObjectManager;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -29,18 +34,24 @@ class EventsController extends AbstractController
      * @var EventTypeRepository
      */
     private $eventTypeRepository;
+    /**
+     * @var ObjectManager
+     */
+    private $em;
 
     /**
      * EventsController constructor.
      * @param EventRepository $repository
      * @param PictureRepository $pictureRepository
      * @param EventTypeRepository $eventTypeRepository
+     * @param ObjectManager $em
      */
-    public function __construct(EventRepository $repository, PictureRepository $pictureRepository, EventTypeRepository $eventTypeRepository)
+    public function __construct(EventRepository $repository, PictureRepository $pictureRepository, EventTypeRepository $eventTypeRepository, ObjectManager $em)
     {
         $this->repository = $repository;
         $this->pictureRepository = $pictureRepository;
         $this->eventTypeRepository = $eventTypeRepository;
+        $this->em = $em;
     }
 
     /**
@@ -93,6 +104,34 @@ class EventsController extends AbstractController
             'pictures' => $pictures,
             'type' => $type
         ]);
+    }
+
+    /**
+     * @Route("/events/{id}/like", name="events.like")
+     * @param Event $event
+     * @param ObjectManager $manager
+     * @param ImpressionRepository $impressionRepository
+     * @return RedirectResponse|Response
+     */
+    public function like(Event $event, ObjectManager $manager, ImpressionRepository $impressionRepository)
+    {
+        /*if ($event) {
+            return $this->redirectToRoute("events.index", [], 302);
+        }*/
+        $user = $this->getUser();
+        if (!$user) {
+            return $this->redirectToRoute("events.show", ['id' => $event->getId()], 302);
+        }
+
+        $userDislike = $impressionRepository->findDislike(1)[0];
+        $userLike = $impressionRepository->findLike(1)[0];
+        dump($userLike, $userDislike);
+
+        dump($userLike->getEvents()->getValues());
+
+        dump($event->getImpression()->getValues());
+
+        return $this->render("test.html.twig");
     }
 
 }
