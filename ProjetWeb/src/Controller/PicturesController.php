@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Social\Comment;
+use App\Entity\Social\Event;
 use App\Entity\Social\Picture;
 use App\Form\CommentType;
+use App\Form\PictureType;
 use App\Repository\CommentRepository;
 use App\Repository\EventRepository;
 use App\Repository\PictureRepository;
@@ -48,6 +50,29 @@ class PicturesController extends AbstractController
         $this->commentRepository = $commentRepository;
         $this->eventRepository = $eventRepository;
         $this->em = $em;
+    }
+
+    /**
+     * @Route("/events/{event}/pictures/new", name="pictures.new")
+     * @param Event $event
+     * @param Request $request
+     * @return Response
+     */
+    public function new(Event $event, Request $request)
+    {
+        $user = $this->getUser();
+        if (!$user) {
+            return $this->redirectToRoute("events.show", [
+                'id' => $event->getId()
+            ], 302);
+        }
+        $picture = new Picture();
+        $form = $this->createForm(PictureType::class, $picture);
+        $form->handleRequest($request);
+
+        return $this->render("pictures/new.html.twig", [
+            'form' => $form->createView()
+        ]);
     }
 
     /**
