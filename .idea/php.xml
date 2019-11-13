@@ -118,6 +118,8 @@
       <path value="$PROJECT_DIR$/ProjetWeb/vendor/jms/metadata" />
       <path value="$PROJECT_DIR$/ProjetWeb/vendor/behat/transliterator" />
       <path value="$PROJECT_DIR$/ProjetWeb/vendor/vich/uploader-bundle" />
+      <path value="$PROJECT_DIR$/ProjetWeb/vendor/league/flysystem-ziparchive" />
+      <path value="$PROJECT_DIR$/ProjetWeb/vendor/league/flysystem" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.1" />

@@ -33,6 +33,8 @@
       <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/jms/metadata" />
       <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/knplabs/knp-components" />
       <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/knplabs/knp-paginator-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/league/flysystem" />
+      <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/league/flysystem-ziparchive" />
       <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/liip/imagine-bundle" />
       <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/monolog/monolog" />
       <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/nikic/php-parser" />
