@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
@@ -56,6 +57,9 @@ class SecurityController extends AbstractController
         $response = $client->request('POST', 'http://127.0.0.1:3000/api/login', ['json' => ['user_mail' => $request->get('_username'), 'user_password' => $request->get('_password')]]);
         $datas = json_decode($response->getBody(), true, 512, JSON_THROW_ON_ERROR);
         if ($datas['auth'] === true) {
+            $session = new Session();
+            $session->start();
+            $session->set('name', $datas['token']);
             $response = new RedirectResponse($this->generateUrl('index'));
             $cookie = new Cookie('x-access-token', $datas['token']);
             $response->headers->setCookie($cookie);

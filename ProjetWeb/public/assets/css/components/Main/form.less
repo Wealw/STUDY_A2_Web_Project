@@ -1,3 +1,4 @@
+@import "../../color";
 div.form {
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
   width: 500px;
@@ -6,7 +7,7 @@ div.form {
 }
 
 h3.form {
-  color: #4D75B1;
+  color: @secondary;
   font-size: 28px;
   margin: 0 0 32px;
   text-align: center;
@@ -24,12 +25,12 @@ div.off label {
 }
 
 input:focus, textarea:focus {
-  border: #4D75B1 solid 2px;
+  border: @secondary solid 2px;
   padding: 0 13px;
 }
 
 div.on label {
-  color: #4D75B1;
+  color: @secondary;
   font-size: 12px;
   top: -6px;
   z-index: 10;

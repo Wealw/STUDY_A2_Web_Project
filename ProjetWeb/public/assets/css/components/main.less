@@ -2,11 +2,17 @@
 
 
 main {
-  @import "Main/flex";
-  @import "Main/form";
-  @import "Main/product";
-  @import "Main/table";
   @import "Main/style";
+  @import "Main/flex";
+  @import "Main/product";
+
+  table {
+    @import "Main/table";
+  }
+
+  form {
+    @import "Main/form";
+  }
   top: 4em;
   z-index: 500;
   padding: 2em 5%;

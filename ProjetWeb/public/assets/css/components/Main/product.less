@@ -1,3 +1,4 @@
+@import "../../color";
 .product-container {
   display: grid;
   grid-gap: 1vw;
@@ -7,14 +8,15 @@
 .product-container .product {
   padding: 1vw;
   font-family: Roboto, serif;
-  background-color: #ffffff;
-  box-shadow: 0 2px 3px #bdb9b7;
+  background-color: @backgroundLight;
+  box-shadow: 0 0 3px @shadow;
+  max-width: 100%;
   text-align: center;
   position: relative;
 }
 
 .product-container .product:hover {
-  box-shadow: 0 5px 5px #bdb9b7;
+  box-shadow: 0 0 3px @shadow;
 }
 
 .product-container .product img {
@@ -24,6 +26,9 @@
 
 .product-container .product-name {
   margin: 0;
+  text-overflow: ellipsis;
+  height: 1.4em;
+  overflow: hidden;
   font-size: x-large;
   letter-spacing: 2px;
   text-transform: uppercase;
@@ -57,8 +62,8 @@
   padding: 1vh;
   border: none;
   cursor: pointer;
-  background-color: #001c21;
-  color: #ffffff;
+  background-color: @primary;
+  color: @primaryText;
   font-family: "Roboto", serif;
   letter-spacing: 2px;
   bottom: 0;
@@ -111,7 +116,7 @@
 
 .red-button button {
   padding: 6px 0 6px 0;
-  font: Bold 13px Arial;
+  font: Bold 13px Roboto;
   background: red;
   color: white;
   width: 90px;
