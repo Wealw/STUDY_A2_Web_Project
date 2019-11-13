@@ -13,6 +13,7 @@ security:
       anonymous: true
       form_login:
         check_path: /login
+        default_target_path: security.tokenGetter
       logout:
         path: /logout
         target: /

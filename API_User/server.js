@@ -47,9 +47,30 @@ app.post('/api/login', function login(req, res) {
                 auth: false,
                 token: null
             });
+            if (password, results[0].user_password) {
+                let token = jwt.sign({
+                    user_id: results[0].user_id,
+                    user_password: results[0].user_password,
+                    user_first_name: results[0].user_first_name,
+                    user_last_name: results[0].user_last_name,
+                    user_mail: results[0].user_mail,
+                    user_phone: results[0].user_phone,
+                    user_postal_code: results[0].user_postal_code,
+                    user_address: results[0].user_address,
+                    user_city: results[0].user_city,
+                    user_image_path: results[0].user_image_path,
+                    created_at: results[0].created_at,
+                    modified_at: results[0].modified_at,
+                    center_id: results[0].center_id,
+                    role_id: results[0].role_id
+                }, secret, {
+                    expiresIn: 86400
+                });
+                return res.status(200).send({auth: true, token: token});
+            }
             bcrypt.compare(password, results[0].user_password, function (err, hash) {
                 if (error) return res.status(404).send();
-                if (!results[0]) {
+                if (!results[0] || hash == false) {
                     return res.status(200).set('Content-type', 'application/json').send({
                         auth: false,
                         token: null

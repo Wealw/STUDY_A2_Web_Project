@@ -35,21 +35,28 @@ class SecurityController extends AbstractController
     {
         $lastUsername = $authenticationUtils->getLastUsername();
         $error = $authenticationUtils->getLastAuthenticationError();
-        if ($request->getMethod() === 'POST') {
-
-            dd("ak");
-            $client = new Client();
-            $response = $client->request('POST', 'http://127.0.0.1:3000/api/login', ['json' => ['user_mail' => $request->get('_username'), 'user_password' => $request->get('_password')]]);
-            $datas = json_decode($response->getBody(), true, 512, JSON_THROW_ON_ERROR);
-
-            if ($datas['auth'] === true) {
-                $this->getUser()->setToken($datas['token']);
-            }
-            //TODO Implement error messages
-        };
         return $this->render('security/login.html.twig', [
             'last_username' => $lastUsername,
             'error' => $error
         ]);
     }
+
+
+    /**
+     * @Route("/token", name="security.tokenGetter")
+     * @return Response
+     * @throws GuzzleException
+     */
+    public function tokenGetter(): Response
+    {
+        $client = new Client();
+
+        $response = $client->request('POST', 'http://127.0.0.1:3000/api/login', ['json' => ['user_mail' => $this->getUser()->getUsername(), 'user_password' => $this->getUser()->getPassword()]]);
+        $datas = json_decode($response->getBody(), true, 512, JSON_THROW_ON_ERROR);
+        if ($datas['auth'] === true) {
+            $this->getUser()->setToken($datas['token']);
+        }
+        return $this->redirectToRoute('index');
+    }
 }
+
