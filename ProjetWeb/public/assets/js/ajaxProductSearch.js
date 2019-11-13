@@ -11,6 +11,8 @@ searchBar.addEventListener('keyup', function () {
             let data = JSON.parse(xhr.responseText);
             let divProds = document.querySelectorAll('.admin_product');
 
+            console.log(data)
+
             for (let i = 0; i < divProds.length; i++) {
                 divProds[i].parentNode.removeChild(divProds[i])
             }
@@ -21,6 +23,7 @@ searchBar.addEventListener('keyup', function () {
                 let td2 = document.createElement('td');
                 let td3 = document.createElement('td');
                 let td4 = document.createElement('td');
+                let td5 = document.createElement('td');
                 let link = document.createElement('a');
 
 
@@ -30,18 +33,12 @@ searchBar.addEventListener('keyup', function () {
                 tr.classList.add('admin_product')
 
                 link.setAttribute('href', 'product/' + data[j].Id+'/edit')
-                link.innerText = data[j].productName
-                td2.innerText = data[j].productPrice
-                td3.innerText = data[j].productInventory
-                td4.innerText = data[j].productDescription
+                link.innerText = data[j].productName;
+                td3.innerText = data[j].productPrice;
+                td5.innerText = data[j].productInventory;
+                td4.innerText = data[j].productDescription;
+                td2.innerText = data[j].productType;
 
-                let tdEdit;
-
-                tdEdit = document.createElement('td')
-                let button = document.createElement('button')
-                tdEdit.setAttribute('href', '/admin/product/'+ data[j].Id +'/edit')
-                button.innerText = 'EDITER'
-                tdEdit.appendChild(button)
 
 
 
@@ -50,7 +47,7 @@ searchBar.addEventListener('keyup', function () {
                 tr.appendChild(td2);
                 tr.appendChild(td3);
                 tr.appendChild(td4);
-                tr.appendChild(tdEdit);
+                tr.appendChild(td5);
                 tbody.appendChild(tr);
             }
         }

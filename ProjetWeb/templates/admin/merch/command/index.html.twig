@@ -2,21 +2,32 @@
 
 {% block body %}
      <a href="{{ path('admin.index') }}"><button>Go Back</button></a>
-    {% for command in commands %}
-        <div class="product-listing">
-            <div>
-                {{ command.id }}
-            </div>
-            <div>
-                {{ command.commandOrderedAt | date('d:m:Y - H:i | e') }}
-            </div>
-            <div>
-                {{ command.commandUserId }}
-            </div>
-            <div>
-                <a href="{{ path('admin.merch.command.show', {id: command.id}) }}"><button>Details</button></a>
-            </div>
-        </div>
-    {% endfor %}
 
+    <table class="admin_list">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Date</th>
+            <th>UserID</th>
+            <th>In Details</th>
+
+        </tr>
+        </thead>
+        <tbody class="command">
+        {% for command in commands %}
+            <tr class="admin_command admin-style">
+                <td>{{ command.Id }}</td>
+                <td>{{ command.commandOrderedAt | date('d:m:Y - H:i | e') }}</td>
+                <td>{{ command.commandUserId }}</td>
+                <td>
+                    <a class="button-container" href="{{ path('admin.merch.command.show', {id: command.Id}) }}">
+                        <button>
+                            Details
+                        </button>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}

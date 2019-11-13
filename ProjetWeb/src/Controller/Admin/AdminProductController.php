@@ -27,11 +27,21 @@ class AdminProductController extends AbstractController
      * @var ProductRepository
      */
     private $productRepository;
+    /**
+     * @var ProductTypeRepository
+     */
+    private $productTypeRepository;
 
 
-    public function __construct(ProductRepository $productRepository)
+    /**
+     * AdminProductController constructor.
+     * @param ProductRepository $productRepository
+     * @param ProductTypeRepository $productTypeRepository
+     */
+    public function __construct(ProductRepository $productRepository, ProductTypeRepository $productTypeRepository)
     {
         $this->productRepository = $productRepository;
+        $this->productTypeRepository = $productTypeRepository;
     }
 
     /**
@@ -126,8 +136,8 @@ class AdminProductController extends AbstractController
      */
     public function search($search): JsonResponse
     {
+        $types = $this->productTypeRepository->findAll();
         $products = $this->productRepository->findLike($search);
-        dump($products);
 
         $jsonProducts = null;
         foreach ($products as $key => $product)
@@ -137,6 +147,7 @@ class AdminProductController extends AbstractController
             $jsonProducts[$key]['productPrice'] = $products[$key]->getProductPrice();
             $jsonProducts[$key]['productInventory'] = $products[$key]->getProductInventory();
             $jsonProducts[$key]['productDescription'] = $products[$key]->getProductDescription();
+            $jsonProducts[$key]['productType'] = $products[$key]->getProductType()->getProductTypeName();
         }
         return $this->json($jsonProducts, 200, ['Content-Type' => 'application/json']);
     }
