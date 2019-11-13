@@ -9,9 +9,12 @@ use App\Form\CommentType;
 use App\Form\PictureType;
 use App\Repository\CommentRepository;
 use App\Repository\EventRepository;
+use App\Repository\ImpressionRepository;
 use App\Repository\PictureRepository;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -86,7 +89,6 @@ class PicturesController extends AbstractController
         if ($picture === null) {
             return $this->redirectToRoute('events.index', [], 302);
         }
-
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
@@ -100,9 +102,23 @@ class PicturesController extends AbstractController
             $this->redirectToRoute("pictures.show", ['id' => $picture->getId()], 302);
         }
 
+        $impressions = $picture->getImpression();
+        $countLike = 0;
+        $countDislike = 0;
+        $action = null;
+        foreach ($impressions as $impression) {
+            if ($impression->getImpressionType() === 'like') {
+                $countLike++;
+            } else {
+                $countDislike++;
+            }
+            if ($impression->getImpressionUserId() === 1) {
+                $action = $impression->getImpressionType();
+            }
+        }
+
         $eventId = $picture->getEvent()->getId();
-        $event = $this->eventRepository->findBy(['id' => $eventId])[0];
-        $picture->setEvent($event);
+        $event = $picture->getEvent();
 
         $pictureRelated = $this->repository->findRelated($picture->getId(), $eventId);
         $comments = $this->commentRepository->findCommentsByPictures($picture->getId());
@@ -111,8 +127,113 @@ class PicturesController extends AbstractController
             'picture' => $picture,
             'picturesRelated' => $pictureRelated,
             'comments' => $comments,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'count_like' => $countLike,
+            'count_dislike' => $countDislike,
+            'action' => $action,
         ]);
+    }
+
+    /**
+     * @Route("events/picture/{id}/like", name="pictures.like")
+     * @param Picture $picture
+     * @param ImpressionRepository $impressionRepository
+     * @return JsonResponse|RedirectResponse
+     */
+    public function like(Picture $picture, ImpressionRepository $impressionRepository)
+    {
+        if (!$picture) {
+            return $this->redirectToRoute("events.index", [], 302);
+        }
+        $user = $this->getUser();
+        if (!$user) {
+            return $this->redirectToRoute("pictures.show", ['id' => $picture->getId()], 302);
+        }
+        $pictureId = $picture->getId();
+
+        $impressionLike = $impressionRepository->findLike(1)[0];
+        $impressionDislike = $impressionRepository->findDislike(1)[0];
+
+        $picturesLiked = $impressionLike->getPictures()->getValues();
+        $picturesDisliked = $impressionDislike->getPictures()->getValues();
+
+        $impressionLike->removePicture($picture);
+        $impressionDislike->removePicture($picture);
+        $this->em->persist($picture);
+
+        foreach ($picturesLiked as $pictureLiked) {
+            if ($pictureId === $pictureLiked->getId()) {
+                $this->em->flush();
+                return $this->json(['action' => 1], 200);
+                break;
+            }
+        }
+
+        foreach ($picturesDisliked as $pictureDisliked) {
+            if ($pictureId === $pictureDisliked->getId()) {
+                $impressionLike->addPicture($picture);
+                $this->em->persist($picture);
+                $this->em->flush();
+                return $this->json(['action' => 2], 200);
+                break;
+            }
+        }
+
+        $impressionLike->addPicture($picture);
+        $this->em->persist($picture);
+        $this->em->flush();
+        return $this->json(['action' => 0], 200);
+    }
+
+    /**
+     * @Route("events/picture/{id}/dislike", name="pictures.dislike")
+     * @param Picture $picture
+     * @param ImpressionRepository $impressionRepository
+     * @return JsonResponse|RedirectResponse
+     */
+    public function dislike(Picture $picture, ImpressionRepository $impressionRepository)
+    {
+        if (!$picture) {
+            return $this->redirectToRoute("events.index", [], 302);
+        }
+        $user = $this->getUser();
+        if (!$user) {
+            return $this->redirectToRoute("pictures.show", ['id' => $picture->getId()], 302);
+        }
+        $pictureId = $picture->getId();
+
+        $impressionLike = $impressionRepository->findLike(1)[0];
+        $impressionDislike = $impressionRepository->findDislike(1)[0];
+
+        $picturesLiked = $impressionLike->getPictures()->getValues();
+        $picturesDisliked = $impressionDislike->getPictures()->getValues();
+
+        $impressionLike->removePicture($picture);
+        $impressionDislike->removePicture($picture);
+        $this->em->persist($picture);
+
+        foreach ($picturesDisliked as $pictureDisliked) {
+            if ($pictureId === $pictureDisliked->getId()) {
+                $this->em->flush();
+                return $this->json(['action' => 1], 200);
+                break;
+            }
+        }
+
+        foreach ($picturesLiked as $pictureLiked) {
+            if ($pictureId === $pictureLiked->getId()) {
+                $impressionDislike->addPicture($picture);
+                $this->em->persist($picture);
+                $this->em->flush();
+                return $this->json(['action' => 2], 200);
+                break;
+            }
+        }
+
+        $impressionLike->addPicture($picture);
+        $this->em->persist($picture);
+        $this->em->flush();
+        return $this->json(['action' => 0], 200);
     }
 
 }

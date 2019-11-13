@@ -118,11 +118,10 @@ class EventsController extends AbstractController
     /**
      * @Route("/events/{id}/like", name="events.like")
      * @param Event $event
-     * @param ObjectManager $em
      * @param ImpressionRepository $impressionRepository
      * @return RedirectResponse|Response
      */
-    public function like(Event $event, ObjectManager $em, ImpressionRepository $impressionRepository)
+    public function like(Event $event, ImpressionRepository $impressionRepository)
     {
         if (!$event) {
             return $this->redirectToRoute("events.index", [], 302);
@@ -141,11 +140,11 @@ class EventsController extends AbstractController
 
         $impressionLike->removeEvent($event);
         $impressionDislike->removeEvent($event);
-        $em->persist($event);
+        $this->em->persist($event);
 
         foreach ($eventsLiked as $eventLiked) {
             if ($eventId === $eventLiked->getId()) {
-                $em->flush();
+                $this->em->flush();
                 return $this->json(['action' => 1], 200);
                 break;
             }
@@ -154,16 +153,16 @@ class EventsController extends AbstractController
         foreach ($eventsDisliked as $eventDisliked) {
             if ($eventId === $eventDisliked->getId()) {
                 $impressionLike->addEvent($event);
-                $em->persist($event);
-                $em->flush();
+                $this->em->persist($event);
+                $this->em->flush();
                 return $this->json(['action' => 2], 200);
                 break;
             }
         }
 
         $impressionLike->addEvent($event);
-        $em->persist($event);
-        $em->flush();
+        $this->em->persist($event);
+        $this->em->flush();
         return $this->json(['action' => 0], 200);
 
     }
@@ -194,11 +193,11 @@ class EventsController extends AbstractController
 
         $impressionLike->removeEvent($event);
         $impressionDislike->removeEvent($event);
-        $em->persist($event);
+        $this->em->persist($event);
 
         foreach ($eventsDisliked as $eventDisliked) {
             if ($eventId === $eventDisliked->getId()) {
-                $em->flush();
+                $this->em->flush();
                 return $this->json(['action' => 1], 200);
                 break;
             }
@@ -207,16 +206,16 @@ class EventsController extends AbstractController
         foreach ($eventsLiked as $eventLiked) {
             if ($eventId === $eventLiked->getId()) {
                 $impressionDislike->addEvent($event);
-                $em->persist($event);
-                $em->flush();
+                $this->em->persist($event);
+                $this->em->flush();
                 return $this->json(['action' => 2], 200);
                 break;
             }
         }
 
         $impressionDislike->addEvent($event);
-        $em->persist($event);
-        $em->flush();
+        $this->em->persist($event);
+        $this->em->flush();
         return $this->json(['action' => 0], 200);
     }
 
