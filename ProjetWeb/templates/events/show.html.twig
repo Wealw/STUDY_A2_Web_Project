@@ -10,9 +10,17 @@
             <div class="card">
                 <p>Type de l'événement :</p>
                 <p><a href="{{ path('events.index') }}?category={{ type.id }}">{{ type.eventTypeName }}</a></p>
-                <div class="row">
-                    <a href=""></a>
-                    <a href=""></a>
+                <div class="row likes">
+                    {% if action == 'like' %}
+                        <a href="{{ path('events.like', {id: event.id}) }}" class="option active"><i class="material-icons">thumb_up</i><span>{{ count_like }}</span></a>
+                        <a href="{{ path('events.dislike', {id: event.id}) }}" class="option"><i class="material-icons">thumb_down</i><span>{{ count_dislike }}</span></a>
+                    {% elseif action == 'dislike' %}
+                        <a href="{{ path('events.like', {id: event.id}) }}" class="option"><i class="material-icons">thumb_up</i><span>{{ count_like }}</span></a>
+                        <a href="{{ path('events.dislike', {id: event.id}) }}" class="option active"><i class="material-icons">thumb_down</i><span>{{ count_dislike }}</span></a>
+                    {% else %}
+                        <a href="{{ path('events.like', {id: event.id}) }}" class="option"><i class="material-icons">thumb_up</i><span>{{ count_like }}</span></a>
+                        <a href="{{ path('events.dislike', {id: event.id}) }}" class="option"><i class="material-icons">thumb_down</i><span>{{ count_dislike }}</span></a>
+                    {% endif %}
                 </div>
             </div>
         </aside>
@@ -53,4 +61,8 @@
         </div>
     </section>
 
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('assets/js/ajaxLikes.js') }}"></script>
 {% endblock %}

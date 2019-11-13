@@ -392,3 +392,7 @@ div.comment {
     border-radius: 2px;
     width: 50%;
 }
+
+div.likes a.active {
+    color: #4D75B1;
+}

@@ -2,20 +2,14 @@
 
 namespace App\Controller;
 
-use App\Entity\Social\Event;
-use App\Entity\Social\EventSearch;
+use App\Entity\Social\{Event, EventSearch};
 use App\Entity\Social\Impression;
 use App\Form\EventSearchType;
-use App\Repository\EventRepository;
-use App\Repository\EventTypeRepository;
-use App\Repository\ImpressionRepository;
-use App\Repository\PictureRepository;
+use App\Repository\{EventRepository, EventTypeRepository, ImpressionRepository, PictureRepository};
 use Doctrine\Common\Persistence\ObjectManager;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\{RedirectResponse, Request, Response, JsonResponse};
 use Symfony\Component\Routing\Annotation\Route;
 
 class EventsController extends AbstractController
@@ -85,13 +79,13 @@ class EventsController extends AbstractController
 
     /**
      * @Route("/events/{id}", name="events.show")
-     * @param $id
+     * @param Event $event
      * @return Response
      */
-    public function show($id): Response
+    public function show(Event $event): Response
     {
-        $event = $this->repository->find($id);
-        $pictures = $this->pictureRepository->findBy(['event' => $id]);
+        $event = $this->repository->find($event->getId());
+        $pictures = $this->pictureRepository->findBy(['event' => $event->getId()]);
 
         if ($event === null) {
             return $this->redirectToRoute('events.index', [], 302);
@@ -99,65 +93,136 @@ class EventsController extends AbstractController
 
         $type = $this->eventTypeRepository->findBy(['id' => $event->getEventType()->getId()])[0];
 
+        $impressions = $event->getImpression();
+
+        $countLike = 0;
+        $countDislike = 0;
+        $action = null;
+        foreach ($impressions as $impression) {
+            if ($impression->getImpressionType() === 'like') {
+                $countLike++;
+            } else {
+                $countDislike++;
+            }
+            if ($impression->getImpressionUserId() === 1) {
+                $action = $impression->getImpressionType();
+            }
+        }
+
         return $this->render("events/show.html.twig", [
             'event' => $event,
             'pictures' => $pictures,
-            'type' => $type
+            'type' => $type,
+            'count_like' => $countLike,
+            'count_dislike' => $countDislike,
+            'action' => $action
         ]);
     }
 
     /**
      * @Route("/events/{id}/like", name="events.like")
      * @param Event $event
-     * @param ObjectManager $manager
+     * @param ObjectManager $em
      * @param ImpressionRepository $impressionRepository
      * @return RedirectResponse|Response
      */
-    public function like(Event $event, ObjectManager $manager, ImpressionRepository $impressionRepository)
+    public function like(Event $event, ObjectManager $em, ImpressionRepository $impressionRepository)
     {
-        /*if ($event) {
+        if (!$event) {
             return $this->redirectToRoute("events.index", [], 302);
-        }*/
+        }
         $user = $this->getUser();
         if (!$user) {
             return $this->redirectToRoute("events.show", ['id' => $event->getId()], 302);
         }
-        $userDislike = $impressionRepository->findDislike(1)[0];
-        $userLike = $impressionRepository->findLike(1)[0];
-
-        $eventsLiked = $userLike->getEvents()->getValues();
-        $eventsDisliked = $userDislike->getEvents()->getValues();
         $eventId = $event->getId();
-        dump($eventsLiked);
+
+        $impressionLike = $impressionRepository->findLike(1)[0];
+        $impressionDislike = $impressionRepository->findDislike(1)[0];
+
+        $eventsLiked = $impressionLike->getEvents()->getValues();
+        $eventsDisliked = $impressionDislike->getEvents()->getValues();
+
+        $impressionLike->removeEvent($event);
+        $impressionDislike->removeEvent($event);
+        $em->persist($event);
 
         foreach ($eventsLiked as $eventLiked) {
             if ($eventId === $eventLiked->getId()) {
-                $eventLiked->getId();
-                $action = 'like';
-                $rightEvent = $eventLiked;
+                $em->flush();
+                return $this->json(['action' => 1], 200);
                 break;
             }
         }
 
-        foreach ($eventsDisliked as $k => $eventDisliked) {
+        foreach ($eventsDisliked as $eventDisliked) {
             if ($eventId === $eventDisliked->getId()) {
-                $eventDisliked->getId();
-                $action = 'dislike';
-                $rightEvent = $eventDisliked;
+                $impressionLike->addEvent($event);
+                $em->persist($event);
+                $em->flush();
+                return $this->json(['action' => 2], 200);
                 break;
             }
         }
 
-        if ($action) {
+        $impressionLike->addEvent($event);
+        $em->persist($event);
+        $em->flush();
+        return $this->json(['action' => 0], 200);
 
-            if ($action === 'like') {
-                dump('lololol');
-                $userLike->removeEvent($event);
+    }
+
+    /**
+     * @Route("/events/{id}/dislike", name="events.dislike")
+     * @param Event $event
+     * @param ObjectManager $em
+     * @param ImpressionRepository $impressionRepository
+     * @return JsonResponse|RedirectResponse
+     */
+    public function dislike(Event $event, ObjectManager $em, ImpressionRepository $impressionRepository)
+    {
+        if (!$event) {
+            return $this->redirectToRoute("events.index", [], 302);
+        }
+        $user = $this->getUser();
+        if (!$user) {
+            return $this->redirectToRoute("events.show", ['id' => $event->getId()], 302);
+        }
+        $eventId = $event->getId();
+
+        $impressionLike = $impressionRepository->findLike(1)[0];
+        $impressionDislike = $impressionRepository->findDislike(1)[0];
+
+        $eventsLiked = $impressionLike->getEvents()->getValues();
+        $eventsDisliked = $impressionDislike->getEvents()->getValues();
+
+        $impressionLike->removeEvent($event);
+        $impressionDislike->removeEvent($event);
+        $em->persist($event);
+
+        foreach ($eventsDisliked as $eventDisliked) {
+            if ($eventId === $eventDisliked->getId()) {
+                $em->flush();
+                return $this->json(['action' => 1], 200);
+                break;
             }
-
         }
 
-        return $this->render("test.html.twig");
+        foreach ($eventsLiked as $eventLiked) {
+            if ($eventId === $eventLiked->getId()) {
+                $impressionDislike->addEvent($event);
+                $em->persist($event);
+                $em->flush();
+                return $this->json(['action' => 2], 200);
+                break;
+            }
+        }
+
+        $impressionDislike->addEvent($event);
+        $em->persist($event);
+        $em->flush();
+        return $this->json(['action' => 0], 200);
+
     }
 
 }
