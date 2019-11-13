@@ -38,7 +38,7 @@
                         <div class="row">
                             <p>Prix : {{ event.eventPrice }}€</p>
                             {% if app.user and event.eventDate > today %}
-                                <a href="" class="blue">S'INSCRIRE</a>
+                                <a href="{{ path('events.participate', {id: event.id}) }}" class="blue">S'INSCRIRE</a>
                                 <span class="separate_buttons"></span>
                             {% endif %}
                             <a href="{{ path('events.show', {id: event.Id}) }}" class="contained">VOIR</a>

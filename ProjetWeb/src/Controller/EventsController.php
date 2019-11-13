@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\Social\{Event, EventSearch};
+use App\Entity\Social\{Event, EventSearch, Participation};
 use App\Entity\Social\Impression;
 use App\Form\EventSearchType;
 use App\Repository\{EventRepository, EventTypeRepository, ImpressionRepository, PictureRepository};
@@ -84,15 +84,11 @@ class EventsController extends AbstractController
      */
     public function show(Event $event): Response
     {
-        $event = $this->repository->find($event->getId());
-        $pictures = $this->pictureRepository->findBy(['event' => $event->getId()]);
-
         if ($event === null) {
             return $this->redirectToRoute('events.index', [], 302);
         }
-
-        $type = $this->eventTypeRepository->findBy(['id' => $event->getEventType()->getId()])[0];
-
+        $pictures = $event->getPictures()->getValues();
+        $type = $event->getEventType();
         $impressions = $event->getImpression();
 
         $countLike = 0;
@@ -222,7 +218,30 @@ class EventsController extends AbstractController
         $em->persist($event);
         $em->flush();
         return $this->json(['action' => 0], 200);
+    }
 
+    /**
+     * @Route("/events/{id}/participate", name="events.participate")
+     * @param Event $event
+     * @return Response
+     */
+    public function participate(Event $event): Response
+    {
+        if ($event === null) {
+            return $this->redirectToRoute('events.index', [], 302);
+        }
+        $participation = new Participation();
+        $participation
+            ->setEvent($event)
+            ->setParticipationUserId(1);
+        $this->em->persist($participation);
+        $this->em->flush();
+
+        $impressions = $event->getImpression();
+
+        return $this->redirectToRoute("events.show", [
+            'id' => $event->getId()
+        ], 302);
     }
 
 }

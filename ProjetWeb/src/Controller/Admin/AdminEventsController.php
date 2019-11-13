@@ -44,11 +44,10 @@ class AdminEventsController extends AbstractController
 
     /**
      * @Route("/admin/events", name="admin.events.index")
-     * @param EventTypeRepository $eventTypeRepository
      * @param Request $request
      * @return Response
      */
-    public function index(EventTypeRepository $eventTypeRepository, Request $request)
+    public function index(Request $request)
     {
         $eventSearch = new AdminEventSearch();
         $form = $this->createForm(AdminEventSearchType::class, $eventSearch);
@@ -56,11 +55,8 @@ class AdminEventsController extends AbstractController
 
         $events = $this->repository->findAll();
 
-        $categories = $eventTypeRepository->findAll();
-
         return $this->render("admin/events/index.html.twig", [
             'events' => $events,
-            'categories' => $categories,
             'form' => $form->createView()
         ]);
     }
