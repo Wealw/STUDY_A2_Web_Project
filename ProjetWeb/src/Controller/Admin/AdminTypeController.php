@@ -31,7 +31,7 @@ class AdminTypeController extends AbstractController
     }
 
     /**
-     * @Route("admin/merch/type", name="admin.merch.type.index")
+     * @Route("admin/productType", name="admin.merch.type.index")
      * @return Response
      */
     public function index() : Response
@@ -44,7 +44,7 @@ class AdminTypeController extends AbstractController
     }
 
     /**
-     * @Route("admin/merch/type/add", name="admin.merch.type.add")
+     * @Route("admin/productType/add", name="admin.merch.type.add")
      * @param Request $request
      * @return Response
      */
@@ -70,7 +70,7 @@ class AdminTypeController extends AbstractController
     }
 
     /**
-     * @Route("admin/merch/type/{id}/edit", name="admin.merch.type.edit")
+     * @Route("admin/productType/{id}/edit", name="admin.merch.type.edit")
      * @param Request $request
      * @param ProductType $productType
      * @return Response

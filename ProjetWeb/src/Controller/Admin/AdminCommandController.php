@@ -39,7 +39,7 @@ class AdminCommandController extends AbstractController
         $this->commandProductRepository = $commandProductRepository;
     }
     /**
-     * @Route("admin/merch/command", name="admin.merch.command.index")
+     * @Route("admin/command", name="admin.merch.command.index")
      * @return Response
      */
     public function index() : Response
@@ -52,7 +52,7 @@ class AdminCommandController extends AbstractController
     }
 
     /**
-     * @Route("admin/merch/command/{id}", name="admin.merch.command.show")
+     * @Route("admin/command/{id}", name="admin.merch.command.show")
      * @param Command $command
      * @return Response
      */

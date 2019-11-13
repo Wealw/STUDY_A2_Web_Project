@@ -7,6 +7,7 @@
         <link rel="stylesheet" href="{{ asset('assets/css/flex.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/css/form.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/css/product.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/command.css') }}">
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
@@ -15,7 +16,7 @@
                 <nav>
                     <ul>
                         <li><a href="{{ path('events.index') }}" class="nav-link">Evénements</a></li>
-                        <li><a href="" class="nav-link">Produits</a></li>
+                        <li><a href="{{ path('merch.index') }}" class="nav-link">Produits</a></li>
                         <li><a href="{{ path('events.calendar') }}" class="nav-link">Calendrier</a></li>
                         {% if is_granted('ROLE_ADMIN') %}
                             <li><a href="{{ path('admin.index') }}" class="nav-link">Administration</a></li>
@@ -38,7 +39,7 @@
             {% endblock %}
         </div>
         <footer>
-
+            <a href="{{ path('profile.index') }}">CONNECTION DU SHEITAN</a>
         </footer>
         {% block javascripts %}{% endblock %}
     </body>
