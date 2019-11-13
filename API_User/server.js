@@ -36,6 +36,7 @@ app.get('/', function (req, res) {
 // Login function
 app.post('/api/login', function login(req, res) {
     try {
+        console.log('Incomming login request.')
         let email = req.body.user_mail;
         let password = req.body.user_password;
         let user_id = null;
@@ -45,21 +46,20 @@ app.post('/api/login', function login(req, res) {
                 auth: false,
                 token: null
             });
-            results.forEach(function (entry) {
                 bcrypt.compare(password, results[0].user_password, function (err, hash) {
                     if (error) return res.status(404).send();
-                    if (!results[0]) return res.status(200).set('Content-type', 'application/json').send({
+                    if (!results[0]) {
+                        return res.status(200).set('Content-type', 'application/json').send({
                         auth: false,
                         token: null
-                    });
+                        })
+                    } else
                     if (hash == true) {
-                        let token = jwt.sign({id: entry.user_id}, secret, {
+                        let token = jwt.sign({id: results[0].user_id}, secret, {
                             expiresIn: 86400
                         });
                         return res.status(200).send({auth: true, token: token});
-
                     }
-                });
             });
         });
     } catch (e) {
@@ -98,7 +98,7 @@ app.post('/api/users', function usersPost(req, res) {
         let user_password = bcrypt.hashSync(req.body.user_password, 8,);
         let user_image_path = req.body.user_image_path;
         let center_id = req.body.center_id;
-        let role_id = req.body.role_id;
+        let role_id = 1;
         if (!(user_first_name && user_last_name && user_mail && user_phone && user_postal_code && user_address && user_city && user_password && user_image_path && center_id && role_id)) {
             return res.status(422).send();
         }
@@ -357,7 +357,6 @@ app.put('/api/users/:id', function userPut(req, res) {
                 let user_password = req.body.user_password;
                 let user_image_path = req.body.user_image_path;
                 let center_id = req.body.center_id;
-                let role_id = req.body.role_id;
                 if (!(user_first_name && user_last_name && user_mail && user_phone && user_postal_code && user_address && user_city && user_password && user_image_path && center_id && role_id)) {
                     return res.status(422).send();
                 }
@@ -365,7 +364,7 @@ app.put('/api/users/:id', function userPut(req, res) {
                     if (error) return res.status(404).send();
                     if (results[0] === undefined) return res.status(410).send();
                 });
-                database.query("UPDATE bde_users_api.users SET user_first_name = ? , user_last_name = ?, user_mail = ? ,user_phone = ? , user_postal_code = ?, user_address = ?, user_city = ? , user_password = ? , user_image_path = ? , modified_at = CURRENT_TIMESTAMP , center_id = ? , role_id = ? WHERE user_id = ?", [user_first_name, user_last_name, user_mail, user_phone, user_postal_code, user_address, user_city, user_password, user_image_path, center_id, role_id, user_id], function (error, results, fields) {
+                database.query("UPDATE bde_users_api.users SET user_first_name = ? , user_last_name = ?, user_mail = ? ,user_phone = ? , user_postal_code = ?, user_address = ?, user_city = ? , user_password = ? , user_image_path = ? , modified_at = CURRENT_TIMESTAMP , center_id = ?  WHERE user_id = ?", [user_first_name, user_last_name, user_mail, user_phone, user_postal_code, user_address, user_city, user_password, user_image_path, center_id, user_id], function (error, results, fields) {
                     if (error) return res.status(500).send();
                     return res.status(202).send();
                 });
@@ -449,12 +448,6 @@ app.patch('/api/users/:id', function userPatch(req, res) {
                 let center_id = req.body.center_id;
                 if (center_id) {
                     database.query('UPDATE bde_users_api.users SET center_id= ? WHERE user_id = ? ;', [center_id, user_id], function (error, results, fields) {
-                        if (error) return res.status(422).send();
-                    });
-                }
-                let role_id = req.body.role_id;
-                if (role_id) {
-                    database.query('UPDATE bde_users_api.users SET role_id= ? WHERE user_id = ? ;', [role_id, user_id], function (error, results, fields) {
                         if (error) return res.status(422).send();
                     });
                 }
