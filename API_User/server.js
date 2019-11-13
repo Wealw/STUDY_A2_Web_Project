@@ -77,7 +77,7 @@ app.get('/api/logout', function (req, res) {
 // List all users
 app.get('/api/users', function usersGet(req, res) {
     try {
-        database.query('SELECT user_id,user_first_name,user_mail, user_phone, user_postal_code, user_address, user_city, user_image_path, created_at, modified_at, center_id, role_id  FROM users;', function (error, results, fields) {
+        database.query('SELECT user_id,user_first_name,user_last_name,user_mail, user_phone, user_postal_code, user_address, user_city, user_image_path, created_at, modified_at, center_id, role_id  FROM users;', function (error, results, fields) {
             if (error) return res.status(404).send();
             res.status(200).set('Content-type', 'application/json').send(results);
         });

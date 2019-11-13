@@ -1,43 +1,56 @@
 security:
-    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
-    providers:
-        in_memory:
-            memory:
-                users:
-                    demo:
-                        password: demo
-                        roles: ROLE_ADMIN
+  # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
 
-    firewalls:
-        dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
-            security: false
-        main:
-            anonymous: true
+  providers:
+    jwt:
+      lexik_jwt:
+        class: App\Security\User
 
-            logout:
-                path: /logout
-                target: /
+  firewalls:
+    login:
+      pattern:  http://127.0.0.1:3000/api/login
+      stateless: true
+      anonymous: true
+      user_checker: App\Security\UserChecker
+      json_login:
+        check_path: http://127.0.0.1:3000/api/login
+        #username_path : user_email
+        #password_path : user_password
+        # Obligatoire pour l'utilisation de Lexit
+        success_handler: lexik_jwt_authentication.handler.authentication_success
+        failure_handler: lexik_jwt_authentication.handler.authentication_failure
 
-            form_login:
-                check_path: /login
+    dev:
+      pattern: ^/(_(profiler|wdt)|css|images|js)/
+      security: false
+    main:
+      anonymous: true
+      guard:
+        authenticators:
+          - App\Security\TokenAuthenticator
 
-            # activate different ways to authenticate
-            # https://symfony.com/doc/current/security.html#firewalls-authentication
+      logout:
+        path: htttp://127.0.0.1:3000/api/logout
+        target: /
 
-            # https://symfony.com/doc/current/security/impersonating_user.html
-            # switch_user: true
 
-    role_hierarchy:
-        ROLE_BDE: ROLE_ADMIN
-        ROLE_ADMIN: [ROLE_USER, ROLE_MODO]
-        ROLE_CESI: [ROLE_USER, ROLE_MODO]
+      # activate different ways to authenticate
+      # https://symfony.com/doc/current/security.html#firewalls-authentication
 
-    # Easy way to control access for large sections of your site
-    # Note: Only the *first* access control that matches will be used
-    access_control:
-        - { path: ^/admin, roles: ROLE_MODO }
-        # - { path: ^/profile, roles: ROLE_USER }
+      # https://symfony.com/doc/current/security/impersonating_user.html
+      # switch_user: true
 
-    encoders:
-        Symfony\Component\Security\Core\User\User: plaintext
+  role_hierarchy:
+    ROLE_BDE: ROLE_ADMIN
+    ROLE_ADMIN: [ROLE_USER, ROLE_MODO]
+    ROLE_CESI: [ROLE_USER, ROLE_MODO]
+
+  # Easy way to control access for large sections of your site
+  # Note: Only the *first* access control that matches will be used
+  access_control:
+    - { path: ^/admin, roles: ROLE_MODO }
+    # - { path: ^/profile, roles: ROLE_USER }
+
+  encoders:
+    App\Security\User:
+      algorithm: auto
