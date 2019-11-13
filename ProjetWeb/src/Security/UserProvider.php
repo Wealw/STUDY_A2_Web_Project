@@ -2,59 +2,47 @@
 
 namespace App\Security;
 
-use JMS\Serializer\SerializerInterface;
-use Symfony\Component\HttpClient\CurlHttpClient;
-use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
+
+use GuzzleHttp\Client;
+use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 class UserProvider implements UserProviderInterface
 {
-    private $service;
-    private $em;
-    /**
-     * @var SerializerInterface
-     */
-    private $serializer;
-
-    public function __construct(SerializerInterface $serializer)
+    public function loadUserByUsername($username)
     {
-
-
-        $this->serializer = $serializer;
+        return $this->fetchUser($username);
     }
 
     public function refreshUser(UserInterface $user)
     {
-        return $this->loadUserByUsername($user->getUsername());
+        if (!$user instanceof User) {
+            throw new UnsupportedUserException(
+                sprintf('Instances of "%s" are not supported.', get_class($user))
+            );
+        }
+
+        $username = $user->getUsername();
+
+        return $this->fetchUser($username);
     }
 
-    public function loadUserByUsername($username)
-    {
-        // Try service
-        $client = new CurlHttpClient();
-        $response = $client->request('GET', 'http://127.0.0.1/api/users');
-        $datas = $this->serializer->deserialize($response->getContent(), User::class, 'json');
-        dd($datas);
-        $isExisting = false;
-        foreach ($datas as $data) {
-            if ($data->getUsername === $username) {
-                $isExisting = true;
-            }
-        }
-        if (!$isExisting) {
-            throw new UsernameNotFoundException(sprintf('No record found for user %s', $username));
-        }
-    }
-
-    /**
-     * @param string $class
-     * @return bool
-     */
     public function supportsClass($class)
     {
-        return $class === 'App\Security\User';
+        return User::class === $class;
     }
 
-
+    private function fetchUser($username)
+    {
+        $client = new Client();
+        $response = $client->request('GET', 'http://127.0.0.1:3000/api/users');
+        $datas = json_decode($response->getBody(), true, 512, JSON_THROW_ON_ERROR);
+        foreach ($datas as $data) {
+            if ($data['user_email'] = $username) {
+                return User::createFromPayload($username, $data);
+            }
+        }
+        return null;
+    }
 }

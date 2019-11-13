@@ -2,35 +2,19 @@ security:
   # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
 
   providers:
-    jwt:
-      lexik_jwt:
-        class: App\Security\User
+    UserProviderAPI:
+      id: App\Security\UserProvider
 
   firewalls:
-    login:
-      pattern:  http://127.0.0.1:3000/api/login
-      stateless: true
-      anonymous: true
-      user_checker: App\Security\UserChecker
-      json_login:
-        check_path: http://127.0.0.1:3000/api/login
-        #username_path : user_email
-        #password_path : user_password
-        # Obligatoire pour l'utilisation de Lexit
-        success_handler: lexik_jwt_authentication.handler.authentication_success
-        failure_handler: lexik_jwt_authentication.handler.authentication_failure
-
     dev:
       pattern: ^/(_(profiler|wdt)|css|images|js)/
       security: false
     main:
       anonymous: true
-      guard:
-        authenticators:
-          - App\Security\TokenAuthenticator
-
+      form_login:
+        check_path: /login
       logout:
-        path: htttp://127.0.0.1:3000/api/logout
+        path: /logout
         target: /
 
 

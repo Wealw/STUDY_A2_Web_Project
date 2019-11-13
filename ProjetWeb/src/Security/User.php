@@ -2,10 +2,10 @@
 
 namespace App\Security;
 
-use Lexik\Bundle\JWTAuthenticationBundle\Security\User\JWTUserInterface;
+use GuzzleHttp\Client;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class User implements JWTUserInterface
+class User implements UserInterface
 {
     private $user_id;
     private $user_mail;
@@ -22,7 +22,8 @@ class User implements JWTUserInterface
     private $center_id;
     private $role_id;
     private $center_name;
-    private $roles = [];
+    private $roles = array();
+    private $token = null;
 
     /**
      * Creates a new instance from a given JWT payload.
@@ -30,12 +31,72 @@ class User implements JWTUserInterface
      * @param string $username
      * @param array $payload
      *
-     * @return JWTUserInterface
+     * @return User
      */
     public static function createFromPayload($username, array $payload)
     {
-        // TODO: Implement createFromPayload() method.
+        return new self(
+            $payload['user_id'],
+            $payload['user_first_name'],
+            $payload['user_last_name'],
+            $username,
+            $payload['user_phone'],
+            $payload['user_postal_code'],
+            $payload['user_address'],
+            $payload['user_city'],
+            $payload['user_password'],
+            $payload['user_image_path'],
+            $payload['created_at'],
+            $payload['modified_at'],
+            $payload['center_id'],
+            $payload['role_id'],
+        );
     }
+
+    public function __construct($user_id, $user_first_name, $user_last_name, $user_mail, $user_phone, $user_postal_code, $user_address, $user_city, $user_password, $user_image_path, $created_at, $modified_at, $center_id, $role_id)
+    {
+        $this->user_id = $user_id;
+        $this->user_first_name = $user_first_name;
+        $this->user_last_name = $user_last_name;
+        $this->user_mail = $user_mail;
+        $this->user_phone = $user_phone;
+        $this->user_postal_code = $user_postal_code;
+        $this->user_address = $user_address;
+        $this->user_city = $user_city;
+        $this->user_password = $user_password;
+        $this->user_image_path = $user_image_path;
+        $this->created_at = $created_at;
+        $this->modified_at = $modified_at;
+        $this->center_id = $center_id;
+        $this->role_id = $role_id;
+        $client = new Client();
+        $response = $client->request('GET', 'http://127.0.0.1:3000/api/centers/' . $center_id);
+        $datas = json_decode($response->getBody(), true, 512, JSON_THROW_ON_ERROR);
+        $this->center_name = $datas['center_location'];
+        $response = $client->request('GET', 'http://127.0.0.1:3000/api/roles/' . $center_id);
+        $datas = json_decode($response->getBody(), true, 512, JSON_THROW_ON_ERROR);
+        $this->roles[] = $datas['role_name'];
+    }
+
+    /**
+     * @return null
+     */
+    public function getToken()
+    {
+        return $this->token;
+    }
+
+    /**
+     * @param null $token
+     * @return User
+     */
+    public function setToken($token)
+    {
+        $this->token = $token;
+        return $this;
+    }
+
+
 
     /**
      * @return mixed
@@ -314,7 +375,7 @@ class User implements JWTUserInterface
      */
     public function getUsername(): string
     {
-        return (string)$this->user_email;
+        return (string)$this->user_mail;
     }
 
     /**
@@ -341,7 +402,7 @@ class User implements JWTUserInterface
      */
     public function getPassword()
     {
-        // not needed for apps that do not check user passwords
+        return $this->user_password;
     }
 
     /**
@@ -349,7 +410,7 @@ class User implements JWTUserInterface
      */
     public function getSalt()
     {
-        // not needed for apps that do not check user passwords
+        return 8;
     }
 
     /**
