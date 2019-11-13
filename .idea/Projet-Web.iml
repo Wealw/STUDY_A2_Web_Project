@@ -28,6 +28,9 @@
       <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/egulias/email-validator" />
       <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/fig/link-util" />
       <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/fzaninotto/faker" />
+      <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/guzzlehttp/guzzle" />
+      <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/guzzlehttp/promises" />
+      <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/guzzlehttp/psr7" />
       <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/imagine/imagine" />
       <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/jdorn/sql-formatter" />
       <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/jms/metadata" />
@@ -43,8 +46,10 @@
       <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/phpdocumentor/type-resolver" />
       <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/psr/cache" />
       <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/psr/container" />
+      <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/psr/http-message" />
       <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/psr/link" />
       <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/psr/log" />
+      <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/ralouphie/getallheaders" />
       <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/sensio/framework-extra-bundle" />
       <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/swiftmailer/swiftmailer" />
       <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/symfony/asset" />

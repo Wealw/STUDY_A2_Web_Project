@@ -1,5 +1,12 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+        VOTRE PROFIL :
+        <div>ID : {{ dataUser.user_id }}</div>
+        <div>FIRST NAME : {{ dataUser.user_first_name }}</div>
+        <div>EMAIL : {{ dataUser.user_address }}</div>
+        <div>CITY : {{ dataUser.user_city }}</div>
+        <div>CENTER : {{ dataSite.center_location }}</div>
+        <div>ROLE : {{ dataRole.role_name }}</div>
 
 {% endblock %}
