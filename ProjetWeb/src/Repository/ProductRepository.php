@@ -23,7 +23,14 @@ class ProductRepository extends ServiceEntityRepository
     }
 
 
-
+    public function findLike($like)
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere("p.productName LIKE :product")
+            ->setParameter('product', '%' . addcslashes($like, '%_') . '%')
+            ->getQuery()
+            ->getResult();
+    }
 
     /**
      * @param ProductSearch $search

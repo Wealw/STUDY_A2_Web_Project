@@ -74,7 +74,14 @@
     flex-direction: row;
 }
 
-.product-shower img{}
+.product-shower .product-image{
+    width: 20%;
+    display: block;
+}
+
+.product-shower .product-image img{
+    width: 100%;
+}
 
 .product-shower .product-description{
     padding: 5px;

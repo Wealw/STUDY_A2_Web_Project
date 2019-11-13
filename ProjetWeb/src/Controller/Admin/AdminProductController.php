@@ -4,15 +4,18 @@
 namespace App\Controller\Admin;
 
 
+use App\Entity\Merch\Admin\AdminProductSearch;
 use App\Entity\Merch\Product;
 use App\Entity\Merch\Command;
 use App\Entity\Merch\ProductType;
+use App\Form\AdminProductSearchType;
 use App\Form\ProductType as ProductForm;
 use App\Repository\CommandProductRepository;
 use App\Repository\CommandRepository;
 use App\Repository\ProductRepository;
 use App\Repository\ProductTypeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -37,10 +40,13 @@ class AdminProductController extends AbstractController
      */
     public function index() : Response
     {
+        $productSearch = new AdminProductSearch();
         $products = $this->productRepository->findAll();
+        $form = $this->createForm(AdminProductSearchType::class, $productSearch);
         return $this->render('admin/merch/product/index.html.twig',
             [
-                'products' => $products
+                'products' => $products,
+                'form' => $form->createView()
             ]);
     }
 
@@ -110,5 +116,28 @@ class AdminProductController extends AbstractController
         $this->getDoctrine()->getManager()->persist($product);
         $this->getDoctrine()->getManager()->flush();
         return $this->redirectToRoute('admin.merch.product.index');
+    }
+
+
+    /**
+     * @Route("/admin/product/search/{search}", name="admin.product.search")
+     * @param $search
+     * @return JsonResponse
+     */
+    public function search($search): JsonResponse
+    {
+        $products = $this->productRepository->findLike($search);
+        dump($products);
+
+        $jsonProducts = null;
+        foreach ($products as $key => $product)
+        {
+            $jsonProducts[$key]['Id'] = $products[$key]->getId();
+            $jsonProducts[$key]['productName'] = $products[$key]->getProductName();
+            $jsonProducts[$key]['productPrice'] = $products[$key]->getProductPrice();
+            $jsonProducts[$key]['productInventory'] = $products[$key]->getProductInventory();
+            $jsonProducts[$key]['productDescription'] = $products[$key]->getProductDescription();
+        }
+        return $this->json($jsonProducts, 200, ['Content-Type' => 'application/json']);
     }
 }
