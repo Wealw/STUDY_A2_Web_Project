@@ -4,6 +4,8 @@
 namespace App\Entity\Merch;
 
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 class ProductSearch
 {
     /**
@@ -15,6 +17,11 @@ class ProductSearch
      * @var boolean|null
      */
     private $inStock;
+
+    /**
+     * @var ProductType|null
+     */
+    private $type;
 
     /**
      * @param bool|null $inStock
@@ -50,6 +57,24 @@ class ProductSearch
     public function getMaxPrice(): ?int
     {
         return $this->maxPrice;
+    }
+
+    /**
+     * @return ProductType|null
+     */
+    public function getType(): ?ProductType
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param ProductType|null $type
+     * @return ProductSearch
+     */
+    public function setType(?ProductType $type): ProductSearch
+    {
+        $this->type = $type;
+        return $this;
     }
 
 

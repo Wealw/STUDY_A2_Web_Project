@@ -7,22 +7,29 @@
         <div>
             UserId : {{ command.commandUserId }}
         </div>
-        {% for commandProduct in commandProducts %}
-            <div class="product-listing">
-                {% for product in products %}
-                    {% if product == commandProduct.product %}
-                        <div>
-                            Product : {{ product.productName }}
-                        </div>
-                        <div>
-                            Price per unit : {{ product.productPrice }} €
-                        </div>
-                    {% endif %}
+
+
+        <table class="admin_list">
+            <thead>
+            <tr>
+                <th>Product</th>
+                <th>Price per Unit</th>
+                <th>Quantity</th>
+            </tr>
+            </thead>
+            <tbody class="command_show">
+                {% for commandProduct in commandProducts %}
+                    {% for product in products %}
+                        {% if product == commandProduct.product %}
+                        <tr class="admin_command_show admin-command">
+                            <td>{{ product.productName }}</td>
+                            <td>{{ product.productPrice }}</td>
+                            <td>{{ commandProduct.quantity }}</td>
+                        </tr>
+                        {% endif %}
+                    {% endfor %}
                 {% endfor %}
-                <div>
-                    Quantity : {{ commandProduct.quantity }}
-                </div>
-            </div>
-        {% endfor %}
+            </tbody>
+        </table>
     </div>
 {% endblock %}

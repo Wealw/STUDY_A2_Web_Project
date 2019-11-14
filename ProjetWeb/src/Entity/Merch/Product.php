@@ -2,12 +2,17 @@
 
 namespace App\Entity\Merch;
 
+use App\Entity\Social\Event;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ProductRepository")
+ * @Vich\Uploadable()
  */
 class Product
 {
@@ -17,6 +22,13 @@ class Product
      * @ORM\Column(type="integer")
      */
     private $id;
+
+
+    /**
+     * @var File|null
+     * @Vich\UploadableField(mapping="product_image", fileNameProperty="productImagePath")
+     */
+    private $imageFile;
 
     /**
      * @ORM\Column(type="string", length=50)
@@ -58,6 +70,11 @@ class Product
      * @ORM\Column(type="boolean")
      */
     private $isOrderable;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $productModifiedAt;
 
     public function __construct()
     {
@@ -183,4 +200,39 @@ class Product
 
         return $this;
     }
+
+    /**
+     * @param File|null $imageFile
+     * @return Product
+     * @throws \Exception
+     */
+    public function setImageFile(?File $imageFile): Product
+    {
+        $this->imageFile = $imageFile;
+        if ($this->imageFile instanceof UploadedFile) {
+            $this->productModifiedAt = new \DateTime('now');
+        }
+        return $this;
+    }
+
+    /**
+     * @return File|null
+     */
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    public function getProductModifiedAt(): ?\DateTimeInterface
+    {
+        return $this->productModifiedAt;
+    }
+
+    public function setProductModifiedAt(?\DateTimeInterface $productModifiedAt): self
+    {
+        $this->productModifiedAt = $productModifiedAt;
+
+        return $this;
+    }
+
 }
