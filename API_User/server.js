@@ -114,6 +114,7 @@ app.get('/api/logout', function (req, res) {
 app.get('/api/users', function usersGet(req, res) {
     try {
         database.query('SELECT *  FROM users;', function (error, results, fields) {
+            console.log(error);
             if (error) return res.status(404).send();
             res.status(200).set('Content-type', 'application/json').send(results);
         });
@@ -124,6 +125,7 @@ app.get('/api/users', function usersGet(req, res) {
 // Create a new user
 app.post('/api/users', function usersPost(req, res) {
     try {
+
         let user_first_name = req.body.user_first_name;
         let user_last_name = req.body.user_last_name;
         let user_mail = req.body.user_mail;
@@ -131,10 +133,11 @@ app.post('/api/users', function usersPost(req, res) {
         let user_postal_code = req.body.user_postal_code;
         let user_address = req.body.user_address;
         let user_city = req.body.user_city;
-        let user_password = bcrypt.hashSync(req.body.user_password, 8,);
+        let user_password = bcrypt.hashSync(req.body.user_password, 8);
         let user_image_path = req.body.user_image_path;
         let center_id = req.body.center_id;
-        let role_id = 1;
+        let role_id = req.body.role_id;
+        console.log(!( role_id));
         if (!(user_first_name && user_last_name && user_mail && user_phone && user_postal_code && user_address && user_city && user_password && user_image_path && center_id && role_id)) {
             return res.status(422).send();
         }

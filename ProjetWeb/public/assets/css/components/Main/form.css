@@ -6,7 +6,7 @@ div.form {
 }
 
 h3.form {
-    color: #fbc02d;
+    color: #4D75B1;
     font-size: 28px;
     margin: 0 0 32px;
     text-align: center;
@@ -25,12 +25,12 @@ div.off label {
 
 input:focus,
 textarea:focus {
-    border: #fbc02d solid 2px;
+    border: #4D75B1 solid 2px;
     padding: 0 13px;
 }
 
 div.on label {
-    color: #fbc02d;
+    color: #4D75B1;
     font-size: 12px;
     top: -6px;
     z-index: 10;

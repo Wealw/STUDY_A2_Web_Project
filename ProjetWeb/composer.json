@@ -6,6 +6,8 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "fzaninotto/faker": "^1.8",
+        "guzzlehttp/guzzle": "^6.4",
+        "jms/serializer-bundle": "^3.4",
         "knplabs/knp-paginator-bundle": "^4.0",
         "liip/imagine-bundle": "^2.2",
         "sensio/framework-extra-bundle": "^5.1",
