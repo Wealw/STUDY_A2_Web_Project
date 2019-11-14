@@ -25,22 +25,22 @@
                             </a></li>
                         {% if is_granted('ROLE_ADMIN') %}
                             <li><a href="{{ path('admin.index') }}" class="nav-link">
-                                    <div class="button "> Administration</div>
-                                </a></li>
+                                <div class="button "> Administration</div>
+                            </a></li>
                         {% endif %}
                     </ul>
                 </nav>
             </div>
             <div class="rightAlign">
                 {% if app.user %}
-
+                    <p>{{ app.user.usermail }}</p>
                     <a href="{{ path('logout') }}" class="header contained colorSecondary">
-                        <div class="button ">DECONNECTER</div>
+                        <div class="button "> DECONNECTER</div>
                     </a>
 
                 {% else %}
 
-                    <a href="" class="header colorSecondaryLight">
+                    <a href="{{ path('security.signup') }}" class="header colorSecondaryLight">
                         <div class="button">S'INSCRIRE</div>
                     </a>
 
