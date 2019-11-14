@@ -1,21 +1,27 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div>{{ product.productName }}</div>
-    <div class="product-shower">
-        <div class="product-image">
-            <img src = "{{ vich_uploader_asset(product, 'imageFile') }}">
-        </div>
-        <div class="product-description">
-            {{ product.productDescription}}
-        </div>
-    </div>
-    <div class="product-information">
-        <div>{{ product.productPrice}} €</div>
-        <div>{{ product.productInventory }}</div>
-        <div>{{ product.productType.productTypeName }}</div>
-    </div>
-    <a href="{{ path('cart.add', {'id': product.Id}) }}">Ajouter au panier</a>
+    <h1>Produit - {{ product.productName }}</h1>
+    <section>
+        <article>
+            <div class="product-image">
+                <img src="{{ vich_uploader_asset(product, 'imageFile') }}">
+            </div>
+            <div class="product-description">
+                <p>                {{ product.productDescription }}</p>
+
+            </div>
+            <div class="product-information">
+                <div>Prix : {{ product.productPrice }} €</div>
+                <div>Quantité restante : {{ product.productInventory }}</div>
+                <div>Type de produit : {{ product.productType.productTypeName }}</div>
+            </div>
+            <a href="{{ path('cart.add', {'id': product.Id}) }}" class="contained">Ajouter au panier</a>
+        </article>
+    </section>
+
+
+
 
 {% endblock %}
 

@@ -24,7 +24,6 @@ class Month {
         if ($year === null) {
             $year = intval(date('Y'));
         }
-
         $this->month = $month;
         $this->year = $year;
     }

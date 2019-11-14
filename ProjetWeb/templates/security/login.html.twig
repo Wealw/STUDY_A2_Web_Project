@@ -10,14 +10,14 @@
         <form action="{{ path('security.login') }}" method="POST">
             <div class="group off">
                 <div>
-                    <input type="text" name="_username">
-                    <label for="">E-mail</label>
+                    <input type="text" name="_username" id="username">
+                    <label for="username">E-mail</label>
                 </div>
             </div>
             <div class="group off">
                 <div>
-                    <input type="password" name="_password">
-                    <label for="">Mot de passe</label>
+                    <input type="password" name="_password" id="password">
+                    <label for="password">Mot de passe</label>
                 </div>
             </div>
             <button type="submit" class="contained">CONNECTION</button>

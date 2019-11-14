@@ -1,0 +1,9 @@
+{
+  "version": 3,
+  "sources": [
+    "table.less"
+  ],
+  "names": [],
+  "mappings": "AAAA;EACE,yBAAA;EACA,UAAA;;AAGF,KAAM,GAAG;AAAI,KAAM,GAAG;EACpB,aAAA;EACA,mBAAA;EAEA,yBAAA;EACA,cAAA;EACA,aAAa,2BAAb;EACA,YAAA;EACA,YAAA;;AAGF,KAAM;EACJ,gCAAA;;AAGF;EACE,aAAA;EACA,mBAAA;EACA,mBAAA;EAEA,YAAA;;AAGF;AAAI;EACF,aAAA;EACA,mBAAA;EAEA,UAAA",
+  "file": "table.css"
+}

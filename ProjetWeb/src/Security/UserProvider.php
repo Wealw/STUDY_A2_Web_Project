@@ -39,7 +39,7 @@ class UserProvider implements UserProviderInterface
         $response = $client->request('GET', 'http://127.0.0.1:3000/api/users');
         $datas = json_decode($response->getBody(), true, 512, JSON_THROW_ON_ERROR);
         foreach ($datas as $data) {
-            if ($data['user_email'] = $username) {
+            if ($data['user_mail'] == $username) {
                 return User::createFromPayload($username, $data);
             }
         }
