@@ -1,0 +1,604 @@
+main {
+  /**/
+  /**/
+  /**/
+  top: 4em;
+  z-index: 500;
+  padding: 2em 5%;
+  min-height: calc(100vh - 8em);
+}
+main body {
+  margin: 0;
+}
+main a,
+main button {
+  cursor: pointer;
+  font-family: "Roboto-Medium", sans-serif;
+  text-decoration: none;
+}
+main ul {
+  padding: 0;
+}
+main li {
+  list-style-type: none;
+}
+main button {
+  border: none;
+  font-family: "Roboto-Medium", sans-serif;
+  font-size: 16px;
+}
+main div.container {
+  padding: 0 10vh;
+}
+main div.grid-4 {
+  display: grid;
+  grid-template-columns: 4fr 4fr 4fr 4fr;
+  grid-gap: 12px;
+  margin-bottom: 50px;
+}
+main div.grid-3 {
+  display: grid;
+  grid-template-columns: 3fr 3fr 3fr;
+  grid-gap: 12px;
+  margin-bottom: 50px;
+}
+main div.grid-2 {
+  display: grid;
+  grid-template-columns: 2fr 2fr;
+  grid-gap: 12px;
+  margin-bottom: 50px;
+}
+main div.card {
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+main div.card_header {
+  font-family: 'Roboto-Medium', sans-serif;
+  padding: 16px;
+  text-transform: uppercase;
+}
+main .card_footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 8px;
+}
+main header a.contained {
+  height: 48px;
+}
+main a.nav-link {
+  color: #777777;
+  font-size: 18px;
+}
+main nav ul li a.active {
+  color: #fbc02d;
+}
+main .blue {
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
+  border-radius: 2px;
+  color: #fbc02d;
+  height: 36px;
+  padding: 0 8px;
+  min-width: 64px;
+}
+main .blue:focus {
+  background-color: #E8EAF6;
+}
+main .contained,
+main button.disabled,
+main a.disabled {
+  display: flex;
+  align-items: center;
+  background-color: #fbc02d;
+  border-radius: 2px;
+  color: #ffffff;
+  height: 36px;
+  padding: 0 16px;
+  min-width: 64px;
+}
+main button.disabled,
+main a.disabled {
+  background-color: #dddddd;
+  color: #777777;
+}
+main span.separate_buttons {
+  display: block;
+  height: 100%;
+  width: 8px;
+}
+main span.separate_content {
+  display: block;
+  background-color: #aaaaaa;
+  height: 1px;
+  width: 100%;
+}
+main .danger {
+  background-color: #F44336;
+}
+main nav.pagination {
+  display: flex;
+  align-items: center;
+  border-radius: 2px;
+  color: #ffffff;
+  height: 48px;
+}
+main ul.pagination {
+  margin: 0;
+}
+main ul.pagination li.page-item a {
+  color: #ffffff;
+}
+main ul.pagination li.disabled {
+  color: #C5CAE9;
+}
+main ul.pagination li.page-item {
+  margin: 0;
+  padding: 16px;
+  background-color: #fbc02d;
+}
+main ul.pagination li.asides {
+  background-color: transparent;
+  height: 36px;
+  margin: 0 16px;
+  padding: 0;
+}
+main ul.pagination li.asides a:focus {
+  background-color: #E8EAF6;
+}
+main ul.pagination li.asides a,
+main ul.pagination li.asides span {
+  display: flex;
+  align-items: center;
+  color: #fbc02d;
+  height: 51px;
+  font-family: "Roboto-Medium", sans-serif;
+  padding: 0 16px;
+}
+main ul.pagination li.asides span {
+  color: #aaaaaa;
+}
+main div.row form {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+main div.pagination {
+  margin-bottom: 40px;
+  flex-grow: 0;
+}
+main div.card_body img {
+  height: auto;
+  width: 100%;
+}
+@media screen and (max-width: 1240px) {
+  main div.container {
+    padding: 0 5vh;
+  }
+}
+@media screen and (max-width: 720px) {
+  main div.container {
+    padding: 0 3vh;
+  }
+}
+main div.calendar {
+  display: grid;
+  grid-template-columns: 7fr 7fr 7fr 7fr 7fr 7fr 7fr;
+}
+main div.calendar_item {
+  border: 1px #AAAAAA solid;
+}
+main table.admin_list {
+  border-collapse: collapse;
+  width: 100%;
+}
+main table.admin_list thead tr {
+  background-color: #777777;
+  color: #ffffff;
+  font-size: 20px;
+  height: 56px;
+}
+main table.admin_list tr {
+  border-top: 2px #777777 solid;
+  height: 56px;
+}
+main a.option i.material-icons {
+  color: #666666;
+  font-size: 28px;
+  margin: 0 4px;
+  padding: 2px 8px;
+}
+main p.event_date {
+  margin: 0;
+}
+main p.event_description {
+  color: #555555;
+  font-family: Roboto, sans-serif;
+  height: 79px;
+  margin: 8px 0 0;
+  overflow: hidden;
+  text-align: justify;
+}
+main div.search_type {
+  padding: 0 12px 12px;
+}
+main div.search_type .grower {
+  width: 100%;
+}
+main div.search_type form {
+  width: 100%;
+}
+main div.search_type h3 {
+  color: #fbc02d;
+  font-size: 24px;
+  margin: 12px 0;
+}
+main .searchElement {
+  display: flex;
+  flex-direction: row;
+}
+main .contained i.material-icons {
+  font-size: 24px;
+  margin: -2px 8px 0 -8px;
+}
+main button.contained i.material-icons {
+  margin: 0 8px 0 -8px;
+}
+main div.carousel_container div.item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+main div.carousel {
+  position: relative;
+  overflow: hidden;
+}
+main div.carousel__container {
+  transition: all 0.8s ease;
+  transform: translate3d(0, 0, 0);
+}
+main div.carousel__container::after {
+  position: relative;
+  content: ' ';
+  clear: both;
+  display: table;
+}
+main div.carousel__item {
+  float: left;
+  overflow: hidden;
+}
+main div.item_header {
+  display: flex;
+  justify-content: flex-start;
+  color: #fbc02d;
+  font-family: Roboto-Medium, sans-serif;
+  font-size: 20px;
+  height: 36px;
+  text-transform: uppercase;
+}
+main div.item_footer {
+  padding: 8px;
+  text-align: justify;
+}
+main div.comment {
+  border-radius: 2px;
+  width: 50%;
+}
+main .column {
+  display: flex;
+  flex-direction: column;
+}
+main .row {
+  display: flex;
+  flex-direction: row;
+}
+main .justify_between {
+  display: flex;
+  justify-content: space-between;
+}
+main .align_center {
+  display: flex;
+  align-items: center;
+}
+main .flex-1 {
+  display: flex;
+  flex: 1;
+}
+main .flex-3 {
+  display: flex;
+  flex: 3;
+}
+main .product-container {
+  display: grid;
+  grid-gap: 1vw;
+  grid-template-columns: 5fr 5fr 5fr 5fr 5fr;
+}
+main .product-container .product {
+  padding: 1vw;
+  font-family: Roboto, serif;
+  background-color: #ffffff;
+  box-shadow: 0 0 3px #424242;
+  max-width: 100%;
+  text-align: center;
+  position: relative;
+}
+main .product-container .product:hover {
+  box-shadow: 0 0 3px #424242;
+}
+main .product-container .product img {
+  width: 100%;
+  padding: 10px 0 10px 0;
+}
+main .product-container .product-name {
+  margin: 0;
+  text-overflow: ellipsis;
+  height: 1.4em;
+  overflow: hidden;
+  font-size: x-large;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+main .product-container .product-type {
+  margin: 0;
+  font-size: small;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+}
+main .product-container .product-price {
+  letter-spacing: 2px;
+  font-weight: bold;
+  font-size: x-large;
+}
+main .product-container .product-description {
+  font-size: small;
+  text-align: justify;
+  color: #284348;
+}
+main .product-container .product-inventory {
+  font-weight: bold;
+}
+main .product button {
+  width: 100%;
+  padding: 1vh;
+  border: none;
+  cursor: pointer;
+  background-color: #fafafa;
+  color: #000000;
+  font-family: "Roboto", serif;
+  letter-spacing: 2px;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+}
+main .product-shower {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+}
+main .product-shower .product-description {
+  padding: 5px;
+  font-size: large;
+}
+main .product-listing {
+  width: 100%;
+  display: grid;
+  grid-gap: 1vw;
+  grid-template-columns: 5fr 5fr 5fr 5fr 5fr;
+  padding: 10px;
+}
+main .green-button button {
+  padding: 6px 0 6px 0;
+  font: Bold 13px Arial;
+  background: green;
+  color: white;
+  width: 90px;
+  border-radius: 2px;
+  border: none;
+}
+main .red-button button {
+  padding: 6px 0 6px 0;
+  font: Bold 13px Roboto;
+  background: red;
+  color: white;
+  width: 90px;
+  border-radius: 2px;
+  border: none;
+}
+@media screen and (max-width: 1240px) {
+  main .product-container {
+    grid-template-columns: 3fr 3fr 3fr;
+  }
+}
+@media screen and (max-width: 720px) {
+  main .product-container {
+    grid-template-columns: 1fr;
+  }
+}
+main table table {
+  border-collapse: collapse;
+  width: 40%;
+}
+main table thead tr td,
+main table thead tr th {
+  display: flex;
+  align-items: center;
+  background-color: #3F51B5;
+  color: #ffffff;
+  font-family: "Roboto-Medium", sans-serif;
+  height: 48px;
+  padding: 8px;
+}
+main table tbody tr {
+  border-bottom: 2px #3F51B5 solid;
+}
+main table tr {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 48px;
+}
+main table td,
+main table th {
+  display: flex;
+  flex-direction: row;
+  width: 50%;
+}
+main form div.form {
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  width: 500px;
+  padding: 50px;
+  margin: 50px auto;
+}
+main form h3.form {
+  color: #fbc02d;
+  font-size: 28px;
+  margin: 0 0 32px;
+  text-align: center;
+}
+main form form button {
+  margin: 0 auto;
+}
+main form div.off label {
+  color: #999999;
+  font-size: 16px;
+  top: 19px;
+  z-index: -10;
+}
+main form input:focus,
+main form textarea:focus {
+  border: #fbc02d solid 2px;
+  padding: 0 13px;
+}
+main form div.on label {
+  color: #fbc02d;
+  font-size: 12px;
+  top: -6px;
+  z-index: 10;
+}
+main form input,
+main form textarea {
+  background: transparent;
+  border: #cccccc solid 1px;
+  border-radius: 4px;
+  color: #333333;
+  font-size: 16px;
+  height: 56px;
+  padding: 0 14px;
+  width: 100%;
+  transition: all 0.3s;
+}
+main form textarea {
+  height: 72px;
+  padding: 14px;
+  resize: none;
+}
+main form textarea:focus {
+  padding: 13px;
+}
+main form textarea::-webkit-scrollbar {
+  cursor: pointer;
+  width: 10px;
+}
+main form textarea::-webkit-scrollbar-thumb {
+  border-radius: 2px;
+  background-color: #aaaaaa;
+}
+main form label {
+  background-color: #ffffff;
+  font-family: Roboto-Medium, sans-serif;
+  padding: 0 4px;
+  position: absolute;
+  left: 12px;
+  transition: all 0.3s;
+}
+main form div.group {
+  margin: 48px 0;
+  position: relative;
+}
+main form div.group ul {
+  color: #D32F2F;
+  font-size: 12px;
+  height: 16px;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  bottom: -20px;
+  left: 16px;
+}
+main form div.group:hover ul {
+  overflow: visible;
+}
+main form div.group ul li {
+  font-family: "Roboto-Medium", sans-serif;
+}
+main form div.groups {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+main form div.half,
+main form div.third {
+  margin: 0;
+}
+main form div.half {
+  width: 175px;
+}
+main form div.third {
+  width: 100px;
+}
+main form div.search {
+  position: relative;
+}
+main form div.search input {
+  height: 48px;
+  border-radius: 24px;
+}
+main form input[type=text].search {
+  border: 1px solid #ddd;
+  border-radius: 23px;
+  box-shadow: 0 1px 6px 0 rgba(32, 33, 36, 0.28);
+  color: #673AB7;
+  font-size: 18px;
+  font-family: "Roboto-Medium", sans-serif;
+  height: 46px;
+  padding: 10px 48px 8px 20px;
+  transition: box-shadow 0.2s;
+}
+main form input[type=text].search:focus,
+main form input[type=text].search:hover {
+  box-shadow: 0 3px 10px 0 rgba(32, 33, 36, 0.4);
+}
+main form input[type=text].search::placeholder {
+  font-family: "Roboto", sans-serif;
+}
+main form div.search button {
+  background: transparent;
+  position: absolute;
+  right: -12px;
+  top: 6px;
+}
+main form div.search button i {
+  font-size: 32px;
+}
+main form h4.form {
+  color: #673AB7;
+  font-size: 20px;
+  margin: 12px 0;
+}
+main form div.select div {
+  display: flex;
+  align-items: center;
+}
+main form div.select select {
+  border: 1px solid #999999;
+  border-radius: 2px;
+  height: 56px;
+  margin: 0 25px 0 100px;
+  width: 150px;
+}
+main form div.select label {
+  color: #999999;
+}
+/*# sourceMappingURL=main.css.map */
