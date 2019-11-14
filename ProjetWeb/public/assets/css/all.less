@@ -1,0 +1,49 @@
+@import "components/header";
+@import "components/footer";
+@import "components/main";
+
+body {
+  margin: 0;
+  max-width: 100vw;
+  min-width: 300px;
+}
+
+a, button {
+  cursor: pointer;
+  font-family: "Roboto", sans-serif;
+  text-decoration: none;
+}
+
+
+@font-face {
+  font-family: 'Roboto-Medium';
+  src: url("../font/Roboto-Medium.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: 'Open-Sans';
+  src: url("../font/Opensans-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: 'MaterialIcon';
+  src: url("../font/MaterialIcons-Regular.ttf") format("truetype");
+}
+
+* {
+  font-family: 'Roboto', sans-serif;
+  box-sizing: border-box;
+  outline: none
+}
+
+.material-icons {
+  font-family: MaterialIcon, sans-serif;
+  font-style: normal;
+  font-size: 24px; /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+}

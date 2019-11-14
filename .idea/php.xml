@@ -118,6 +118,8 @@
       <path value="$PROJECT_DIR$/ProjetWeb/vendor/jms/metadata" />
       <path value="$PROJECT_DIR$/ProjetWeb/vendor/behat/transliterator" />
       <path value="$PROJECT_DIR$/ProjetWeb/vendor/vich/uploader-bundle" />
+      <path value="$PROJECT_DIR$/ProjetWeb/vendor/league/flysystem-ziparchive" />
+      <path value="$PROJECT_DIR$/ProjetWeb/vendor/league/flysystem" />
       <path value="$PROJECT_DIR$/ProjetWeb/vendor/jms/serializer" />
       <path value="$PROJECT_DIR$/ProjetWeb/vendor/hoa/zformat" />
       <path value="$PROJECT_DIR$/ProjetWeb/vendor/hoa/ustring" />
@@ -141,7 +143,12 @@
       <path value="$PROJECT_DIR$/ProjetWeb/vendor/lexik/jwt-authentication-bundle" />
       <path value="$PROJECT_DIR$/ProjetWeb/vendor/lcobucci/jwt" />
       <path value="$PROJECT_DIR$/ProjetWeb/vendor/namshi/jose" />
+      <path value="$PROJECT_DIR$/ProjetWeb/vendor/guzzlehttp/promises" />
+      <path value="$PROJECT_DIR$/ProjetWeb/vendor/guzzlehttp/psr7" />
+      <path value="$PROJECT_DIR$/ProjetWeb/vendor/guzzlehttp/guzzle" />
+      <path value="$PROJECT_DIR$/ProjetWeb/vendor/ralouphie/getallheaders" />
+      <path value="$PROJECT_DIR$/ProjetWeb/vendor/psr/http-message" />
     </include_path>
   </component>
-  <component name="PhpProjectSharedConfiguration" php_language_level="7.3" />
+  <component name="PhpProjectSharedConfiguration" php_language_level="7.1" />
 </project>

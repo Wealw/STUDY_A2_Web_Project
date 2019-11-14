@@ -56,7 +56,8 @@ class AdminPicturesController extends AbstractController
     public function delete(Picture $picture, Request $request): RedirectResponse
     {
         if ($this->isCsrfTokenValid('delete' . $picture->getId(), $request->get('_token'))) {
-            $picture->setIsVisible(0);
+            $this->em->remove($picture);
+            //$picture->setIsVisible(0);
             $this->em->flush();
         }
         return $this->redirectToRoute("admin.pictures.index", [], 302);

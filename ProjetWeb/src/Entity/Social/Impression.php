@@ -33,9 +33,24 @@ class Impression
      */
     private $events;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Social\Comment", mappedBy="impression")
+     */
+    private $comments;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Social\Picture", mappedBy="impression")
+     */
+    private $pictures;
+
+    /**
+     * Impression constructor.
+     */
     public function __construct()
     {
         $this->events = new ArrayCollection();
+        $this->comments = new ArrayCollection();
+        $this->pictures = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -90,6 +105,62 @@ class Impression
         if ($this->events->contains($event)) {
             $this->events->removeElement($event);
             $event->removeImpression($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Event[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->addImpression($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->contains($comment)) {
+            $this->comments->removeElement($comment);
+            $comment->removeImpression($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Event[]
+     */
+    public function getPictures(): Collection
+    {
+        return $this->pictures;
+    }
+
+    public function addPicture(Picture $picture): self
+    {
+        if (!$this->pictures->contains($picture)) {
+            $this->pictures[] = $picture;
+            $picture->addImpression($this);
+        }
+
+        return $this;
+    }
+
+    public function removePicture(Picture $picture): self
+    {
+        if ($this->pictures->contains($picture)) {
+            $this->pictures->removeElement($picture);
+            $picture->removeImpression($this);
         }
 
         return $this;

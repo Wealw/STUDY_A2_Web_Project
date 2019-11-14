@@ -44,6 +44,9 @@
       <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/hoa/ustring" />
       <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/hoa/visitor" />
       <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/hoa/zformat" />
+      <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/guzzlehttp/guzzle" />
+      <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/guzzlehttp/promises" />
+      <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/guzzlehttp/psr7" />
       <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/imagine/imagine" />
       <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/jdorn/sql-formatter" />
       <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/jms/metadata" />
@@ -51,8 +54,8 @@
       <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/jms/serializer-bundle" />
       <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/knplabs/knp-components" />
       <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/knplabs/knp-paginator-bundle" />
-      <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/lcobucci/jwt" />
-      <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/lexik/jwt-authentication-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/league/flysystem" />
+      <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/league/flysystem-ziparchive" />
       <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/liip/imagine-bundle" />
       <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/monolog/monolog" />
       <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/namshi/jose" />

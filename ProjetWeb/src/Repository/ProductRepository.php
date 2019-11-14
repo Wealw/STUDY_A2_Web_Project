@@ -22,6 +22,16 @@ class ProductRepository extends ServiceEntityRepository
         parent::__construct($registry, Product::class);
     }
 
+
+    public function findLike($like)
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere("p.productName LIKE :product")
+            ->setParameter('product', '%' . addcslashes($like, '%_') . '%')
+            ->getQuery()
+            ->getResult();
+    }
+
     /**
      * @param ProductSearch $search
      * @return Query
@@ -41,7 +51,12 @@ class ProductRepository extends ServiceEntityRepository
             $query = $query
                 ->andWhere('p.productInventory > 0');
         }
-
+        if($search->getType())
+        {
+            $query = $query
+                ->andWhere('p.productType = :type')
+                ->setParameter('type', $search->getType());
+        }
         return $query->getQuery();
     }
 

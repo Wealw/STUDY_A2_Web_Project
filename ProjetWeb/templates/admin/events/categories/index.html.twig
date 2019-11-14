@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Administrer les événements | BDE.CESI' %}
+
+{% block body %}
+
+    <h1>Liste des événements :</h1>
+
+    <div class="column">
+        <div class="row justify_between">
+            <p>Ensemble des événements</p>
+            <a href="{{ path('admin.events.new') }}" class="contained"><i class="material-icons">add</i> AJOUTER UN EVENEMENT</a>
+        </div>
+        <table class="admin_list">
+            <thead>
+            <tr>
+                <th>Titre de la catégorie</th>
+                <th>Nombre d'événement</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody class="event">
+            {% for category in categories %}
+                <tr class="admin_event">
+                    <td><a href="{{ path('events.index') }}?category={{ category.id }}">{{ category.eventTypeName }}</a></td>
+                    <td>{{ category.events | length }}</td>
+                    <td class="row">
+                        <a href="{{ path('admin.categories.edit', {id: category.id}) }}" class="contained">EDITER</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('assets/js/ajaxSearch.js') }}"></script>
+{% endblock %}

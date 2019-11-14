@@ -37,6 +37,19 @@ class AdminEventTypesController extends AbstractController
     }
 
     /**
+     * @Route("/admin/events/categories", name="admin.categories.index")
+     * @return Response
+     */
+    public function index(): Response
+    {
+        $categories = $this->eventTypeRepository->findAll();
+
+        return $this->render("admin/events/categories/index.html.twig", [
+            'categories' => $categories,
+        ]);
+    }
+
+    /**
      * @Route("/admin/categories/create", name="admin.categories.new")
      * @param Request $request
      * @return Response
