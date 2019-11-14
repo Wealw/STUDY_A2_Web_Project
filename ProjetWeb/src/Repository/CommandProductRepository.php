@@ -19,6 +19,24 @@ class CommandProductRepository extends ServiceEntityRepository
         parent::__construct($registry, CommandProduct::class);
     }
 
+
+    public function findMostSold()
+    {
+        /*
+        SELECT product.product_name, product.product_price, product.product_image_path, product.product_description FROM product
+LEFT JOIN command_product ON command_product.product_id = product.id
+WHERE product_id IS NOT NULL AND product.is_orderable = true
+GROUP BY product.id
+ORDER BY quantity DESC
+        */
+        return $this->createQueryBuilder('cd')
+            ->groupBy('cd.product')
+            ->orderBy('cd.quantity', 'DESC')
+            ->setMaxResults(3)
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return CommandProduct[] Returns an array of CommandProduct objects
     //  */

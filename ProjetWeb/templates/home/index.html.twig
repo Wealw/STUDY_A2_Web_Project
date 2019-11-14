@@ -2,7 +2,34 @@
 
 {% block body %}
     <h1>Projet Weeb</h1>
+    <section>
 
+        <h2>Nos Happy Meal :</h2>
+        <div class="product-container">
+        {% for commandProduct in commandProducts %}
+            {% for prod in products %}
+                {% if prod.id == commandProduct.product.id %}
+                    <div class="product">
+                        <div class="product-name">
+                            {{ prod.productName }}
+                        </div>
+                        <div class="product-type">
+                            ({{ prod.productType.productTypeName }})
+                        </div>
+
+                        <img src = "{{ prod.productImagePath }}">
+
+                        <div class="product-price">
+                            {{ prod.productPrice }} €
+                        </div>
+                        <br><br>
+                        <a href="{{ path('merch.show', {id: prod.Id}) }}"><button> Check This</button></a>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+        </div>
+    </section>
     <section>
         <h2>Les événements :</h2>
         <div class="carousel_container" id="carousel1">

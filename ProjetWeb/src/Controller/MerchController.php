@@ -42,7 +42,7 @@ class MerchController extends AbstractController
         $products = $paginator->paginate(
             $this->productRepository->findAllVisibleQuery($search),
             $request->query->getInt('page', 1),
-            10
+            15
         );
         return $this->render('merch/index.html.twig',
             [
