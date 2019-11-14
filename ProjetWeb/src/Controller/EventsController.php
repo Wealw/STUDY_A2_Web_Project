@@ -150,8 +150,7 @@ class EventsController extends AbstractController
         }
         $eventId = $event->getId();
 
-        $impressionLike = $impressionRepository->findLike(1)[0];
-        $impressionDislike = $impressionRepository->findDislike(1)[0];
+        [$impressionLike, $impressionDislike] = $this->setImpressions($impressionRepository);
 
         $eventsLiked = $impressionLike->getEvents()->getValues();
         $eventsDisliked = $impressionDislike->getEvents()->getValues();
@@ -203,8 +202,7 @@ class EventsController extends AbstractController
         }
         $eventId = $event->getId();
 
-        $impressionLike = $impressionRepository->findLike(1)[0];
-        $impressionDislike = $impressionRepository->findDislike(1)[0];
+        [$impressionLike, $impressionDislike] = $this->setImpressions($impressionRepository);
 
         $eventsLiked = $impressionLike->getEvents()->getValues();
         $eventsDisliked = $impressionDislike->getEvents()->getValues();
@@ -283,6 +281,36 @@ class EventsController extends AbstractController
         return $this->redirectToRoute("events.show", [
             'id' => $event->getId()
         ], 302);
+    }
+
+    /**
+     * @param ImpressionRepository $impressionRepository
+     * @return array
+     */
+    private function setImpressions(ImpressionRepository $impressionRepository) {
+        $user = $this->getUser();
+        $testLike = $impressionRepository->findBy([
+            'impression_user_id' => $user->getUserId()
+        ]);
+
+        if ($testLike == null) {
+            $impressionLike = new Impression();
+            $impressionDislike = new Impression();
+            $impressionLike
+                ->setImpressionUserId($user->getUserId())
+                ->setImpressionType('like');
+            $this->em->persist($impressionLike);
+            $impressionDislike
+                ->setImpressionUserId($user->getUserId())
+                ->setImpressionType('dislike');
+            $this->em->persist($impressionDislike);
+            $this->em->flush();
+        } else {
+            $impressionLike = $impressionRepository->findLike($user->getUserId())[0];
+            $impressionDislike = $impressionRepository->findDislike($user->getUserId())[0];
+        }
+
+        return [$impressionLike, $impressionDislike];
     }
 
 }
