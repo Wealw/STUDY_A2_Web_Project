@@ -393,6 +393,9 @@ main a.option i.material-icons {
   margin: 0 4px;
   padding: 2px 8px;
 }
+main a.option i.material-icons:active {
+  color: #fbc02d;
+}
 main p.event_date {
   margin: 0;
 }
