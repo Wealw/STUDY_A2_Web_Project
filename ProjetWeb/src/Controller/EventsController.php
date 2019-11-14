@@ -5,7 +5,11 @@ namespace App\Controller;
 use App\Entity\Social\{Event, EventSearch, Participation};
 use App\Entity\Social\Impression;
 use App\Form\EventSearchType;
-use App\Repository\{EventRepository, EventTypeRepository, ImpressionRepository, PictureRepository};
+use App\Repository\{EventRepository,
+    EventTypeRepository,
+    ImpressionRepository,
+    ParticipationRepository,
+    PictureRepository};
 use Doctrine\Common\Persistence\ObjectManager;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -52,10 +56,11 @@ class EventsController extends AbstractController
      * @Route("/events", name="events.index")
      * @param PaginatorInterface $paginator
      * @param Request $request
+     * @param ParticipationRepository $participationRepository
      * @return Response
      * @throws \Exception
      */
-    public function index(PaginatorInterface $paginator, Request $request): Response
+    public function index(PaginatorInterface $paginator, Request $request, ParticipationRepository $participationRepository): Response
     {
         $search = new EventSearch();
         $form = $this->createForm(EventSearchType::class, $search);
@@ -66,10 +71,11 @@ class EventsController extends AbstractController
             $request->query->getInt('page', 1),
             15
         );
-
+        $participations = $participationRepository->findBy(['participation_user_id' => $this->getUser()->getUserId()]);
 
         return $this->render("events/index.html.twig", [
             'events' => $events,
+            'participations' => $participations,
             'form' => $form->createView(),
             'today' => new \DateTime()
         ]);
@@ -78,9 +84,10 @@ class EventsController extends AbstractController
     /**
      * @Route("/events/{id}", name="events.show")
      * @param Event $event
+     * @param ParticipationRepository $participationRepository
      * @return Response
      */
-    public function show(Event $event): Response
+    public function show(Event $event, ParticipationRepository $participationRepository): Response
     {
         if ($event === null) {
             return $this->redirectToRoute('events.index', [], 302);
@@ -88,6 +95,17 @@ class EventsController extends AbstractController
         $pictures = $event->getPictures()->getValues();
         $type = $event->getEventType();
         $impressions = $event->getImpression();
+
+        $participation = $participationRepository->findBy([
+            'event' => $event,
+            'participation_user_id' => $this->getUser()->getUserId()
+        ]);
+
+        if ($participation != null) {
+            $hasParticipated = true;
+        } else {
+            $hasParticipated = false;
+        }
 
         $countLike = 0;
         $countDislike = 0;
@@ -105,8 +123,7 @@ class EventsController extends AbstractController
 
         return $this->render("events/show.html.twig", [
             'event' => $event,
-            'pictures' => $pictures,
-            'type' => $type,
+            'has_participated' => $hasParticipated,
             'count_like' => $countLike,
             'count_dislike' => $countDislike,
             'action' => $action
@@ -220,19 +237,31 @@ class EventsController extends AbstractController
     /**
      * @Route("/events/{id}/participate", name="events.participate")
      * @param Event $event
+     * @param ParticipationRepository $participationRepository
      * @return Response
      */
-    public function participate(Event $event): Response
+    public function participate(Event $event, ParticipationRepository $participationRepository): Response
     {
         $user = $this->getUser();
-        if ($event || !$user) {
+        if (!$event || !$user) {
             return $this->redirectToRoute('events.index', [], 302);
+        }
+
+        $hasParticipated = $participationRepository->findBy([
+            'participation_user_id' => $user->getUserId(),
+            'event' => $event
+        ]);
+
+        if ($hasParticipated != null) {
+            return $this->redirectToRoute("events.show", [
+                'id' => $event->getId()
+            ], 302);
         }
 
         $participation = new Participation();
         $participation
             ->setEvent($event)
-            ->setParticipationUserId($user->getId());
+            ->setParticipationUserId($user->getUserId());
         $this->em->persist($participation);
         $this->em->flush();
 

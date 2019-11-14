@@ -10,6 +10,7 @@ use App\Form\PictureType;
 use App\Repository\CommentRepository;
 use App\Repository\EventRepository;
 use App\Repository\ImpressionRepository;
+use App\Repository\ParticipationRepository;
 use App\Repository\PictureRepository;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -59,19 +60,46 @@ class PicturesController extends AbstractController
      * @Route("/events/{event}/pictures/new", name="pictures.new")
      * @param Event $event
      * @param Request $request
+     * @param ParticipationRepository $participationRepository
      * @return Response
+     * @throws \Exception
      */
-    public function new(Event $event, Request $request)
+    public function new(Event $event, Request $request, ParticipationRepository $participationRepository)
     {
         $user = $this->getUser();
-        if (!$user) {
+        $today = new \DateTime();
+        if (!$user || $event->getEventDate() > $today) {
             return $this->redirectToRoute("events.show", [
                 'id' => $event->getId()
             ], 302);
         }
+
+        $hasParticipated = $participationRepository->findBy([
+            'event' => $event,
+            'participation_user_id' => $user->getUserId()
+        ]);
+
+        if ($hasParticipated == null) {
+            return $this->redirectToRoute("events.show", [
+                'id' => $event->getId()
+            ], 302);
+        }
+
         $picture = new Picture();
         $form = $this->createForm(PictureType::class, $picture);
         $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $picture
+                ->setPictureUserId($user->getUserId())
+                ->setEvent($event);
+
+            $this->em->persist($picture);
+            $this->em->flush();
+            return $this->redirectToRoute("events.show", [
+                'id' => $event->getId()
+            ], 302);
+        }
 
         return $this->render("pictures/new.html.twig", [
             'form' => $form->createView()
