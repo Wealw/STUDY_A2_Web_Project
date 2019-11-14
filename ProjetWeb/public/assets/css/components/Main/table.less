@@ -1,34 +1,91 @@
-table {
-  border-collapse: collapse;
-  width: 40%;
+@import "../../color";
+
+
+
+thead {
+  border-spacing: 0;
+}
+
+a {
+  text-decoration: none;
+  color: @primaryText;
+}
+
+a:hover {
+  color: @secondaryDark;
 }
 
 thead tr td, thead tr th {
   display: flex;
   align-items: center;
-
-  background-color: #3F51B5;
-  color: #ffffff;
+  background-color: @secondary;
+  color: @secondaryText;
   font-family: "Roboto-Medium", sans-serif;
-  height: 48px;
+  height: 4em;
   padding: 8px;
+  justify-content: center;
 }
 
-tbody tr {
-  border-bottom: 2px #3F51B5 solid;
-}
 
 tr {
   display: flex;
   flex-direction: row;
   align-items: center;
 
-  height: 48px;
+  height: 4em;
 }
 
 td, th {
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  width: 25%;
+}
 
-  width: 50%;
+td {
+  display: block;
+  text-align: center;
+
+  img {
+    height: 4em;
+  }
+
+  a.contained {
+    background-color: @primary;
+    color: @secondaryText;
+  }
+
+  a.contained:hover {
+    background-color: @secondary;
+  }
+
+  form {
+    width: 100%;
+  }
+
+  form button.contained {
+    background-color: @primaryDark;
+    color: @primaryText;
+  }
+
+  form button.contained:hover {
+    background-color: #F44336;
+  }
+
+  .sizeLimiter {
+    max-width: 100%;
+  }
+
+  p {
+    a {
+      max-width: 100%;
+      display: block;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    display: block;
+    max-width: 100%;
+  }
 }
