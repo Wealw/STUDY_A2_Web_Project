@@ -96,15 +96,17 @@ class EventsController extends AbstractController
         $type = $event->getEventType();
         $impressions = $event->getImpression();
 
-        $participation = $participationRepository->findBy([
-            'event' => $event,
-            'participation_user_id' => $this->getUser()->getUserId()
-        ]);
 
-        if ($participation != null) {
-            $hasParticipated = true;
-        } else {
-            $hasParticipated = false;
+        $hasParticipated = false;
+        if ($this->getUser()) {
+            $participation = $participationRepository->findBy([
+                'event' => $event,
+                'participation_user_id' => $this->getUser()->getUserId()
+            ]);
+
+            if ($participation != null) {
+                $hasParticipated = true;
+            }
         }
 
         $countLike = 0;
@@ -124,6 +126,7 @@ class EventsController extends AbstractController
         return $this->render("events/show.html.twig", [
             'event' => $event,
             'has_participated' => $hasParticipated,
+            'today' => new \DateTime(),
             'count_like' => $countLike,
             'count_dislike' => $countDislike,
             'action' => $action
@@ -239,12 +242,20 @@ class EventsController extends AbstractController
      * @param Event $event
      * @param ParticipationRepository $participationRepository
      * @return Response
+     * @throws \Exception
      */
     public function participate(Event $event, ParticipationRepository $participationRepository): Response
     {
         $user = $this->getUser();
+        $today = new \DateTime();
         if (!$event || !$user) {
             return $this->redirectToRoute('events.index', [], 302);
+        }
+
+        if ($today > $event->getEventDate()) {
+            return $this->redirectToRoute('events.show', [
+                'id' => $event->getId()
+            ]);
         }
 
         $hasParticipated = $participationRepository->findBy([
@@ -253,6 +264,8 @@ class EventsController extends AbstractController
         ]);
 
         if ($hasParticipated != null) {
+            $this->em->remove($hasParticipated[0]);
+            $this->em->flush();
             return $this->redirectToRoute("events.show", [
                 'id' => $event->getId()
             ], 302);

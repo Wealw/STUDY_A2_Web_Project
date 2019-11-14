@@ -22,11 +22,15 @@
                         <a href="{{ path('events.dislike', {id: event.id}) }}" class="option"><i class="material-icons">thumb_down</i><span>{{ count_dislike }}</span></a>
                     {% endif %}
                 </div>
-                <div class="participation">
-                    {% if has_participated == true %}
-                        <a href="#" class="disabled">INSCRIT</a>
+                <div class="participation row">
+                    {% if has_participated == true and today > event.eventDate %}
+                        <a href="{{ path('pictures.new', {event: event.id}) }}" class="contained"><i class="material-icons">add</i>AJOUTER UNE PHOTO</a>
                     {% else %}
-                        <a href="{{ path('events.participate', {id: event.id}) }}" class="contained">S'INSCRIRE</a>
+                        {% if has_participated == true %}
+                            <a href="#" class="disabled">INSCRIT</a>
+                        {% else %}
+                            <a href="{{ path('events.participate', {id: event.id}) }}" class="contained">S'INSCRIRE</a>
+                        {% endif %}
                     {% endif %}
                 </div>
             </div>
