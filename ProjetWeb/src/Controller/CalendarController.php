@@ -42,7 +42,10 @@ class CalendarController extends AbstractController
 
         $navigation = $this->getPrevNext($thisMonth->format('m'), $thisMonth->format('Y'));
 
+        dump($month);
+
         return $this->render("calendar/index.html.twig", [
+            'month' => $month,
             'weeks' => $weeks,
             'start' => $start,
             'days' => $month->getDays(),

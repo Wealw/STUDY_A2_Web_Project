@@ -61,19 +61,17 @@ class EventsController extends AbstractController
         $form = $this->createForm(EventSearchType::class, $search);
         $form->handleRequest($request);
 
-        $today = new \DateTime();
-
         $events = $paginator->paginate(
             $this->repository->findRequestVisible($search),
             $request->query->getInt('page', 1),
-            12
+            15
         );
 
 
         return $this->render("events/index.html.twig", [
             'events' => $events,
             'form' => $form->createView(),
-            'today' => $today
+            'today' => new \DateTime()
         ]);
     }
 
@@ -226,13 +224,15 @@ class EventsController extends AbstractController
      */
     public function participate(Event $event): Response
     {
-        if ($event === null) {
+        $user = $this->getUser();
+        if ($event || !$user) {
             return $this->redirectToRoute('events.index', [], 302);
         }
+
         $participation = new Participation();
         $participation
             ->setEvent($event)
-            ->setParticipationUserId(1);
+            ->setParticipationUserId($user->getId());
         $this->em->persist($participation);
         $this->em->flush();
 

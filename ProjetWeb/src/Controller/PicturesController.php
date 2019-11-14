@@ -121,7 +121,7 @@ class PicturesController extends AbstractController
         $event = $picture->getEvent();
 
         $pictureRelated = $this->repository->findRelated($picture->getId(), $eventId);
-        $comments = $this->commentRepository->findCommentsByPictures($picture->getId());
+        $comments = $picture->getComments();
 
         return $this->render('pictures/show.html.twig', [
             'picture' => $picture,
