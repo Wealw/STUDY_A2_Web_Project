@@ -2,41 +2,41 @@
 
 {% block body %}
     <h1>Les commentaires</h1>
-
-    <table class="admin_list">
-        <thead>
-        <tr>
-            <th>Contenu du commentaire</th>
-            <th>Date de publication</th>
-            <th>Auteur</th>
-            <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for comment in comments %}
-            <tr class="">
-                <td>
-                    <div class="sizeLimiter"><p><a
-                                    href="{{ path('pictures.show', {id: comment.picture.id}) }}">{{ comment.commentText }}</a>
-                        </p></div>
-                </td>
-                <td>{{ comment.commentPostedAt | date('d F Y H:i') }}</td>
-                <td>{{ comment.commentUserId }}</td>
-                <td class="row">
-                    {% if comment.isVisible == 1 %}
-                        <form method="post" action="{{ path('admin.comments.delete', {id: comment.id}) }}">
-                            <input type="hidden" name="_method" value="DELETE">
-                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ comment.id) }}">
-                            <button class="contained danger">SUPPRIMER</button>
-                        </form>
-                    {% else %}
-                        <button disabled class="disabled">SUPPRIMÉ</button>
-                    {% endif %}
-
-                </td>
+    <div class="tabOverflowContainer">
+        <table class="admin_list">
+            <thead>
+            <tr>
+                <th>Contenu du commentaire</th>
+                <th>Date de publication</th>
+                <th>Auteur</th>
+                <th>Actions</th>
             </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            {% for comment in comments %}
+                <tr class="">
+                    <td>
+                        <div class="sizeLimiter"><p><a
+                                        href="{{ path('pictures.show', {id: comment.picture.id}) }}">{{ comment.commentText }}</a>
+                            </p></div>
+                    </td>
+                    <td>{{ comment.commentPostedAt | date('d F Y H:i') }}</td>
+                    <td>{{ comment.commentUserId }}</td>
+                    <td class="row">
+                        {% if comment.isVisible == 1 %}
+                            <form method="post" action="{{ path('admin.comments.delete', {id: comment.id}) }}">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ comment.id) }}">
+                                <button class="contained danger">SUPPRIMER</button>
+                            </form>
+                        {% else %}
+                            <button disabled class="disabled">SUPPRIMÉ</button>
+                        {% endif %}
 
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}

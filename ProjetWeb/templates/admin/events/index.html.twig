@@ -6,51 +6,54 @@
 
     <h1>Liste des événements :</h1>
 
-   <div class="column">
-       <div class="row justify_between">
-           <p>Ensemble des événements</p>
-           <a href="{{ path('admin.events.new') }}" class="contained"><i class="material-icons">add</i> AJOUTER UN EVENEMENT</a>
-       </div>
-       <div class="search_type" style="margin-bottom: 32px">
-           <h3>Personnaliser la recherche</h3>
-           {{ form_start(form) }}
-                <div class="group off half search_bar">{{ form_rest(form) }}</div>
-                <button type="submit" class="contained">RECHERCHER</button>
-           {{ form_end(form) }}
-       </div>
-       <table class="admin_list">
-           <thead>
-           <tr>
-               <th>Titre de l'événement</th>
-               <th>Date de l'événement</th>
-               <th>Ajouté le</th>
-               <th>Auteur</th>
-               <th>Actions</th>
-           </tr>
-           </thead>
-           <tbody class="event">
-           {% for event in events %}
-               <tr class="admin_event">
-                   <td><a href="{{ path('events.show', {id: event.Id}) }}">{{ event.eventName }}</a></td>
-                   <td>{{ event.eventDate | date('d F Y H:i') }}</td>
-                   <td>{{ event.eventCreatedAt | date('d F Y') }}</td>
-                   <td>{{ event.eventCreatedBy }}</td>
-                   <td class="row">
-                       {% if event.eventIsVisible == 1 %}
-                           <a href="{{ path('admin.events.edit', {id: event.id}) }}" class="contained">EDITER</a>
-                           <form method="post" action="{{ path('admin.events.delete', {id: event.id}) }}">
-                               <input type="hidden" name="_method" value="DELETE">
-                               <button class="contained danger">SUPPRIMER</button>
-                           </form>
-                       {% else %}
-                           <button disabled class="disabled">SUPPRIMÉ</button>
-                       {% endif %}
-                   </td>
-               </tr>
-           {% endfor %}
-           </tbody>
-       </table>
-   </div>
+    <div class="column">
+        <div class="row justify_between">
+            <p>Ensemble des événements</p>
+            <a href="{{ path('admin.events.new') }}" class="contained"><i class="material-icons">add</i> AJOUTER UN
+                EVENEMENT</a>
+        </div>
+        <div class="search_type" style="margin-bottom: 32px">
+            <h3>Personnaliser la recherche</h3>
+            {{ form_start(form) }}
+            <div class="group off half search_bar">{{ form_rest(form) }}</div>
+            <button type="submit" class="contained">RECHERCHER</button>
+            {{ form_end(form) }}
+        </div>
+        <div class="tabOverflowContainer">
+            <table class="admin_list">
+                <thead>
+                <tr>
+                    <th>Titre de l'événement</th>
+                    <th>Date de l'événement</th>
+                    <th>Ajouté le</th>
+                    <th>Auteur</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody class="event">
+                {% for event in events %}
+                    <tr class="admin_event">
+                        <td><a href="{{ path('events.show', {id: event.Id}) }}">{{ event.eventName }}</a></td>
+                        <td>{{ event.eventDate | date('d F Y H:i') }}</td>
+                        <td>{{ event.eventCreatedAt | date('d F Y') }}</td>
+                        <td>{{ event.eventCreatedBy }}</td>
+                        <td class="row">
+                            {% if event.eventIsVisible == 1 %}
+                                <a href="{{ path('admin.events.edit', {id: event.id}) }}" class="contained">EDITER</a>
+                                <form method="post" action="{{ path('admin.events.delete', {id: event.id}) }}">
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <button class="contained danger">SUPPRIMER</button>
+                                </form>
+                            {% else %}
+                                <button disabled class="disabled">SUPPRIMÉ</button>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 
 {% endblock %}
 
