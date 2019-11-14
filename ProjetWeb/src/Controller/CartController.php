@@ -11,6 +11,9 @@ use App\Repository\CommandRepository;
 use App\Repository\ProductRepository;
 use Exception;
 use Metadata\Tests\Driver\Fixture\C\SubDir\C;
+use Swift_Mailer;
+use Swift_Message;
+use Swift_SmtpTransport;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,6 +21,8 @@ use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use GuzzleHttp\Exception\GuzzleException as GuzzleExceptionAlias;
+use GuzzleHttp\Client;
 
 class CartController extends AbstractController
 {
@@ -194,10 +199,12 @@ class CartController extends AbstractController
      * @Route("/cart/order", name="cart.order")
      * @param ProductRepository $productRepository
      * @param SessionInterface $session
+     * @param Swift_Mailer $mailer
      * @return RedirectResponse
      * @throws Exception
+     * @throws GuzzleExceptionAlias
      */
-    public function order(ProductRepository $productRepository, SessionInterface $session)
+    public function order(ProductRepository $productRepository, SessionInterface $session, Swift_Mailer $mailer)
     {
         $cart = $session->get('cart', []);
 
@@ -227,6 +234,33 @@ class CartController extends AbstractController
 
             }
             $this->getDoctrine()->getManager()->flush();
+
+            $client = new Client();
+
+            $firstResponse = $client->request('GET', 'http://127.0.0.1:3000/api/users');
+            $dataUsers = json_decode($firstResponse->getBody(), true, 512, JSON_THROW_ON_ERROR);
+            foreach ($dataUsers as $key => $dataUser)
+            {
+                $secondResponse = $client->request('GET', 'http://127.0.0.1:3000/api/roles/' . $dataUser["role_id"]);
+                $dataRole = json_decode($secondResponse->getBody(), true, 512, JSON_THROW_ON_ERROR);
+
+                if($dataRole['role_name'] == "Membre BDE")
+                {
+                    // Create a message
+                    $message = (new Swift_Message('Wonderful Subject'))
+                        ->setFrom('projetweeb@gmail.com')
+                        ->setTo($dataUser['user_mail'])
+                        ->setBody('New command made ! Check it in the ADMIN/MERCH/COMMAND');
+
+                    // Send the message
+                    $mailer->send($message);
+                }
+            }
+
+
+
+
+
 
             return $this->redirectToRoute("cart.delete.all");
 
