@@ -165,22 +165,12 @@
     "hoa/zformat": {
         "version": "1.17.01.10"
     },
-    "guzzlehttp/guzzle": {
-        "version": "6.4.1"
-    },
-    "guzzlehttp/promises": {
-        "version": "v1.3.1"
-    },
-    "guzzlehttp/psr7": {
-        "version": "1.6.1"
-    },
     "imagine/imagine": {
         "version": "1.2.2"
     },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
     },
-
     "jms/metadata": {
         "version": "2.1.0"
     },
@@ -213,21 +203,6 @@
     "league/flysystem-ziparchive": {
         "version": "1.0.3"
     },
-    "lcobucci/jwt": {
-        "version": "3.3.1"
-    },
-    "lexik/jwt-authentication-bundle": {
-        "version": "2.5",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "2.5",
-            "ref": "5b2157bcd5778166a5696e42f552ad36529a07a6"
-        },
-        "files": [
-            "./config/packages/lexik_jwt_authentication.yaml"
-        ]
-    },
     "liip/imagine-bundle": {
         "version": "1.8",
         "recipe": {
@@ -243,9 +218,6 @@
     },
     "monolog/monolog": {
         "version": "1.25.1"
-    },
-    "namshi/jose": {
-        "version": "7.2.3"
     },
     "nikic/php-parser": {
         "version": "v4.2.5"
