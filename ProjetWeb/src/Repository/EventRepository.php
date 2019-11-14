@@ -28,9 +28,11 @@ class EventRepository extends ServiceEntityRepository
      */
     public function findRequestVisible(EventSearch $search): Query
     {
+        $now = (new \DateTime())->format('Y-m-d 00:00:00');
         $query = $this->createQueryBuilder('e')
             ->andWhere('e.event_is_visible = 1')
-            ->orderBy('e.event_created_at', 'DESC');
+            ->andWhere("e.event_date > '$now' ")
+            ->orderBy('e.event_date', 'ASC');
 
         if ($search->getMaxPrice()) {
             $query = $query

@@ -1,0 +1,75 @@
+thead {
+  border-spacing: 0;
+}
+a {
+  text-decoration: none;
+  color: #000000;
+}
+a:hover {
+  color: #c49000;
+}
+thead tr td,
+thead tr th {
+  display: flex;
+  align-items: center;
+  background-color: #fbc02d;
+  color: #000000;
+  font-family: "Roboto-Medium", sans-serif;
+  height: 4em;
+  padding: 8px;
+  justify-content: center;
+}
+tr {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 4em;
+}
+td,
+th {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 25%;
+}
+td {
+  display: block;
+  text-align: center;
+}
+td img {
+  height: 4em;
+}
+td a.contained {
+  background-color: #fafafa;
+  color: #000000;
+}
+td a.contained:hover {
+  background-color: #fbc02d;
+}
+td form {
+  width: 100%;
+}
+td form button.contained,
+td #delete {
+  background-color: #c7c7c7;
+  color: #000000;
+}
+td form button.contained:hover,
+td #delete:hover {
+  background-color: #F44336;
+}
+td .sizeLimiter {
+  max-width: 100%;
+}
+td p {
+  display: block;
+  max-width: 100%;
+}
+td p a {
+  max-width: 100%;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/*# sourceMappingURL=table.css.map */

@@ -44,9 +44,6 @@
       <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/hoa/ustring" />
       <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/hoa/visitor" />
       <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/hoa/zformat" />
-      <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/guzzlehttp/guzzle" />
-      <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/guzzlehttp/promises" />
-      <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/guzzlehttp/psr7" />
       <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/imagine/imagine" />
       <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/jdorn/sql-formatter" />
       <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/jms/metadata" />
@@ -58,7 +55,6 @@
       <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/league/flysystem-ziparchive" />
       <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/liip/imagine-bundle" />
       <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/monolog/monolog" />
-      <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/namshi/jose" />
       <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/nikic/php-parser" />
       <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/ocramius/package-versions" />
       <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/ocramius/proxy-manager" />

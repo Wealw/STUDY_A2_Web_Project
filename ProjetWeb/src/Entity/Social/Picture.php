@@ -73,6 +73,10 @@ class Picture
     {
         $this->comments = new ArrayCollection();
         $this->impression = new ArrayCollection();
+
+        $this
+            ->setPicturePostedAt(new \DateTime())
+            ->setIsVisible(1);
     }
 
     public function getId(): ?int

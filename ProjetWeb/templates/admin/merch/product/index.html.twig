@@ -1,8 +1,12 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <a href="{{ path('admin.index') }}"><button>Go Back</button></a>
-    <a href="{{ path('admin.merch.product.add') }}"><button>Add Product</button></a>
+    <a href="{{ path('admin.index') }}">
+        <button>Go Back</button>
+    </a>
+    <a href="{{ path('admin.merch.product.add') }}">
+        <button>Add Product</button>
+    </a>
     <div class="search_type" style="margin-bottom: 32px">
         <h3>Personnaliser la recherche</h3>
         {{ form_start(form) }}
@@ -10,31 +14,31 @@
         <button type="submit" class="contained">RECHERCHER</button>
         {{ form_end(form) }}
     </div>
-   <table class="admin_list">
-   <thead>
-   <tr>
-       <th>Nom</th>
-       <th>Type</th>
-       <th>€</th>
-       <th>Description</th>
-       <th>Qty</th>
+    <div class="tabOverflowContainer">
+        <table class="admin_list">
+            <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Type</th>
+                <th>€</th>
+                <th>Description</th>
+                <th>Qty</th>
 
-   </tr>
-   </thead>
-   <tbody class="product">
-   {% for product in products %}
-       <tr class="admin_product">
-           <td><a href="{{ path('admin.merch.product.id', {id: product.Id}) }}">{{ product.productName }}</a></td>
-           <td>{{ product.productType.productTypeName }}</td>
-           <td>{{ product.productPrice }}</td>
-           <td>{{ product.productDescription }}</td>
-           <td>{{ product.productInventory }}</td>
-
-       </tr>
-   {% endfor %}
-   </tbody>
-</table>
-
+            </tr>
+            </thead>
+            <tbody class="product">
+            {% for product in products %}
+                <tr class="admin_product">
+                    <td><a href="{{ path('admin.merch.product.id', {id: product.Id}) }}">{{ product.productName }}</a></td>
+                    <td>{{ product.productType.productTypeName }}</td>
+                    <td>{{ product.productPrice }}</td>
+                    <td><p><a>{{ product.productDescription }}</a></p></td>
+                    <td>{{ product.productInventory }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}
 
 {% block javascripts %}

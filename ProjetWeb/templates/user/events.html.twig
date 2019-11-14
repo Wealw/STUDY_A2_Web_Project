@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Mes inscriptions aux événements | BDE-CESI' %}
+
+{% block body %}
+    <h1>Les événements auxquels j'ai participé</h1>
+
+    <section>
+        <div class="product-container">
+            {% for participation in participations %}
+                {% set event = participation.event %}
+                <div class="product">
+                    <div class="product-name">{{ event.eventName }}</div>
+                    <img src="{{ event.eventImagePath }}" alt="">
+                    <p class="event_date">Date : {{ event.eventDate | date('d-m-Y') }}
+                        à {{ event.eventDate | date('H:i') }}</p>
+                    <div class="product-price">
+                        {{ event.eventPrice }}€
+                    </div>
+                    <br>
+                    <br>
+                    <a href="{{ path('events.show', {id: event.Id}) }}">
+                        <button>Voir</button>
+                    </a>
+
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+
+{% endblock %}

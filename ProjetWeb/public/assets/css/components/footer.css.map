@@ -1,0 +1,9 @@
+{
+  "version": 3,
+  "sources": [
+    "footer.less"
+  ],
+  "names": [],
+  "mappings": "AAAA;EACE,yBAAA;EACA,YAAA",
+  "file": "footer.css"
+}
