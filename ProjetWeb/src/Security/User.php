@@ -3,10 +3,19 @@
 namespace App\Security;
 
 use GuzzleHttp\Client;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
+/**
+ * Class User
+ * @package App\Security
+ * @Vich\Uploadable
+ */
 class User implements UserInterface
 {
+
     private $user_id;
     private $user_mail;
     private $user_first_name;
@@ -16,13 +25,20 @@ class User implements UserInterface
     private $user_address;
     private $user_city;
     private $user_password;
+
+    /**
+     * @var File|null
+     * @Vich\UploadableField(mapping="user_image", fileNameProperty="user_image_path")
+     */
+    private $imageFile;
+
     private $user_image_path;
     private $created_at;
     private $modified_at;
     private $center_id;
     private $role_id;
     private $center_name;
-    private $roles = array();
+    private $roles;
     private $token = null;
 
     /**
@@ -49,7 +65,7 @@ class User implements UserInterface
             $payload['created_at'],
             $payload['modified_at'],
             $payload['center_id'],
-            $payload['role_id'],
+            $payload['role_id']
         );
     }
 
@@ -73,7 +89,7 @@ class User implements UserInterface
         $response = $client->request('GET', 'http://127.0.0.1:3000/api/centers/' . $center_id);
         $datas = json_decode($response->getBody(), true, 512, JSON_THROW_ON_ERROR);
         $this->center_name = $datas['center_location'];
-        $response = $client->request('GET', 'http://127.0.0.1:3000/api/roles/' . $center_id);
+        $response = $client->request('GET', 'http://127.0.0.1:3000/api/roles/' . $role_id);
         $datas = json_decode($response->getBody(), true, 512, JSON_THROW_ON_ERROR);
         $this->roles[] = $datas['role_name'];
     }
@@ -95,8 +111,6 @@ class User implements UserInterface
         $this->token = $token;
         return $this;
     }
-
-
 
     /**
      * @return mixed
@@ -385,8 +399,6 @@ class User implements UserInterface
     {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
-
         return array_unique($roles);
     }
 
@@ -421,4 +433,27 @@ class User implements UserInterface
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
     }
+
+    /**
+     * @return File|null
+     */
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    /**
+     * @param File|null $imageFile
+     * @return User
+     * @throws \Exception
+     */
+    public function setImageFile(?File $imageFile): User
+    {
+        $this->imageFile = $imageFile;
+        if ($this->imageFile instanceof UploadedFile) {
+            $this->event_modified_at = new \DateTime('now');
+        }
+        return $this;
+    }
+
 }

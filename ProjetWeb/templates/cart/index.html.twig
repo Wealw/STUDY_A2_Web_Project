@@ -5,41 +5,39 @@
     <h1>Votre panier</h1>
     <a href="{{ path('cart.persist') }}">Persist</a>
     <a href="{{ path('cart.getCart') }}">GetCart</a>
-{%if items | length > 0 %}
+{% if items | length > 0 %}
+<div class="tabOverflowContainer">
     <table>
         <thead>
-            <tr>
-                <th>Produit</th>
-                <th>Prix</th>
-                <th>Quantité</th>
-                <th>Total</th>
-                <th></th>
-            </tr>
+        <tr>
+            <th>Produit</th>
+            <th>Prix</th>
+            <th>Quantité</th>
+            <th>Total</th>
+            <th></th>
+        </tr>
         </thead>
         <tbody>
-            {% for item in items %}
-                <tr>
-                    <td>{{ item.product.productName }}</td>
-                    <td>{{ item.product.productPrice }}</td>
-                    <td>{{ item.quantity }}</td>
-                    <td>{{ item.product.productPrice * item.quantity }}</td>
-                    <td>
-                        <a href="{{ path('cart.delete', {'id': item.product.id}) }}">Supprimer</a>
-                    </td>
-                </tr>
-            {% endfor %}
-        </tbody>
-        <tfoot>
+        {% for item in items %}
             <tr>
-                <td colspan="3">Total : {{ total }}</td>
-                <td><a href="{{ path('cart.order') }}">Commander</a></td>
-                <td></td>
+                <td><a href="{{ path('merch.show', {'id': item.product.id} ) }}">{{ item.product.productName }}</a></td>
+                <td>{{ item.product.productPrice |number_format(2, '.', ',') }} €</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ (item.product.productPrice * item.quantity) |number_format(2, '.', ',') }} €</td>
+                <td>
+                    <a href="{{ path('cart.delete', {'id': item.product.id}) }}" class="contained"
+                       id="delete">Supprimer</a>
+                </td>
             </tr>
-        </tfoot>
+        {% endfor %}
+        </tbody>
     </table>
-{% else %}
+</div>
+<p>Total : {{ total }} €<p>
+    <a href="{{ path('cart.order') }}" class="contained">Commander</a>
+    {% else %}
 
-{% endif %}
+    {% endif %}
 
 {% endblock %}
 

@@ -5,7 +5,11 @@ namespace App\Controller;
 use App\Entity\Social\{Event, EventSearch, Participation};
 use App\Entity\Social\Impression;
 use App\Form\EventSearchType;
-use App\Repository\{EventRepository, EventTypeRepository, ImpressionRepository, PictureRepository};
+use App\Repository\{EventRepository,
+    EventTypeRepository,
+    ImpressionRepository,
+    ParticipationRepository,
+    PictureRepository};
 use Doctrine\Common\Persistence\ObjectManager;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -52,37 +56,38 @@ class EventsController extends AbstractController
      * @Route("/events", name="events.index")
      * @param PaginatorInterface $paginator
      * @param Request $request
+     * @param ParticipationRepository $participationRepository
      * @return Response
      * @throws \Exception
      */
-    public function index(PaginatorInterface $paginator, Request $request): Response
+    public function index(PaginatorInterface $paginator, Request $request, ParticipationRepository $participationRepository): Response
     {
         $search = new EventSearch();
         $form = $this->createForm(EventSearchType::class, $search);
         $form->handleRequest($request);
 
-        $today = new \DateTime();
-
         $events = $paginator->paginate(
             $this->repository->findRequestVisible($search),
             $request->query->getInt('page', 1),
-            12
+            15
         );
-
+        $participations = $participationRepository->findBy(['participation_user_id' => $this->getUser()->getUserId()]);
 
         return $this->render("events/index.html.twig", [
             'events' => $events,
+            'participations' => $participations,
             'form' => $form->createView(),
-            'today' => $today
+            'today' => new \DateTime()
         ]);
     }
 
     /**
      * @Route("/events/{id}", name="events.show")
      * @param Event $event
+     * @param ParticipationRepository $participationRepository
      * @return Response
      */
-    public function show(Event $event): Response
+    public function show(Event $event, ParticipationRepository $participationRepository): Response
     {
         if ($event === null) {
             return $this->redirectToRoute('events.index', [], 302);
@@ -90,6 +95,19 @@ class EventsController extends AbstractController
         $pictures = $event->getPictures()->getValues();
         $type = $event->getEventType();
         $impressions = $event->getImpression();
+
+
+        $hasParticipated = false;
+        if ($this->getUser()) {
+            $participation = $participationRepository->findBy([
+                'event' => $event,
+                'participation_user_id' => $this->getUser()->getUserId()
+            ]);
+
+            if ($participation != null) {
+                $hasParticipated = true;
+            }
+        }
 
         $countLike = 0;
         $countDislike = 0;
@@ -107,8 +125,8 @@ class EventsController extends AbstractController
 
         return $this->render("events/show.html.twig", [
             'event' => $event,
-            'pictures' => $pictures,
-            'type' => $type,
+            'has_participated' => $hasParticipated,
+            'today' => new \DateTime(),
             'count_like' => $countLike,
             'count_dislike' => $countDislike,
             'action' => $action
@@ -132,8 +150,7 @@ class EventsController extends AbstractController
         }
         $eventId = $event->getId();
 
-        $impressionLike = $impressionRepository->findLike(1)[0];
-        $impressionDislike = $impressionRepository->findDislike(1)[0];
+        [$impressionLike, $impressionDislike] = $this->setImpressions($impressionRepository);
 
         $eventsLiked = $impressionLike->getEvents()->getValues();
         $eventsDisliked = $impressionDislike->getEvents()->getValues();
@@ -185,8 +202,7 @@ class EventsController extends AbstractController
         }
         $eventId = $event->getId();
 
-        $impressionLike = $impressionRepository->findLike(1)[0];
-        $impressionDislike = $impressionRepository->findDislike(1)[0];
+        [$impressionLike, $impressionDislike] = $this->setImpressions($impressionRepository);
 
         $eventsLiked = $impressionLike->getEvents()->getValues();
         $eventsDisliked = $impressionDislike->getEvents()->getValues();
@@ -222,17 +238,41 @@ class EventsController extends AbstractController
     /**
      * @Route("/events/{id}/participate", name="events.participate")
      * @param Event $event
+     * @param ParticipationRepository $participationRepository
      * @return Response
+     * @throws \Exception
      */
-    public function participate(Event $event): Response
+    public function participate(Event $event, ParticipationRepository $participationRepository): Response
     {
-        if ($event === null) {
+        $user = $this->getUser();
+        $today = new \DateTime();
+        if (!$event || !$user) {
             return $this->redirectToRoute('events.index', [], 302);
         }
+
+        if ($today > $event->getEventDate()) {
+            return $this->redirectToRoute('events.show', [
+                'id' => $event->getId()
+            ]);
+        }
+
+        $hasParticipated = $participationRepository->findBy([
+            'participation_user_id' => $user->getUserId(),
+            'event' => $event
+        ]);
+
+        if ($hasParticipated != null) {
+            $this->em->remove($hasParticipated[0]);
+            $this->em->flush();
+            return $this->redirectToRoute("events.show", [
+                'id' => $event->getId()
+            ], 302);
+        }
+
         $participation = new Participation();
         $participation
             ->setEvent($event)
-            ->setParticipationUserId(1);
+            ->setParticipationUserId($user->getUserId());
         $this->em->persist($participation);
         $this->em->flush();
 
@@ -241,6 +281,36 @@ class EventsController extends AbstractController
         return $this->redirectToRoute("events.show", [
             'id' => $event->getId()
         ], 302);
+    }
+
+    /**
+     * @param ImpressionRepository $impressionRepository
+     * @return array
+     */
+    private function setImpressions(ImpressionRepository $impressionRepository) {
+        $user = $this->getUser();
+        $testLike = $impressionRepository->findBy([
+            'impression_user_id' => $user->getUserId()
+        ]);
+
+        if ($testLike == null) {
+            $impressionLike = new Impression();
+            $impressionDislike = new Impression();
+            $impressionLike
+                ->setImpressionUserId($user->getUserId())
+                ->setImpressionType('like');
+            $this->em->persist($impressionLike);
+            $impressionDislike
+                ->setImpressionUserId($user->getUserId())
+                ->setImpressionType('dislike');
+            $this->em->persist($impressionDislike);
+            $this->em->flush();
+        } else {
+            $impressionLike = $impressionRepository->findLike($user->getUserId())[0];
+            $impressionDislike = $impressionRepository->findDislike($user->getUserId())[0];
+        }
+
+        return [$impressionLike, $impressionDislike];
     }
 
 }
