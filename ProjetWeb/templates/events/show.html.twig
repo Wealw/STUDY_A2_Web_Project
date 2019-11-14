@@ -9,7 +9,7 @@
         <aside class="flex-1 column">
             <div class="card">
                 <p>Type de l'événement :</p>
-                <p><a href="{{ path('events.index') }}?category={{ type.id }}">{{ type.eventTypeName }}</a></p>
+                <p><a href="{{ path('events.index') }}?category={{ event.eventType.id }}">{{ event.eventType.eventTypeName }}</a></p>
                 <div class="row likes">
                     {% if action == 'like' %}
                         <a href="{{ path('events.like', {id: event.id}) }}" class="option active"><i class="material-icons">thumb_up</i><span>{{ count_like }}</span></a>
@@ -20,6 +20,13 @@
                     {% else %}
                         <a href="{{ path('events.like', {id: event.id}) }}" class="option"><i class="material-icons">thumb_up</i><span>{{ count_like }}</span></a>
                         <a href="{{ path('events.dislike', {id: event.id}) }}" class="option"><i class="material-icons">thumb_down</i><span>{{ count_dislike }}</span></a>
+                    {% endif %}
+                </div>
+                <div class="participation">
+                    {% if has_participated == true %}
+                        <a href="#" class="disabled">INSCRIT</a>
+                    {% else %}
+                        <a href="{{ path('events.participate', {id: event.id}) }}" class="contained">S'INSCRIRE</a>
                     {% endif %}
                 </div>
             </div>
@@ -38,22 +45,17 @@
                     <p>{{ event.eventDescription }}</p>
                 </div>
             </div>
-            <div class="card_footer">
-
-            </div>
         </article>
     </section>
     <section>
         <h2>Images : </h2>
         <div class="grid-4">
-            {% for picture in pictures %}
+            {% for picture in event.pictures %}
                 <div class="card">
                     <div class="card_body">
                         <img src="{{ picture.picturePath }}" alt="">
                     </div>
                     <div class="card_footer">
-                        <a href="" class="option"><i class="material-icons">thumb_up</i></a>
-                        <a href="" class="option"><i class="material-icons">thumb_down</i></a>
                         <a href="{{ path('pictures.show', {'id': picture.id}) }}" class="contained">COMMENTER</a>
                     </div>
                 </div>

@@ -4,7 +4,13 @@
 
 {% block body %}
 
-    <h1>Les événements</h1>
+    <div class="row justify_between">
+        <h1>Les événements</h1>
+        {% if app.user %}
+
+            <a href="{{ path('profile.events') }}" class="contained">MES INSCRIPTIONS</a>
+        {% endif %}
+    </div>
     <section>
         <div class="search_type" style="margin-bottom: 32px">
             <h3>Personnaliser la recherche</h3>
@@ -21,8 +27,7 @@
                     {{ form_end(form) }}
                 </div>
                 {% if is_granted('ROLE_ADMIN') %}
-                    <a href="{{ path('admin.events.new') }}" class="contained"><i class="material-icons">add</i> NOUVEL
-                        ÉVÉNEMENT</a>
+                    <a href="{{ path('admin.events.new') }}" class="contained"><i class="material-icons">add</i> NOUVEL ÉVÉNEMENT</a>
                 {% endif %}
             </div>
         </div>
@@ -38,10 +43,20 @@
                     </div>
                     <br>
                     <br>
-                            {% if app.user and event.eventDate > today %}
-                                <a href="{{ path('events.participate', {id: event.id}) }}" class="blue">S'INSCRIRE</a>
-                                <span class="separate_buttons"></span>
+                    {% set participated = false %}
+                    {% if app.user and event.eventDate > today %}
+                        {% for participation in participations %}
+                            {% if participation.event.id == event.id %}
+                                {% set participated = true %}
                             {% endif %}
+                        {% endfor %}
+                        {% if participated == true %}
+                            <a href="" class="blue disabled" disabled>INSCRIT</a>
+                        {% else %}
+                            <a href="{{ path('events.participate', {id: event.id}) }}" class="blue">S'INSCRIRE</a>
+                        {% endif %}
+                        <span class="separate_buttons"></span>
+                    {% endif %}
                     <a href="{{ path('events.show', {id: event.Id}) }}">
                         <button>Voir</button>
                     </a>
