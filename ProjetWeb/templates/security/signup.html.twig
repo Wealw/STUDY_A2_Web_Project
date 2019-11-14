@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Inscription | BDE.CESI' %}
+
+{% block body %}
+
+    <div class="form">
+        {{ form_start(form) }}
+            {{ form_row(form.user_mail) }}
+            {{ form_row(form.user_first_name) }}
+            {{ form_row(form.user_last_name) }}
+            {{ form_row(form.user_password) }}
+            {{ form_row(form.user_phone) }}
+            {{ form_row(form.user_postal_code) }}
+            {{ form_row(form.user_address) }}
+            {{ form_row(form.user_city) }}
+            {{ form_row(form.centerId) }}
+            {{ form_rest(form) }}
+            <button type="submit" class="contained">S'INSCRIRE</button>
+        {{ form_end(form) }}
+    </div>
+
+{% endblock %}
+

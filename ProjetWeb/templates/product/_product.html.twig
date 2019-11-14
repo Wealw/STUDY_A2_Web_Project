@@ -1,20 +1,20 @@
 {% if product.isOrderable == true %}
-<div class="product">
-    <div class="product-name">
+    <article class="product">
+        <h2 class="product-name">
             {{ product.productName }}
-    </div>
-    <div class="product-type">
-        ({{ product.productType.productTypeName }})
-    </div>
+        </h2>
+        <h3 class="product-type">
+            ({{ product.productType.productTypeName }})
+        </h3>
 
-    <img src="{{ product.productImagePath }}">
+        <img src="{{ product.productImagePath }}">
 
-    <div class="product-price">
-        {{ product.productPrice }} €
-    </div>
-    <br><br>
-    <a href="{{ path('merch.show', {id: product.Id}) }}"><button> Check This</button></a>
-</div>
+        <p class="product-price">
+            {{ product.productPrice }} €
+        </p>
+        <br>
+        <a href="{{ path('merch.show', {id: product.Id}) }}" class="link">En savoir plus</a>
+    </article>
 {% endif %}
 
 
