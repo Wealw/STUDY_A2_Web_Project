@@ -18,6 +18,9 @@
                         <li><a href="{{ path('events.calendar') }}" class="nav-link">
                                 <div class="button "> Calendrier</div>
                             </a></li>
+                        <li><a href="{{ path('cart.index') }}" class="nav-link">
+                                <div class="button "> Panier </div>
+                            </a></li>
                         {% if is_granted('ROLE_ADMIN') %}
                             <li><a href="{{ path('admin.index') }}" class="nav-link">
                                     <div class="button "> Administration</div>

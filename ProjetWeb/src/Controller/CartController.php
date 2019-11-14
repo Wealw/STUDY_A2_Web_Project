@@ -3,7 +3,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Merch\Command;
+use App\Entity\Merch\CommandProduct;
+use App\Notification\CommandNotification;
+use App\Repository\CommandProductRepository;
+use App\Repository\CommandRepository;
 use App\Repository\ProductRepository;
+use Exception;
 use Metadata\Tests\Driver\Fixture\C\SubDir\C;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -92,6 +98,24 @@ class CartController extends AbstractController
     }
 
     /**
+     * @Route("/cart/delete", name="cart.delete.all")
+     * @param $id
+     * @param SessionInterface $session
+     * @return RedirectResponse
+     */
+    public function deleteAll(SessionInterface $session)
+    {
+        $cart = $session->get('cart', []);
+
+        foreach ($cart as $id => $quantity)
+        {
+            unset($cart[$id]);
+        }
+        $session->set('cart', $cart);
+        return $this->redirectToRoute("cart.index");
+    }
+
+    /**
      * @Route("/cart/persist", name="cart.persist")
      * @param SessionInterface $session
      * @param Request $request
@@ -165,4 +189,51 @@ class CartController extends AbstractController
         }
         return $this->redirectToRoute('cart.index');
     }
+
+    /**
+     * @Route("/cart/order", name="cart.order")
+     * @param ProductRepository $productRepository
+     * @param SessionInterface $session
+     * @return RedirectResponse
+     * @throws Exception
+     */
+    public function order(ProductRepository $productRepository, SessionInterface $session)
+    {
+        $cart = $session->get('cart', []);
+
+        if($this->getUser())
+        {
+            $command = new Command();
+
+            $command
+                ->setCommandUserId($this->getUser()->getUserId())
+                ->setCommandOrderedAt(new \DateTime('now'));
+
+            $this->getDoctrine()->getManager()->persist($command);
+
+
+            foreach ($cart as $id => $quantity)
+            {
+                $commandProduct = new CommandProduct();
+
+                $product = $productRepository->findOneBy(['id' => $id]);
+
+                $commandProduct
+                    ->setCommand($command)
+                    ->setProduct($product)
+                    ->setQuantity($cart[$id]);
+
+                $this->getDoctrine()->getManager()->persist($commandProduct);
+
+            }
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute("cart.delete.all");
+
+        }else{
+            return $this->redirectToRoute("security.login");
+        }
+    }
+
+
 }
