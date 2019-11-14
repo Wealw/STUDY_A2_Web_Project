@@ -6,7 +6,7 @@
 }
 
 .product-container .product {
-  padding: 1vw;
+  padding: 16px 0 0;
   font-family: Roboto, serif;
   background-color: @backgroundLight;
   box-shadow: 0 0 3px @shadow;
@@ -20,8 +20,9 @@
 }
 
 .product-container .product img {
+  padding: 8px 0;
   width: 100%;
-  padding: 10px 0 10px 0;
+
 }
 
 .product-container .product-name {
@@ -57,7 +58,7 @@
   font-weight: bold;
 }
 
-.product button {
+.product .button {
   width: 100%;
   padding: 1vh;
   border: none;
@@ -70,6 +71,30 @@
   left: 0;
   position: absolute;
 }
+
+.link {
+  background-color: @primary;
+  color: @primaryText;
+  display: flex;
+  height: 36px;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.register {
+
+  display: flex;
+  height: 36px;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.link:hover {
+  background-color: @primaryDark;
+}
+
 
 /**/
 

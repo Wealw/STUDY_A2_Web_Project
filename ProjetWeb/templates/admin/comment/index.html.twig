@@ -3,7 +3,7 @@
 {% block body %}
     <h1>Les commentaires</h1>
 
-    <table class="admin_list" style="width: 70%">
+    <table class="admin_list">
         <thead>
         <tr>
             <th>Contenu du commentaire</th>
@@ -15,7 +15,11 @@
         <tbody>
         {% for comment in comments %}
             <tr class="">
-                <td><a href="{{ path('pictures.show', {id: comment.picture.id}) }}">{{ comment.commentText }}</a></td>
+                <td>
+                    <div class="sizeLimiter"><p><a
+                                    href="{{ path('pictures.show', {id: comment.picture.id}) }}">{{ comment.commentText }}</a>
+                        </p></div>
+                </td>
                 <td>{{ comment.commentPostedAt | date('d F Y H:i') }}</td>
                 <td>{{ comment.commentUserId }}</td>
                 <td class="row">

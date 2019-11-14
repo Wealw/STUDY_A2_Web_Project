@@ -6,7 +6,9 @@
             <div class="burgerLine"></div>
         </a>
         <span class="spacer"></span>
-        <img src="{{ asset('assets/images/logo.png') }} " alt="logo">
+        <a href="{{ path('index') }}">
+            <img src="{{ asset('assets/images/logo.png') }} " alt="logo">
+        </a>
         <div class="burger">
             <div>
                 <nav>
@@ -30,7 +32,7 @@
                 {% if app.user %}
 
                     <a href="{{ path('logout') }}" class="header contained colorSecondary">
-                        <div class="button "> DECONNECTER</div>
+                        <div class="button ">DECONNECTER</div>
                     </a>
 
                 {% else %}

@@ -38,7 +38,6 @@
                    <td class="row">
                        {% if event.eventIsVisible == 1 %}
                            <a href="{{ path('admin.events.edit', {id: event.id}) }}" class="contained">EDITER</a>
-                           <span class="separate_buttons"></span>
                            <form method="post" action="{{ path('admin.events.delete', {id: event.id}) }}">
                                <input type="hidden" name="_method" value="DELETE">
                                <button class="contained danger">SUPPRIMER</button>

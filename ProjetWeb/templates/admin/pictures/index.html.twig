@@ -15,12 +15,11 @@
         <tbody>
         {% for picture in pictures %}
             <tr class="">
-                <td><img src="{{ picture.picturePath }}" alt="" style="height: 100px; width: 100px"></td>
+                <td><img src="{{ picture.picturePath }}" alt=""></td>
                 <td>{{ picture.picturePostedAt | date('d F Y') }}</td>
                 <td>{{ picture.pictureUserId }}</td>
                 <td class="row">
                     <a href="{{ path('pictures.show', {id: picture.Id}) }}" class="contained">VOIR</a>
-                    <span class="separate_buttons"></span>
                     {% if picture.isVisible == 1 %}
                         <form method="post" action="{{ path('admin.pictures.delete', {id: picture.id}) }}">
                             <input type="hidden" name="_method" value="DELETE">

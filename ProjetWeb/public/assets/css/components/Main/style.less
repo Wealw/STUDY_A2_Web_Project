@@ -102,10 +102,11 @@ nav ul li a.active {
 .contained, button.disabled, a.disabled {
   display: flex;
   align-items: center;
+  justify-content: center;
   background-color: @secondary;
-  border-radius: 2px;
-  color: #ffffff;
-  height: 36px;
+  color: @primaryText;
+  height: 4em;
+  width: 100%;
   padding: 0 16px;
   min-width: 64px;
 }
@@ -128,12 +129,14 @@ span.separate_content {
   width: 100%;
 }
 
-.danger {
-  background-color: #F44336;
+
+nav {
+  padding-top: 2em;
 }
 
-nav.pagination {
+nav .pagination {
   display: flex;
+  flex-direction: row;
   align-items: center;
 
   border-radius: 2px;
@@ -221,22 +224,6 @@ div.calendar_item {
   border: 1px #AAAAAA solid;
 }
 
-table.admin_list {
-  border-collapse: collapse;
-  width: 100%;
-}
-
-table.admin_list thead tr {
-  background-color: #777777;
-  color: #ffffff;
-  font-size: 20px;
-  height: 56px;
-}
-
-table.admin_list tr {
-  border-top: 2px #777777 solid;
-  height: 56px;
-}
 
 a.option i.material-icons {
   color: #666666;
@@ -259,15 +246,71 @@ p.event_description {
 }
 
 div.search_type {
+  @media ( max-width: 800px) {
+    form {
+      flex-direction: column;
+    }
+
+    .searchElement {
+      height: 4em;
+    }
+
+  }
+
   padding: 0 12px 12px;
 
   .grower {
     width: 100%;
   }
 
+  main form div.checkbox label {
+    color: #999999;
+    text-decoration: none;
+  }
+
+  #inStock {
+    padding: 16px;
+    right: 40px;
+    width: 1em;
+    height: 1em;
+  }
+
+  #checkboxDebug div {
+    width: 100%;
+    display: flex;
+    @media (max-width: 800px) {
+      justify-content: flex-start;
+    }
+
+    label {
+      margin-left: 16px;
+      justify-content: flex-start;
+    }
+
+    input {
+      justify-content: flex-end;
+    }
+  }
+
   form {
     width: 100%;
+    display: flex;
+    justify-content: space-around;
+
   }
+}
+
+button .contained {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  i {
+    align-items: center;
+    justify-content: center;
+  }
+
 }
 
 div.search_type h3 {
@@ -276,19 +319,15 @@ div.search_type h3 {
   margin: 12px 0;
 }
 
-.searchElement {
-  display: flex;
-  flex-direction: row;
-}
+
 
 .contained i.material-icons {
   font-size: 24px;
-  margin: -2px 8px 0 -8px;
+  text-align: center;
+
 }
 
-button.contained i.material-icons {
-  margin: 0 8px 0 -8px;
-}
+
 
 
 div.carousel_container div.item {
