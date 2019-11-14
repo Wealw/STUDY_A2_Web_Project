@@ -26,7 +26,6 @@ searchBar.addEventListener('keyup', function () {
                 let td5 = document.createElement('td');
                 let link = document.createElement('a');
 
-
                 console.log(data[j])
                 console.log(data[j].Id)
 
@@ -39,9 +38,6 @@ searchBar.addEventListener('keyup', function () {
                 td4.innerText = data[j].productDescription;
                 td2.innerText = data[j].productType;
 
-
-
-
                 td1.appendChild(link);
                 tr.appendChild(td1);
                 tr.appendChild(td2);
@@ -52,9 +48,7 @@ searchBar.addEventListener('keyup', function () {
             }
         }
     };
-
     xhr.open('GET', '/admin/product/search/' + value);
     xhr.setRequestHeader('X-Requested-With', 'xmlhttprequest');
     xhr.send();
-
 });

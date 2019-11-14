@@ -44,6 +44,9 @@
       <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/hoa/ustring" />
       <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/hoa/visitor" />
       <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/hoa/zformat" />
+      <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/guzzlehttp/guzzle" />
+      <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/guzzlehttp/promises" />
+      <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/guzzlehttp/psr7" />
       <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/imagine/imagine" />
       <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/jdorn/sql-formatter" />
       <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/jms/metadata" />

@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h1>Votre panier</h1>
+    <a href="{{ path('cart.persist') }}">Persist</a>
+    <a href="{{ path('cart.getCart') }}">GetCart</a>
+{%if items | length > 0 %}
+    <table>
+        <thead>
+            <tr>
+                <th>Produit</th>
+                <th>Prix</th>
+                <th>Quantité</th>
+                <th>Total</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+                <tr>
+                    <td>{{ item.product.productName }}</td>
+                    <td>{{ item.product.productPrice }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>{{ item.product.productPrice * item.quantity }}</td>
+                    <td>
+                        <a href="{{ path('cart.delete', {'id': item.product.id}) }}">Supprimer</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3">Total : {{ total }}</td>
+                <td></td>
+                <td></td>
+            </tr>
+        </tfoot>
+    </table>
+{% else %}
+
+{% endif %}
+
+{% endblock %}
+

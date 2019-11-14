@@ -165,6 +165,15 @@
     "hoa/zformat": {
         "version": "1.17.01.10"
     },
+    "guzzlehttp/guzzle": {
+        "version": "6.4.1"
+    },
+    "guzzlehttp/promises": {
+        "version": "v1.3.1"
+    },
+    "guzzlehttp/psr7": {
+        "version": "1.6.1"
+    },
     "imagine/imagine": {
         "version": "1.2.2"
     },

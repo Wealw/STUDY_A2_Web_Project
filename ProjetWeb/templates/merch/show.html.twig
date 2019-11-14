@@ -15,6 +15,7 @@
         <div>{{ product.productInventory }}</div>
         <div>{{ product.productType.productTypeName }}</div>
     </div>
+    <a href="{{ path('cart.add', {'id': product.Id}) }}">Ajouter au panier</a>
 
 {% endblock %}
 
