@@ -5,36 +5,8 @@
 {% block body %}
     <h1>Evénement - {{ event.eventName }}</h1>
 
-    <section class="row">
-        <aside class="flex-1 column">
-            <div class="card">
-                <p>Type de l'événement :</p>
-                <p><a href="{{ path('events.index') }}?category={{ event.eventType.id }}">{{ event.eventType.eventTypeName }}</a></p>
-                <div class="row likes">
-                    {% if action == 'like' %}
-                        <a href="{{ path('events.like', {id: event.id}) }}" class="option active"><i class="material-icons">thumb_up</i><span>{{ count_like }}</span></a>
-                        <a href="{{ path('events.dislike', {id: event.id}) }}" class="option"><i class="material-icons">thumb_down</i><span>{{ count_dislike }}</span></a>
-                    {% elseif action == 'dislike' %}
-                        <a href="{{ path('events.like', {id: event.id}) }}" class="option"><i class="material-icons">thumb_up</i><span>{{ count_like }}</span></a>
-                        <a href="{{ path('events.dislike', {id: event.id}) }}" class="option active"><i class="material-icons">thumb_down</i><span>{{ count_dislike }}</span></a>
-                    {% else %}
-                        <a href="{{ path('events.like', {id: event.id}) }}" class="option"><i class="material-icons">thumb_up</i><span>{{ count_like }}</span></a>
-                        <a href="{{ path('events.dislike', {id: event.id}) }}" class="option"><i class="material-icons">thumb_down</i><span>{{ count_dislike }}</span></a>
-                    {% endif %}
-                </div>
-                <div class="participation">
-                    {% if has_participated == true %}
-                        <a href="#" class="disabled">INSCRIT</a>
-                    {% else %}
-                        <a href="{{ path('events.participate', {id: event.id}) }}" class="contained">S'INSCRIRE</a>
-                    {% endif %}
-                </div>
-            </div>
-        </aside>
+    <section>
         <article class="flex-3 column">
-            <div class="card_header">
-                {{ event.eventName }}
-            </div>
             <div class="card_body row">
                 <div>
                     {% if event.eventImagePath %}
@@ -44,6 +16,30 @@
                 <div>
                     <p>{{ event.eventDescription }}</p>
                 </div>
+            </div>
+            <p>Prix : {{ event.eventPrice }} €</p>
+            <p>Type de l'événement : <a
+                        href="{{ path('events.index') }}?category={{ event.eventType.id }}">{{ event.eventType.eventTypeName }}</a>
+            </p>
+            <div class="row likes">
+                {% if action == 'like' %}
+                    <a href="{{ path('events.like', {id: event.id}) }}" class="option active"><i class="material-icons">thumb_up</i><span>{{ count_like }}</span></a>
+                    <a href="{{ path('events.dislike', {id: event.id}) }}" class="option"><i class="material-icons">thumb_down</i><span>{{ count_dislike }}</span></a>
+                {% elseif action == 'dislike' %}
+                    <a href="{{ path('events.like', {id: event.id}) }}" class="option"><i class="material-icons">thumb_up</i><span>{{ count_like }}</span></a>
+                    <a href="{{ path('events.dislike', {id: event.id}) }}" class="option active"><i
+                                class="material-icons">thumb_down</i><span>{{ count_dislike }}</span></a>
+                {% else %}
+                    <a href="{{ path('events.like', {id: event.id}) }}" class="option"><i class="material-icons">thumb_up</i><span>{{ count_like }}</span></a>
+                    <a href="{{ path('events.dislike', {id: event.id}) }}" class="option"><i class="material-icons">thumb_down</i><span>{{ count_dislike }}</span></a>
+                {% endif %}
+            </div>
+            <div class="participation">
+                {% if has_participated == true %}
+                    <a href="#" class="disabled">INSCRIT</a>
+                {% else %}
+                    <a href="{{ path('events.participate', {id: event.id}) }}" class="contained">S'INSCRIRE</a>
+                {% endif %}
             </div>
         </article>
     </section>
