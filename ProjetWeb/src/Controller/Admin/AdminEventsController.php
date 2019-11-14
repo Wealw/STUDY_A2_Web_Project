@@ -4,12 +4,17 @@
 namespace App\Controller\Admin;
 
 
+use App\Entity\Social\Admin\AdminEventSearch;
 use App\Entity\Social\Event;
+use App\Form\AdminEventSearchType;
 use App\Form\EventType;
+use App\Repository\CommentRepository;
 use App\Repository\EventRepository;
 use App\Repository\EventTypeRepository;
 use Doctrine\Common\Persistence\ObjectManager;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -39,17 +44,20 @@ class AdminEventsController extends AbstractController
 
     /**
      * @Route("/admin/events", name="admin.events.index")
-     * @param EventTypeRepository $eventTypeRepository
+     * @param Request $request
      * @return Response
      */
-    public function index(EventTypeRepository $eventTypeRepository)
+    public function index(Request $request)
     {
+        $eventSearch = new AdminEventSearch();
+        $form = $this->createForm(AdminEventSearchType::class, $eventSearch);
+        $form->handleRequest($request);
+
         $events = $this->repository->findAll();
-        $categories = $eventTypeRepository->findAll();
 
         return $this->render("admin/events/index.html.twig", [
             'events' => $events,
-            'categories' => $categories
+            'form' => $form->createView()
         ]);
     }
 
@@ -106,11 +114,33 @@ class AdminEventsController extends AbstractController
      */
     public function delete(Event $event, Request $request)
     {
-        if ($this->isCsrfTokenValid('delete' . $event->getId(), $request->get('_token'))) {
-            $event->setEventIsVisible(0);
-            $this->em->flush();
-        }
+        $event->setEventIsVisible(0);
+        $this->em->flush();
         return $this->redirectToRoute("admin.events.index", [], 302);
+    }
+
+    /**
+     * @Route("/admin/events/search/{search}", name="admin.events.search")
+     * @param $search
+     * @param CommentRepository $commentRepository
+     * @return JsonResponse
+     */
+    public function search(CommentRepository $commentRepository, $search = null): JsonResponse
+    {
+        $comments = $commentRepository->findLike($search);
+        $events = $this->repository->findLike($search);
+        $jsonEvents = [];
+
+        foreach ($events as $k => $event) {
+            $jsonEvents[$k]['id'] = $events[$k]->getId();
+            $jsonEvents[$k]['eventName'] = $events[$k]->getEventName();
+            $jsonEvents[$k]['eventDate'] = $events[$k]->getEventDate()->format('d F Y H:i');
+            $jsonEvents[$k]['createdAt'] = $events[$k]->getEventCreatedAt()->format('d F Y');
+            $jsonEvents[$k]['createdBy'] = $events[$k]->getEventCreatedBy();
+            $jsonEvents[$k]['isVisible'] = $events[$k]->getEventIsVisible();
+        }
+
+        return $this->json($jsonEvents, 200, ['Content-Type' => 'application/json']);
     }
 
 }

@@ -4,7 +4,11 @@ namespace App\Controller\Admin;
 
 use App\Repository\EventRepository;
 use App\Repository\PictureRepository;
+use League\Flysystem\Filesystem;
+use League\Flysystem\ZipArchive\ZipArchiveAdapter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
 
 class AdminController extends AbstractController
@@ -42,6 +46,42 @@ class AdminController extends AbstractController
             'events' => $events,
             'pictures' => $pictures
         ]);
+    }
+
+    public function csv()
+    {
+
+    }
+
+    /**
+     * @Route("/admin/images/download", name="admin.images.download")
+     */
+    public function downloadImages()
+    {
+        $zip = new \ZipArchive();
+        $zipName = time() . ".zip";
+
+
+
+        /*$zipFile = 'assets/files';
+        $zip = new Filesystem(new ZipArchiveAdapter($zipFile));
+        $i = 0;
+        $attachments = scandir('assets/images/');
+        foreach ($attachments as $k => $attachment) {
+            if ($attachment > 1) {
+                $zip->write(
+                    $attachment,
+                    file_get_contents($attachment)
+                );
+            }
+        }*/
+
+        $zip->getAdapter()->getArchive()->close();
+        $response = new BinaryFileResponse($zipFile);
+        $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+            $response->getFile()->getFilename());
+        $response->deleteFileAfterSend(true);
+        return $response;
     }
 
 }
