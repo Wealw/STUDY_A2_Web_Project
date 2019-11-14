@@ -1,0 +1,12 @@
+@import "../flex.css";
+@import "../form.css";
+@import "../product.css";
+@import "../table.css";
+@import "../style.css";
+
+main {
+    top: 4em;
+    z-index: 500;
+}
+
+/*# sourceMappingURL=main.css.map */
