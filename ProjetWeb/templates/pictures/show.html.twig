@@ -10,8 +10,17 @@
             </div>
             <div class="p">{{ picture.pictureDescription }}</div>
         </div>
-        <div class="section_footer">
-
+        <div class="section_footer row likes">
+            {% if action == 'like' %}
+                <a href="{{ path('pictures.like', {id: picture.id}) }}" class="option active"><i class="material-icons">thumb_up</i><span>{{ count_like }}</span></a>
+                <a href="{{ path('pictures.dislike', {id: picture.id}) }}" class="option"><i class="material-icons">thumb_down</i><span>{{ count_dislike }}</span></a>
+            {% elseif action == 'dislike' %}
+                <a href="{{ path('pictures.like', {id: picture.id}) }}" class="option"><i class="material-icons">thumb_up</i><span>{{ count_like }}</span></a>
+                <a href="{{ path('pictures.dislike', {id: picture.id}) }}" class="option active"><i class="material-icons">thumb_down</i><span>{{ count_dislike }}</span></a>
+            {% else %}
+                <a href="{{ path('pictures.like', {id: picture.id}) }}" class="option"><i class="material-icons">thumb_up</i><span>{{ count_like }}</span></a>
+                <a href="{{ path('pictures.dislike', {id: picture.id}) }}" class="option"><i class="material-icons">thumb_down</i><span>{{ count_dislike }}</span></a>
+            {% endif %}
         </div>
     </section>
 
@@ -64,11 +73,10 @@
                     </div>
                 </div>
                 <div class="row" style="padding: 8px">
-                    <a href="" class="option"><i class="material-icons">thumb_up</i></a>
-                    <a href="" class="option"><i class="material-icons">thumb_down</i></a>
+                    <!--<a href="" class="option"><i class="material-icons">thumb_up</i></a>
+                    <a href="" class="option"><i class="material-icons">thumb_down</i></a>-->
                     {% if is_granted('ROLE_MODO') %}
                         {% if comment.isVisible == 1 %}
-                            <form method="post" action="{{ path('admin.comments.delete', {id: comment.id}) }}">
                             <form method="post" action="{{ path('admin.comments.delete', {id: comment.id}) }}">
                                 <input type="hidden" name="_method" value="DELETE">
                                 <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ comment.id) }}">
@@ -90,4 +98,8 @@
             </div>
         {% endif %}
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('assets/js/ajaxLikes.js') }}"></script>
 {% endblock %}

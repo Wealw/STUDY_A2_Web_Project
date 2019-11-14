@@ -4,7 +4,7 @@
     <div>{{ product.productName }}</div>
     <div class="product-shower">
         <div class="product-image">
-            <img src="{{ product.productImagePath }}">
+            <img src = "{{ vich_uploader_asset(product, 'imageFile') }}">
         </div>
         <div class="product-description">
             {{ product.productDescription}}
@@ -15,6 +15,7 @@
         <div>{{ product.productInventory }}</div>
         <div>{{ product.productType.productTypeName }}</div>
     </div>
+    <a href="{{ path('cart.add', {'id': product.Id}) }}">Ajouter au panier</a>
 
 {% endblock %}
 

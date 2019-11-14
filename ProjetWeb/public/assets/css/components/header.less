@@ -1,0 +1,235 @@
+@import "../color";
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  flex-grow: initial;
+  flex-direction: row;
+  justify-content: flex-start;
+  background-color: @primaryLight;
+  box-shadow: 0 0 5px @shadow;
+  height: 4em;
+
+  a {
+    text-decoration: none;
+    color: black;
+  }
+
+  img {
+    align-items: flex-start;
+    justify-content: flex-start;
+    height: 4em;
+    width: 4em;
+    padding: 0.25em;
+  }
+
+  .burger {
+    width: 100%;
+  }
+
+  .spacerMaximised {
+    flex-grow: 100;
+  }
+
+  .spacerMinified {
+    display: none;
+  }
+
+  nav {
+    display: flex;
+    flex-direction: row;
+    color: #eee;
+
+
+    ul {
+      list-style-type: disc;
+      margin-block-start: 0;
+      margin-block-end: 0;
+      margin-inline-start: 0;
+      margin-inline-end: 0;
+      padding-inline-start: 0;
+      display: flex;
+      flex-direction: row;
+
+      li:hover {
+        background-color: @primary;
+      }
+
+      li {
+        display: flex;
+        align-items: center;
+        height: 4em;
+        padding: 0 16px;
+      }
+    }
+  }
+
+  .rightAlign {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin: 0 1em 0 auto;
+
+    .button {
+      display: flex;
+      height: 4em;
+      align-items: center;
+      padding: 0 16px;
+    }
+
+    .colorSecondary {
+      background-color: @secondary;
+    }
+
+    .colorSecondaryLight {
+      background-color: @secondaryLight;
+    }
+
+    .colorSecondary:hover {
+      background-color: @secondaryDark;
+    }
+
+    .colorSecondaryLight:hover {
+      background-color: @secondaryDark;
+    }
+
+    a:hover {
+      background-color: #eee;
+    }
+
+    a {
+      align-items: center;
+      height: 4em;
+    }
+  }
+
+}
+
+@media (min-width: 800px) {
+  header {
+    .burgerButton {
+      display: none;
+    }
+
+    .burger {
+      display: flex;
+      flex-direction: row;
+      height: 4em;
+
+      nav {
+        ul {
+          height: 4em;
+        }
+      }
+
+      .rightAlign {
+        height: 4em;
+      }
+    }
+  }
+
+}
+
+@media (max-width: 800px) {
+  header {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    z-index: 1000;
+
+    .burgerButton {
+      padding: 1em;
+      display: flex;
+      flex-direction: column;
+      align-content: space-around;
+      justify-content: space-around;
+      width: 4em;
+      height: 4em;
+
+      .burgerLine {
+
+        height: 2px;
+        background-color: black;
+      }
+    }
+
+    .spacer {
+      flex-grow: 100;
+    }
+
+    img {
+      align-items: flex-end;
+      justify-content: flex-end;
+    }
+
+    .burger {
+      left: -100%;
+      transition: transform 0.1s ease-in;
+      position: absolute;
+      top: 4em;
+      text-align: center;
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+
+      background-color: @primaryLight;
+      box-shadow: 0 0 5px @shadow;
+
+      nav {
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+
+        ul {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+
+          li {
+            text-align: center;
+            margin: auto;
+            width: 100%;
+          }
+        }
+      }
+
+      .rightAlign {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        text-align: center;
+
+
+        .button {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+        }
+
+      }
+
+      a {
+
+        width: 100%;
+      }
+
+      a:hover {
+
+      }
+
+    }
+
+    .clicked {
+      transform: translate(100%, 0);
+    }
+  }
+}

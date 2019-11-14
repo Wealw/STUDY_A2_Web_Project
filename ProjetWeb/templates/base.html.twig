@@ -1,45 +1,20 @@
 <!DOCTYPE html>
 <html lang="fr">
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/css/flex.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/css/form.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/css/product.css') }}">
-        {% block stylesheets %}{% endblock %}
-    </head>
-    <body>
-        <header>
-            <div>
-                <nav>
-                    <ul>
-                        <li><a href="{{ path('events.index') }}" class="nav-link">Evénements</a></li>
-                        <li><a href="" class="nav-link">Produits</a></li>
-                        <li><a href="{{ path('events.calendar') }}" class="nav-link">Calendrier</a></li>
-                        {% if is_granted('ROLE_ADMIN') %}
-                            <li><a href="{{ path('admin.index') }}" class="nav-link">Administration</a></li>
-                        {% endif %}
-                    </ul>
-                </nav>
-            </div>
-            <div class="row align_center">
-                {% if app.user %}
-                    <a href="{{ path('logout') }}" class="header contained">SE DECONNECTER</a>
-                {% else %}
-                    <a href="" class="header">S'INSCRIRE</a>
-                    <a href="{{ path('security.login') }}" class="header contained">SE CONNECTER</a>
-                {% endif %}
-            </div>
-        </header>
-        <div class="container">
-            {% block body %}
-
-            {% endblock %}
-        </div>
-        <footer>
-
-        </footer>
-        {% block javascripts %}{% endblock %}
-    </body>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {{ include('components/stylesheet.html.twig') }}
+</head>
+<body>
+{{ include('components/header.html.twig') }}
+<main>
+    {% block body %}
+    {% endblock %}
+</main>
+{{ include('components/footer.html.twig') }}
+<script type="text/javascript" src="{{ asset('assets/js/jquery.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/js/jquery.dropdown.js') }}"></script>
+{% block javascripts %}
+{% endblock %}
+</body>
 </html>
