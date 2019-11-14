@@ -37,7 +37,7 @@ class ProductSearchType extends AbstractType
     }
 
     /**
-     * @param OptionsResolver $resolver
+     * @param OptionsResolver $resolverW
      */
     public function configureOptions(OptionsResolver $resolver)
     {
