@@ -9,41 +9,42 @@
         <div class="search_type" style="margin-bottom: 32px">
             <h3>Personnaliser la recherche</h3>
             <div class="row justify_between align_center">
-                <div>
+                <div class="grower">
                     {{ form_start(form) }}
-                        <div class="group off half">
-                            {{ form_row(form.maxPrice) }}
-                        </div>
-                        <div class="group half select">
-                            {{ form_rest(form) }}
-                        </div>
+                    <div class="group off half">
+                        {{ form_row(form.maxPrice) }}
+                    </div>
+                    <div class="group half select">
+                        {{ form_rest(form) }}
+                    </div>
                     <button type="submit" class="contained"><i class="material-icons">search</i></button>
                     {{ form_end(form) }}
                 </div>
                 {% if is_granted('ROLE_ADMIN') %}
-                    <a href="{{ path('admin.events.new') }}" class="contained"><i class="material-icons">add</i> NOUVEL ÉVÉNEMENT</a>
+                    <a href="{{ path('admin.events.new') }}" class="contained"><i class="material-icons">add</i> NOUVEL
+                        ÉVÉNEMENT</a>
                 {% endif %}
             </div>
         </div>
-        <div class="content grid-4">
+        <div class="product-container">
             {% for event in events %}
-                <div class="card">
-                    <div class="card_header">{{ event.eventName }}</div>
-                    <div class="card_body">
-                        <img src="{{ event.eventImagePath }}" alt="">
+                <div class="product">
+                    <div class="product-name">{{ event.eventName }}</div>
+                    <img src="{{ event.eventImagePath }}" alt="">
+                    <p class="event_date">Date : {{ event.eventDate | date('d-m-Y') }}
+                        à {{ event.eventDate | date('H:i') }}</p>
+                    <div class="product-price">
+                        {{ event.eventPrice }}€
                     </div>
-                    <div class="card_footer column">
-                        <p class="event_date">Date de l'événement : {{ event.eventDate | date('d-m-Y') }} à {{ event.eventDate | date('H:i') }}</p>
-                        <p class="event_description">{{ event.eventDescription | nl2br }}</p>
-                        <div class="row">
-                            <p>Prix : {{ event.eventPrice }}€</p>
+                    <br>
+                    <br>
                             {% if app.user and event.eventDate > today %}
                                 <a href="" class="blue">S'INSCRIRE</a>
-                                <span class="separate_buttons"></span>
                             {% endif %}
-                            <a href="{{ path('events.show', {id: event.Id}) }}" class="contained">VOIR</a>
-                        </div>
-                    </div>
+                    <a href="{{ path('events.show', {id: event.Id}) }}">
+                        <button>Voir</button>
+                    </a>
+
                 </div>
             {% endfor %}
         </div>
