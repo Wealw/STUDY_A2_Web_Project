@@ -1,0 +1,35 @@
+table {
+    border-collapse: collapse;
+    width: 40%;
+}
+
+thead tr td,
+thead tr th {
+    display: flex;
+    align-items: center;
+    background-color: #3F51B5;
+    color: #ffffff;
+    font-family: "Roboto-Medium", sans-serif;
+    height: 48px;
+    padding: 8px;
+}
+
+tbody tr {
+    border-bottom: 2px #3F51B5 solid;
+}
+
+tr {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 48px;
+}
+
+td,
+th {
+    display: flex;
+    flex-direction: row;
+    width: 50%;
+}
+
+/*# sourceMappingURL=table.css.map */
