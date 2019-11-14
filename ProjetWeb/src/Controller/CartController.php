@@ -256,14 +256,7 @@ class CartController extends AbstractController
                     $mailer->send($message);
                 }
             }
-
-
-
-
-
-
             return $this->redirectToRoute("cart.delete.all");
-
         }else{
             return $this->redirectToRoute("security.login");
         }

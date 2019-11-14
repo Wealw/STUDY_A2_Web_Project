@@ -100,5 +100,4 @@ class HomeController extends AbstractController
             'centers' => $centers
         ]);
     }
-
 }
