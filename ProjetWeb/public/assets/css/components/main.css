@@ -107,10 +107,11 @@ main button.disabled,
 main a.disabled {
     display: flex;
     align-items: center;
+    justify-content: center;
     background-color: #fbc02d;
-    border-radius: 2px;
-    color: #ffffff;
-    height: 36px;
+    color: #000000;
+    height: 4em;
+    width: 100%;
     padding: 0 16px;
     min-width: 64px;
 }
@@ -134,15 +135,16 @@ main span.separate_content {
     width: 100%;
 }
 
-main .danger {
-    background-color: #F44336;
+main nav {
+    padding-top: 2em;
 }
 
-main nav.pagination {
+main nav .pagination {
     display: flex;
+    flex-direction: row;
     align-items: center;
+    color: #000000;
     border-radius: 2px;
-    color: #ffffff;
     height: 48px;
 }
 
@@ -151,11 +153,11 @@ main ul.pagination {
 }
 
 main ul.pagination li.page-item a {
-    color: #ffffff;
+    color: #000000;
 }
 
 main ul.pagination li.disabled {
-    color: #C5CAE9;
+    color: #424242;
 }
 
 main ul.pagination li.page-item {
@@ -226,23 +228,6 @@ main div.calendar_item {
     border: 1px #AAAAAA solid;
 }
 
-main table.admin_list {
-    border-collapse: collapse;
-    width: 100%;
-}
-
-main table.admin_list thead tr {
-    background-color: #777777;
-    color: #ffffff;
-    font-size: 20px;
-    height: 56px;
-}
-
-main table.admin_list tr {
-    border-top: 2px #777777 solid;
-    height: 56px;
-}
-
 main a.option i.material-icons {
     color: #666666;
     font-size: 28px;
@@ -267,12 +252,68 @@ main div.search_type {
     padding: 0 12px 12px;
 }
 
+@media (max-width: 800px) {
+    main div.search_type form {
+        flex-direction: column;
+    }
+
+    main div.search_type .searchElement {
+        height: 4em;
+    }
+}
+
 main div.search_type .grower {
     width: 100%;
 }
 
+main div.search_type main form div.checkbox label {
+    color: #999999;
+    text-decoration: none;
+}
+
+main div.search_type #inStock {
+    padding: 16px;
+    right: 40px;
+    width: 1em;
+    height: 1em;
+}
+
+main div.search_type #checkboxDebug div {
+    width: 100%;
+    display: flex;
+}
+
+@media (max-width: 800px) {
+    main div.search_type #checkboxDebug div {
+        justify-content: flex-start;
+    }
+}
+
+main div.search_type #checkboxDebug div label {
+    margin-left: 16px;
+    justify-content: flex-start;
+}
+
+main div.search_type #checkboxDebug div input {
+    justify-content: flex-end;
+}
+
 main div.search_type form {
     width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+main button .contained {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+main button .contained i {
+    align-items: center;
+    justify-content: center;
 }
 
 main div.search_type h3 {
@@ -281,18 +322,9 @@ main div.search_type h3 {
     margin: 12px 0;
 }
 
-main .searchElement {
-    display: flex;
-    flex-direction: row;
-}
-
 main .contained i.material-icons {
     font-size: 24px;
-    margin: -2px 8px 0 -8px;
-}
-
-main button.contained i.material-icons {
-    margin: 0 8px 0 -8px;
+    text-align: center;
 }
 
 main div.carousel_container div.item {
@@ -381,7 +413,7 @@ main .product-container {
 }
 
 main .product-container .product {
-    padding: 1vw;
+    padding: 16px 0 0;
     font-family: Roboto, serif;
     background-color: #ffffff;
     box-shadow: 0 0 3px #424242;
@@ -395,8 +427,8 @@ main .product-container .product:hover {
 }
 
 main .product-container .product img {
+    padding: 8px 0;
     width: 100%;
-    padding: 10px 0 10px 0;
 }
 
 main .product-container .product-name {
@@ -417,6 +449,8 @@ main .product-container .product-type {
 }
 
 main .product-container .product-price {
+    margin-block-start: 0;
+    margin-block-end: 0;
     letter-spacing: 2px;
     font-weight: bold;
     font-size: x-large;
@@ -432,7 +466,7 @@ main .product-container .product-inventory {
     font-weight: bold;
 }
 
-main .product button {
+main .product .button {
     width: 100%;
     padding: 1vh;
     border: none;
@@ -444,6 +478,28 @@ main .product button {
     bottom: 0;
     left: 0;
     position: absolute;
+}
+
+main .link {
+    background-color: #fafafa;
+    color: #000000;
+    display: flex;
+    height: 36px;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+main .register {
+    display: flex;
+    height: 36px;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+main .link:hover {
+    background-color: #c7c7c7;
 }
 
 main .product-shower {
@@ -498,38 +554,105 @@ main .red-button button {
     }
 }
 
-main table table {
+main .tabOverflowContainer {
+    max-width: 100%;
+    overflow-y: hidden;
+    overflow-x: scroll;
+}
+
+main table {
+    border-spacing: 0;
+    width: 100%;
     border-collapse: collapse;
-    width: 40%;
+    min-width: 1100px;
+}
+
+main table thead {
+    border-spacing: 0;
+}
+
+main table a {
+    text-decoration: none;
+    color: #000000;
+}
+
+main table a:hover {
+    color: #c49000;
 }
 
 main table thead tr td,
 main table thead tr th {
     display: flex;
     align-items: center;
-    background-color: #3F51B5;
-    color: #ffffff;
+    background-color: #fbc02d;
+    color: #000000;
     font-family: "Roboto-Medium", sans-serif;
-    height: 48px;
+    height: 4em;
     padding: 8px;
-}
-
-main table tbody tr {
-    border-bottom: 2px #3F51B5 solid;
+    justify-content: center;
 }
 
 main table tr {
     display: flex;
     flex-direction: row;
     align-items: center;
-    height: 48px;
+    height: 4em;
 }
 
 main table td,
 main table th {
     display: flex;
     flex-direction: row;
-    width: 50%;
+    justify-content: center;
+    width: 25%;
+}
+
+main table td {
+    display: block;
+    text-align: center;
+}
+
+main table td img {
+    height: 4em;
+}
+
+main table td a.contained {
+    background-color: #fafafa;
+    color: #000000;
+}
+
+main table td a.contained:hover {
+    background-color: #fbc02d;
+}
+
+main table td form {
+    width: 100%;
+}
+
+main table td form button.contained {
+    background-color: #c7c7c7;
+    color: #000000;
+}
+
+main table td form button.contained:hover {
+    background-color: #F44336;
+}
+
+main table td .sizeLimiter {
+    max-width: 100%;
+}
+
+main table td p {
+    display: block;
+    max-width: 100%;
+}
+
+main table td p a {
+    max-width: 100%;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 main form div.form {
@@ -612,9 +735,28 @@ main form label {
     transition: all 0.3s;
 }
 
-main form div.group {
-    margin: 48px 0;
-    position: relative;
+@media (min-width: 800px) {
+    main form div.group {
+        margin: 48px 0;
+        width: 100%;
+        position: relative;
+    }
+}
+
+@media (max-width: 800px) {
+    main form .group {
+        display: flex;
+        align-content: center;
+        width: 100%;
+        height: 4em;
+        margin: 0;
+        position: relative;
+    }
+}
+
+main form .group div {
+    display: flex;
+    width: 100%;
 }
 
 main form div.group ul {
@@ -705,6 +847,7 @@ main form h4.form {
 
 main form div.select div {
     display: flex;
+    justify-content: center;
     align-items: center;
 }
 
@@ -712,12 +855,11 @@ main form div.select select {
     border: 1px solid #999999;
     border-radius: 2px;
     height: 56px;
-    margin: 0 25px 0 100px;
-    width: 150px;
+    margin: 0 0 0 100px;
+    width: 100%;
 }
 
 main form div.select label {
     color: #999999;
 }
-
 /*# sourceMappingURL=main.css.map */

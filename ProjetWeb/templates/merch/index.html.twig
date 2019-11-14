@@ -4,26 +4,21 @@
         <div class="search_type" style="margin-bottom: 32px">
             <h3>Personnaliser la recherche</h3>
         <div class="row justify_between align_center">
-            <div>
                 {{ form_start(form) }}
-                <div class="group off half">
+            <div class="group off  searchElement">
                     {{ form_row(form.maxPrice) }}
                 </div>
-                <div class="searchElement">
-                    <p>Est en stock:</p>
+            <div class="group select checkbox searchElement" id="checkboxDebug">
+                <div>
                     {{ form_row(form.inStock) }}
                 </div>
-                <div class="searchElement">
-                    <p>Type:</p>
-                    {{ form_row(form.type) }}
                 </div>
-                <div class="group half select">
+            <div class="group select  searchElement">
                     {{ form_rest(form) }}
                 </div>
                 <button type="submit" class="contained"><i class="material-icons">search</i></button>
                 {{ form_end(form) }}
             </div>
-        </div>
     </div>
     <div class="product-container">
             {% for product in products %}

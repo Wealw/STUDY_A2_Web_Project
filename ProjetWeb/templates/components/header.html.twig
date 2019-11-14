@@ -6,7 +6,9 @@
             <div class="burgerLine"></div>
         </a>
         <span class="spacer"></span>
-        <a href="{{ path('index') }}"><img src="{{ asset('assets/images/logo.png') }} " alt="logo"></a>
+        <a href="{{ path('index') }}">
+            <img src="{{ asset('assets/images/logo.png') }} " alt="logo">
+        </a>
         <div class="burger">
             <div>
                 <nav>
@@ -17,6 +19,9 @@
                         <li><a href="{{ path('merch.index') }}" class="nav-link">Produits</a></li>
                         <li><a href="{{ path('events.calendar') }}" class="nav-link">
                                 <div class="button "> Calendrier</div>
+                            </a></li>
+                        <li><a href="{{ path('cart.index') }}" class="nav-link">
+                                <div class="button "> Panier </div>
                             </a></li>
                         {% if is_granted('ROLE_ADMIN') %}
                             <li><a href="{{ path('admin.index') }}" class="nav-link">
@@ -38,6 +43,8 @@
                     <a href="{{ path('security.signup') }}" class="header colorSecondaryLight">
                         <div class="button">S'INSCRIRE</div>
                     </a>
+
+
                     <a href="{{ path('security.login') }}" class="header contained colorSecondary">
                         <div class="button">SE CONNECTER</div>
                     </a>

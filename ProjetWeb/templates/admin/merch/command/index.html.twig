@@ -2,7 +2,7 @@
 
 {% block body %}
      <a href="{{ path('admin.index') }}"><button>Go Back</button></a>
-
+    <div class="tabOverflowContainer">
     <table class="admin_list">
         <thead>
         <tr>
@@ -30,4 +30,5 @@
         {% endfor %}
         </tbody>
     </table>
+    </div>
 {% endblock %}
