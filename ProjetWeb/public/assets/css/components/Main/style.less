@@ -87,7 +87,7 @@ nav ul li a.active {
 .blue {
   display: flex;
   align-items: center;
-  background-color: #ffffff;
+  background-color: @backgroundLight;
   border-radius: 2px;
   color: @secondary;
   height: 36px;
@@ -138,9 +138,8 @@ nav .pagination {
   display: flex;
   flex-direction: row;
   align-items: center;
-
+  color: @primaryText;
   border-radius: 2px;
-  color: #ffffff;
   height: 48px;
 }
 
@@ -149,11 +148,11 @@ ul.pagination {
 }
 
 ul.pagination li.page-item a {
-  color: #ffffff;
+  color: @primaryText;
 }
 
 ul.pagination li.disabled {
-  color: #C5CAE9;
+  color: @shadow;
 }
 
 ul.pagination li.page-item {
