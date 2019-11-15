@@ -7,7 +7,7 @@
             ({{ product.productType.productTypeName }})
         </h3>
 
-        <img src="{{ product.productImagePath }}" alt="Produit">
+        <img src="{{ vich_uploader_asset(product, 'imageFile') }}" alt="Produit">
 
         <p class="product-price">
             {{ product.productPrice }} €

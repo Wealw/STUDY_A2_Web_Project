@@ -49,8 +49,6 @@ class HomeController extends AbstractController
         $commandProducts = $this->commandProductRepository->findMostSold();
         $products = $this->productRepository->findAll();
 
-        dump($this->getUser());
-
         return $this->render('home/index.html.twig', [
             'next_events' => $nextEvents,
             'commandProducts' => $commandProducts,
@@ -70,13 +68,10 @@ class HomeController extends AbstractController
             return $this->redirectToRoute("index", [], 302);
         }
 
-        $user = new User(null, null, null, null, null, null, null, null, null, null, null, null, 1, 1, null);
+        $user = new User(null, null, null, null, null, null, null, null, null, null, null, null, 1, 2, null);
         $form = $this->createForm(SignUpType::class, $user);
         $form->handleRequest($request);
-
-        dump($user);
         if ($form->isSubmitted() && $form->isValid()) {
-            dd($user);
             $user->setUserImagePath("assets/images/user.png");
 
             $userJson = [

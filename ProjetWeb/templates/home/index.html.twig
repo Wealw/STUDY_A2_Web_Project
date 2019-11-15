@@ -18,7 +18,7 @@
                             ({{ prod.productType.productTypeName }})
                         </div>
 
-                        <img src = "{{ prod.productImagePath }}" alt="Produit">
+                        <img src = "{{ vich_uploader_asset(prod, 'imageFile') }}" alt="Produit">
 
                         <div class="product-price">
                             {{ prod.productPrice }} €
@@ -40,7 +40,7 @@
                         {{ event.eventName }}
                     </div>
                     <div class="item_body column">
-                        <img src="{{ event.eventImagePath }}" alt="Evénement">
+                        <img src="{{ vich_uploader_asset(event, 'imageFile') }}" alt="Evénement">
                     </div>
                     <div class="item_footer">
                         <p>{{ event.eventDescription }}</p>
