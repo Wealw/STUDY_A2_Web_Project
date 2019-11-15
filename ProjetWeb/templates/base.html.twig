@@ -12,6 +12,9 @@
     {% endblock %}
 </main>
 {{ include('components/footer.html.twig') }}
+{% if ( not(app.user)) %}
+    {{ include('components/cookie.html.twig') }}
+{% endif %}
 <script type="text/javascript" src="{{ asset('assets/js/jquery.js') }}"></script>
 <script type="text/javascript" src="{{ asset('assets/js/jquery.dropdown.js') }}"></script>
 {% block javascripts %}

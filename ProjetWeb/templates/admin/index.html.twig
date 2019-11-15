@@ -4,47 +4,69 @@
 
 {% block body %}
 
-    <h1>Page d'administration</h1>
-    <section>
-        <div class="row">
-            <div class="column flex-1">
-                <div>
-                    <div>
-                        <div class="row">
-                            <h2>Les événements</h2>
-                        </div>
-                        <a href="{{ path('admin.events.index') }}" class="contained">VOIR TOUT</a>
-                    </div>
-                    <div>
-                        <div class="row">
-                            <h2>Les images</h2>
-                        </div>
-                        <a href="{{ path('admin.pictures.index') }}" class="contained">VOIR TOUT</a>
-                    </div>
-                    <div>
-                        <div class="row">
-                            <h2>Les Commentaires</h2>
-                        </div>
-                        <a href="{{ path('admin.comments.index') }}" class="contained">VOIR TOUT</a>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <h2>Les produits</h2>
-                </div>
-                <div>
-                    <div>
-                        <a href="{{ path('admin.merch.product.index') }}">Liste des produits</a>
-                    </div>
-                    <div>
-                        <a href="{{ path('admin.merch.type.index') }}">Les catégories de produits</a>
-                    </div>
-                    <div>
-                        <a href="{{ path('admin.merch.command.index') }}">Liste des commandes</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <h1 style="margin-bottom: 50px">Page d'administration</h1>
+    <section class="admin">
+        <h2>Evénement et social</h2>
+        <table class="admin_list">
+            <thead>
+            <tr>
+                <th>Titre de la catégorie</th>
+                <th>Nombre d'éléments</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody class="event">
+                <tr class="admin_event">
+                    <td><b>Les catégories d'événements</b></td>
+                    <td>{{ event_categories | length }}</td>
+                    <td class="row"><a href="{{ path('admin.categories.index') }}" class="contained">VOIR TOUT</a></td>
+                </tr>
+                <tr class="admin_event">
+                    <td><b>Les événements</b></td>
+                    <td>{{ events | length }}</td>
+                    <td class="row"><a href="{{ path('admin.events.index') }}" class="contained">VOIR TOUT</a></td>
+                </tr>
+                <tr class="admin_event">
+                    <td><b>Les images</b></td>
+                    <td>{{ pictures | length }}</td>
+                    <td class="row"><a href="{{ path('admin.pictures.index') }}" class="contained">VOIR TOUT</a></td>
+                </tr>
+                <tr class="admin_event">
+                    <td><b>Les commentaires</b></td>
+                    <td>{{ comments | length }}</td>
+                    <td class="row"><a href="{{ path('admin.pictures.index') }}" class="contained">VOIR TOUT</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+    <section class="admin">
+        <h2>Produits et magasins</h2>
+        <table class="admin_list">
+            <thead>
+                <tr>
+                    <th>Titre de la catégorie</th>
+                    <th>Nombre d'éléments</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody class="event">
+                <tr class="admin_event">
+                    <td><b>Les catégories de produits</b></td>
+                    <td>{{ product_categories | length }}</td>
+                    <td class="row"><a href="{{ path('admin.merch.type.index') }}" class="contained">VOIR TOUT</a></td>
+                </tr>
+                <tr class="admin_event">
+                    <td><b>Les produits</b></td>
+                    <td>{{ products | length }}</td>
+                    <td class="row"><a href="{{ path('admin.merch.product.index') }}" class="contained">VOIR TOUT</a></td>
+                </tr>
+                <tr class="admin_event">
+                    <td><b>Les commandes</b></td>
+                    <td>{{ commands | length }}</td>
+                    <td class="row"><a href="{{ path('admin.merch.command.index') }}" class="contained">VOIR TOUT</a></td>
+                </tr>
+            </tbody>
+        </table>
     </section>
 
 {% endblock %}
