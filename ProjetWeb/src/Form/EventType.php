@@ -18,7 +18,8 @@ class EventType extends AbstractType
             ->add('event_name')
             ->add('event_description')
             ->add('imageFile', FileType::class, [
-                'required' => false
+                'required' => false,
+                'label' => false
             ])
             ->add('event_location')
             ->add('event_price', NumberType::class)

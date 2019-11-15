@@ -3,7 +3,13 @@
 {% block title 'Les images des événements - Admin | BDE-CESI' %}
 
 {% block body %}
+
     <h1>Les images des événements</h1>
+    <div class="row justify_between" style="margin-bottom: 50px">
+        <p>Panneau d'administration des images liées aux événements.</p>
+        <a href="{{ path('download.pictures') }}" class="contained_no-width"><i class="material-icons">get_app</i> TÉLÉCHARGER TOUTES LES IMAGES</a>
+    </div>
+
     <div class="tabOverflowContainer">
         <table class="admin_list">
             <thead>

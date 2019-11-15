@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20191112081421 extends AbstractMigration
+final class Version20191115085119 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -24,7 +24,7 @@ final class Version20191112081421 extends AbstractMigration
 
         $this->addSql('CREATE TABLE command (id INT AUTO_INCREMENT NOT NULL, command_ordered_at DATETIME NOT NULL, command_user_id INT NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE command_product (command_id INT NOT NULL, product_id INT NOT NULL, quantity INT NOT NULL, INDEX IDX_3C20574E33E1689A (command_id), INDEX IDX_3C20574E4584665A (product_id), PRIMARY KEY(command_id, product_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
-        $this->addSql('CREATE TABLE product (id INT AUTO_INCREMENT NOT NULL, product_type_id INT NOT NULL, product_name VARCHAR(50) NOT NULL, product_price NUMERIC(10, 2) NOT NULL, product_inventory INT NOT NULL, product_description LONGTEXT NOT NULL, product_image_path VARCHAR(255) NOT NULL, is_orderable TINYINT(1) NOT NULL, INDEX IDX_D34A04AD14959723 (product_type_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE product (id INT AUTO_INCREMENT NOT NULL, product_type_id INT NOT NULL, product_name VARCHAR(50) NOT NULL, product_price NUMERIC(10, 2) NOT NULL, product_inventory INT NOT NULL, product_description LONGTEXT NOT NULL, product_image_path VARCHAR(255) NOT NULL, is_orderable TINYINT(1) NOT NULL, product_modified_at DATETIME DEFAULT NULL, INDEX IDX_D34A04AD14959723 (product_type_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE product_type (id INT AUTO_INCREMENT NOT NULL, product_type_name VARCHAR(50) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE comment (id INT AUTO_INCREMENT NOT NULL, picture_id INT NOT NULL, comment_text LONGTEXT NOT NULL, comment_posted_at DATETIME NOT NULL, comment_modified_at DATETIME DEFAULT NULL, comment_user_id INT NOT NULL, is_visible TINYINT(1) NOT NULL, INDEX IDX_9474526CEE45BDBF (picture_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE comment_impression (comment_id INT NOT NULL, impression_id INT NOT NULL, INDEX IDX_A6BA3B91F8697D13 (comment_id), INDEX IDX_A6BA3B91A3BA46B6 (impression_id), PRIMARY KEY(comment_id, impression_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');

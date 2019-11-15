@@ -4,8 +4,6 @@
 
 {% block body %}
 
-    <h1>Les événements</h1>
-
     <div class="row justify_between">
         <h1>Les événements</h1>
         <div class="row">
@@ -43,7 +41,7 @@
             {% for event in events %}
                 <div class="product">
                     <div class="product-name">{{ event.eventName }}</div>
-                    <img src="{{ event.eventImagePath }}" alt="">
+                    <img src="{{ vich_uploader_asset(event, 'imageFile') }}" alt="">
                     <p class="event_date">Date : {{ event.eventDate | date('d-m-Y') }}
                         à {{ event.eventDate | date('H:i') }}</p>
                     <div class="product-price">
@@ -61,7 +59,7 @@
                         {% if participated == true %}
                             <a href="" class="blue disabled" disabled>INSCRIT</a>
                         {% else %}
-                            <a href="{{ path('events.participate', {id: event.id}) }}" class="blue">S'INSCRIRE</a>
+                            <a href="{{ path('events.participate', {id: event.id}) }}" class="contained">S'INSCRIRE</a>
                         {% endif %}
                     {% endif %}
                     <a href="{{ path('events.show', {id: event.Id}) }}" class="link">Voir</a>
