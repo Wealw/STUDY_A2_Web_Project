@@ -6,23 +6,21 @@ namespace App\Controller;
 use App\Entity\Merch\Command;
 use App\Entity\Merch\CommandProduct;
 use App\Notification\CommandNotification;
-use App\Repository\CommandProductRepository;
-use App\Repository\CommandRepository;
 use App\Repository\ProductRepository;
+use ConnectHolland\CookieConsentBundle\CHCookieConsentBundle;
+use DateTime;
 use Exception;
-use Metadata\Tests\Driver\Fixture\C\SubDir\C;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException as GuzzleExceptionAlias;
 use Swift_Mailer;
 use Swift_Message;
-use Swift_SmtpTransport;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use GuzzleHttp\Exception\GuzzleException as GuzzleExceptionAlias;
-use GuzzleHttp\Client;
 
 class CartController extends AbstractController
 {
@@ -39,7 +37,7 @@ class CartController extends AbstractController
 
         $this->getCart($session, $request);
         $cart = $session->get('cart', []);
-
+        new CHCookieConsentBundle();
         $cartWithData = [];
 
         foreach ($cart as $id => $quantity) {
@@ -139,34 +137,34 @@ class CartController extends AbstractController
      */
     public function persist(SessionInterface $session, Request $request)
     {
-        $cart = $session->get('cart', []);
-        if(($request->cookies->get('cart')) !== null)
-        {
-            if($cart == null)
-            {
-                $cookie = new Cookie(
-                    'cart',
-                    '',
-                    time() + ( 2 * 365 * 24 * 60 * 60)
-                );
-                $res = new Response();
-                $res->headers->setCookie($cookie);
-                $res->send();
-                return $this->redirectToRoute('cart.index');
+        if ($this->getUser() !== null) {
+            $cart = $session->get('cart', []);
+            if (($request->cookies->get('cart')) !== null) {
+                if ($cart == null) {
+                    $cookie = new Cookie(
+                        'cart',
+                        '',
+                        time() + (2 * 365 * 24 * 60 * 60)
+                    );
+                    $res = new Response();
+                    $res->headers->setCookie($cookie);
+                    $res->send();
+                    return $this->redirectToRoute('cart.index');
+                }
             }
+            $DataCart = "";
+            foreach ($cart as $id => $quantity) {
+                $DataCart = $DataCart . $id . "-" . $quantity . ";";
+            }
+            $cookie = new Cookie(
+                'cart',
+                $DataCart,
+                time() + (2 * 365 * 24 * 60 * 60)
+            );
+            $res = new Response();
+            $res->headers->setCookie($cookie);
+            $res->send();
         }
-        $DataCart = "";
-        foreach ($cart as $id => $quantity) {
-            $DataCart = $DataCart . $id . "-" . $quantity . ";";
-        }
-        $cookie = new Cookie(
-            'cart',
-            $DataCart,
-            time() + ( 2 * 365 * 24 * 60 * 60)
-        );
-        $res = new Response();
-        $res->headers->setCookie($cookie);
-        $res->send();
         return $this->redirectToRoute('cart.index');
     }
 
@@ -177,38 +175,33 @@ class CartController extends AbstractController
      */
     public function getCart(SessionInterface $session, Request $request)
     {
-        $cart = $session->get('cart', []);
+        if (!$this->getUser()) {
+            $cart = $session->get('cart', []);
 
-        if ($cart !== null)
-        {
-            foreach ($cart as $id => $quantity) {
-                unset($cart[$id]);
+            if ($cart !== null) {
+                foreach ($cart as $id => $quantity) {
+                    unset($cart[$id]);
+                }
             }
-        }
 
-        if((($request->cookies->get('cart')) !== null) && ($cart == null))
-        {
-            $savedCart = ($request->cookies->get('cart'));
-            $products = explode(';', $savedCart);
+            if ((($request->cookies->get('cart')) !== null) && ($cart == null)) {
+                $savedCart = ($request->cookies->get('cart'));
+                $products = explode(';', $savedCart);
 
-            foreach ($products as $id => $product)
-            {
-                if($product !== "")
-                {
-                    $temp = explode('-', $product);
-                    for($i = 0; $i < $temp[1]; $i++)
-                    {
-                        if(!empty($cart[$temp[0]]))
-                        {
-                            $cart[$temp[0]]++;
-                        } else
-                        {
-                            $cart[$temp[0]] = 1;
+                foreach ($products as $id => $product) {
+                    if ($product !== "") {
+                        $temp = explode('-', $product);
+                        for ($i = 0; $i < $temp[1]; $i++) {
+                            if (!empty($cart[$temp[0]])) {
+                                $cart[$temp[0]]++;
+                            } else {
+                                $cart[$temp[0]] = 1;
+                            }
                         }
                     }
                 }
+                $session->set('cart', $cart);
             }
-            $session->set('cart', $cart);
         }
         return $this->redirectToRoute('cart.index');
     }
@@ -239,7 +232,7 @@ class CartController extends AbstractController
 
             $command
                 ->setCommandUserId($this->getUser()->getUserId())
-                ->setCommandOrderedAt(new \DateTime('now'));
+                ->setCommandOrderedAt(new DateTime('now'));
 
             $this->getDoctrine()->getManager()->persist($command);
 
