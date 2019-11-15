@@ -3,8 +3,6 @@
 {% block body %}
 
     <h1>Votre panier</h1>
-    <a href="{{ path('cart.persist') }}">Persist</a>
-    <a href="{{ path('cart.getCart') }}">GetCart</a>
 {% if items | length > 0 %}
 <div class="tabOverflowContainer">
     <table>
