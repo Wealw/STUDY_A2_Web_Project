@@ -9,7 +9,6 @@ use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
-use Vich\UploaderBundle\Twig\Extension\UploaderExtension;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\EventRepository")
