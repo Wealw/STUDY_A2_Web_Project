@@ -389,6 +389,10 @@ main div.card_body img {
   main div.container {
     padding: 0 5vh;
   }
+
+    main span.little_display_none {
+        display: none;
+    }
 }
 @media screen and (max-width: 720px) {
   main div.container {
@@ -412,7 +416,7 @@ main a.option i.material-icons:active {
   color: #fbc02d;
 }
 main p.event_date {
-  margin: 0;
+    margin: 8px 0;
 }
 main p.event_description {
   color: #555555;
@@ -482,7 +486,6 @@ main button .contained i {
   align-items: center;
   justify-content: center;
 }
-
 main a.contained:hover {
     background-color: #c49000;
 }
@@ -552,6 +555,25 @@ main div.admin_categories {
 }
 main div.admin_categories h3 {
   color: #555555;
+}
+
+main div.resize_img {
+    height: 200px;
+    overflow: hidden;
+}
+
+main .product-price {
+    padding-bottom: 32px;
+}
+
+main article.product {
+    position: relative;
+}
+
+main .sticky_bottom {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
 }
 main .column {
   display: flex;
@@ -1038,7 +1060,6 @@ main form .checkbox input {
   height: 20px;
   width: 20px;
 }
-
 .cookie {
     box-shadow: 0 0 3px #424242;
     background-color: #fafafa;

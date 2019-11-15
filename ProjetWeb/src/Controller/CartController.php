@@ -264,13 +264,13 @@ class CartController extends AbstractController
                 $secondResponse = $client->request('GET', 'http://127.0.0.1:3000/api/roles/' . $dataUser["role_id"]);
                 $dataRole = json_decode($secondResponse->getBody(), true, 512, JSON_THROW_ON_ERROR);
 
-                if($dataRole['role_name'] == "Membre BDE")
+                if ($dataRole['role_name'] == "ROLE_BDE")
                 {
                     // Create a message
                     $message = (new Swift_Message('New Order Made'))
                         ->setFrom('projetweeb@gmail.com')
                         ->setTo($dataUser['user_mail'])
-                        ->setBody('New command made ! Check it in the ADMIN/COMMAND');
+                        ->setBody('New command made ! Check it in the ADMIN/COMMAND | ID : ' . $command->getId());
 
                     // Send the message
                     $mailer->send($message);

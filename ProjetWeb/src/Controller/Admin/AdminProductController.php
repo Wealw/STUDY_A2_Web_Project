@@ -6,19 +6,18 @@ namespace App\Controller\Admin;
 
 use App\Entity\Merch\Admin\AdminProductSearch;
 use App\Entity\Merch\Product;
-use App\Entity\Merch\Command;
-use App\Entity\Merch\ProductType;
 use App\Form\AdminProductSearchType;
 use App\Form\ProductType as ProductForm;
-use App\Repository\CommandProductRepository;
-use App\Repository\CommandRepository;
 use App\Repository\ProductRepository;
 use App\Repository\ProductTypeRepository;
+use Liip\ImagineBundle\Imagine\Cache\CacheManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 
 class AdminProductController extends AbstractController
@@ -64,15 +63,20 @@ class AdminProductController extends AbstractController
      * @Route("admin/product/{id}/edit", name="admin.merch.product.id")
      * @param Request $request
      * @param Product $product
+     * @param CacheManager $cacheManager
+     * @param UploaderHelper $helper
      * @return Response
      */
-    public function edit(Request $request, Product $product) : Response
+    public function edit(Request $request, Product $product, CacheManager $cacheManager, UploaderHelper $helper): Response
     {
         $form = $this->createForm(ProductForm::class, $product);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid())
         {
+            if ($product->getImageFile() instanceof UploadedFile) {
+                $cacheManager->remove($helper->asset($product, 'imageFile'));
+            }
             $this->getDoctrine()->getManager()->flush();
             return $this->redirectToRoute('admin.merch.product.index');
         }
