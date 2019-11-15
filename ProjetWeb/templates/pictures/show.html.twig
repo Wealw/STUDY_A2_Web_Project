@@ -92,7 +92,7 @@
         {% if app.user %}
             <div class="add_comment">
                 {{ form_start(form) }}
-                    {{ form_row(form.commentText) }}
+                    <div class="group off">{{ form_row(form.commentText) }}</div>
                     <button type="submit" class="contained">AJOUTER</button>
                 {{ form_end(form) }}
             </div>
@@ -102,4 +102,5 @@
 
 {% block javascripts %}
     <script src="{{ asset('assets/js/ajaxLikes.js') }}"></script>
+    <script src="{{ asset('assets/js/form.js') }}"></script>
 {% endblock %}

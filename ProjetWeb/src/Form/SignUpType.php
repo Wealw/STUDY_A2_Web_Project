@@ -24,6 +24,7 @@ class SignUpType extends AbstractType
             ->add('user_password')
             ->add('centerId', ChoiceType::class, [
                 'mapped' => false,
+                'label' => 'Centre CESI',
                 'choices' => [
                     'Strasbourg' => 1,
                     'Nanterre' => 2,
@@ -39,6 +40,7 @@ class SignUpType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => User::class,
+            'translation_domain' => 'forms'
         ]);
     }
 }

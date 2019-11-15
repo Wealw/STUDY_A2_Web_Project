@@ -109,6 +109,19 @@ nav ul li a.active {
   width: 100%;
   padding: 0 16px;
   min-width: 64px;
+  white-space: nowrap;
+}
+
+.contained_no-width {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: @secondary;
+  color: @primaryText;
+  height: 4em;
+  padding: 0 16px;
+  min-width: 64px;
+  white-space: nowrap;
 }
 
 button.disabled, a.disabled {
@@ -283,6 +296,8 @@ div.search_type {
   #checkboxDebug div {
     width: 100%;
     display: flex;
+    padding: 0 8px;
+
     @media (max-width: 800px) {
       justify-content: flex-start;
     }
@@ -290,10 +305,14 @@ div.search_type {
     label {
       margin-left: 16px;
       justify-content: flex-start;
+      left: 0;
     }
 
     input {
       justify-content: flex-end;
+      margin-left: 56px;
+      height: 20px;
+      width: 20px;
     }
   }
 
@@ -304,7 +323,6 @@ div.search_type {
 
   }
 }
-
 
 button .contained {
   text-align: center;
@@ -385,4 +403,9 @@ div.item_footer {
 div.comment {
   border-radius: 2px;
   width: 50%;
+}
+
+div.form_justify form {
+  display: flex;
+  justify-content: space-between;
 }

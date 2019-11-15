@@ -9,10 +9,12 @@
     </a>
     <div class="search_type" style="margin-bottom: 32px">
         <h3>Personnaliser la recherche</h3>
-        {{ form_start(form) }}
-        <div class="group off half search_bar">{{ form_rest(form) }}</div>
-        <button type="submit" class="contained">RECHERCHER</button>
-        {{ form_end(form) }}
+        <div class="form_justify">
+            {{ form_start(form) }}
+            <div class="group off half search_bar">{{ form_rest(form) }}</div>
+            <button type="submit" class="contained_no-width">RECHERCHER</button>
+            {{ form_end(form) }}
+        </div>
     </div>
     <div class="tabOverflowContainer">
         <table class="admin_list">

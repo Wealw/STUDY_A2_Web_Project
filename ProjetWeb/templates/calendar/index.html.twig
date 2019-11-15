@@ -7,9 +7,12 @@
     <h1>Calendrier - {{ start | date('m/Y') }}</h1>
     <div class="navigation row justify_between" style="margin-bottom: 24px">
         <div class="row">
-            <a href="{{ path('events.calendar.other', {monthNumber: prevMonth, yearNumber: prevYear}) }}" class="contained"><i class="material-icons">keyboard_arrow_left</i> MOIS PRÉCÉDENT</a>
+            <a href="{{ path('events.calendar.other', {monthNumber: prevMonth, yearNumber: prevYear}) }}" class="contained" style="white-space: nowrap; padding-right: 24px">
+                <i class="material-icons">keyboard_arrow_left</i>MOIS PRÉCÉDENT</a>
             <span class="separate_buttons"></span>
-            <a href="{{ path('events.calendar.other', {monthNumber: nextMonth, yearNumber: nextYear}) }}" class="contained">MOIS SUIVANT&nbsp<i class="material-icons">keyboard_arrow_right</i></a>
+            <span class="separate_buttons"></span>
+            <a href="{{ path('events.calendar.other', {monthNumber: nextMonth, yearNumber: nextYear}) }}" class="contained" style="padding-right: 0">MOIS SUIVANT&nbsp
+                <i class="material-icons">keyboard_arrow_right</i></a>
         </div>
         {% if is_granted('ROLE_ADMIN') %}
             <div>
@@ -23,7 +26,7 @@
                 {% set date = start | date_modify("+" ~ (k + i *7) ~ " days") %}
                 {% set today = date | date('Y-m-d') %}
                 <div class="calendar_item">
-                    <div class="calendar_day">{{ date | date('d-m-Y') }}</div>
+                    <div class="calendar_day">{{ date | date('d') }}</div>
                     <div>
                         {% for k, event in events %}
                             {% if k == today %}

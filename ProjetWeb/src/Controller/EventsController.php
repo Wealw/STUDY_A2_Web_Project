@@ -71,7 +71,10 @@ class EventsController extends AbstractController
             $request->query->getInt('page', 1),
             15
         );
-        $participations = $participationRepository->findBy(['participation_user_id' => $this->getUser()->getUserId()]);
+        $participations = [];
+        if ($this->getUser()) {
+            $participations = $participationRepository->findBy(['participation_user_id' => $this->getUser()->getUserId()]);
+        }
 
         return $this->render("events/index.html.twig", [
             'events' => $events,

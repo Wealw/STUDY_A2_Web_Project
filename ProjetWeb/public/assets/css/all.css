@@ -31,6 +31,9 @@ header .spacerMaximised {
 header .spacerMinified {
   display: none;
 }
+header .username {
+  margin-right: 24px;
+}
 header nav {
   display: flex;
   flex-direction: row;
@@ -294,6 +297,18 @@ main a.disabled {
   width: 100%;
   padding: 0 16px;
   min-width: 64px;
+  white-space: nowrap;
+}
+main .contained_no-width {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fbc02d;
+  color: #000000;
+  height: 4em;
+  padding: 0 16px;
+  min-width: 64px;
+  white-space: nowrap;
 }
 main button.disabled,
 main a.disabled {
@@ -434,6 +449,7 @@ main div.search_type #inStock {
 main div.search_type #checkboxDebug div {
   width: 100%;
   display: flex;
+  padding: 0 8px;
 }
 @media (max-width: 800px) {
   main div.search_type #checkboxDebug div {
@@ -443,9 +459,13 @@ main div.search_type #checkboxDebug div {
 main div.search_type #checkboxDebug div label {
   margin-left: 16px;
   justify-content: flex-start;
+  left: 0;
 }
 main div.search_type #checkboxDebug div input {
   justify-content: flex-end;
+  margin-left: 56px;
+  height: 20px;
+  width: 20px;
 }
 main div.search_type form {
   width: 100%;
@@ -511,6 +531,10 @@ main div.item_footer {
 main div.comment {
   border-radius: 2px;
   width: 50%;
+}
+main div.form_justify form {
+  display: flex;
+  justify-content: space-between;
 }
 main .column {
   display: flex;
@@ -677,6 +701,23 @@ main .product-information div {
 }
 main .product-description p {
   text-align: justify;
+}
+main div.calendar_item {
+  height: 144px;
+  padding: 4px;
+  transition: 0.2s all;
+}
+main div.calendar_item:hover {
+  background-color: #eeeeee;
+  transition: 0.2s all;
+}
+main div.event_item a {
+  color: #333333;
+  transition: 0.2s all;
+}
+main div.event_item a:hover {
+  color: #c49000;
+  transition: 0.2s all;
 }
 main .tabOverflowContainer {
   max-width: 100%;
@@ -874,6 +915,9 @@ main form div.groups {
   flex-direction: row;
   justify-content: space-between;
 }
+main form div.groups div.group {
+  margin: 0;
+}
 main form div.half,
 main form div.third {
   margin: 0;
@@ -929,14 +973,22 @@ main form div.select div {
   align-items: center;
 }
 main form div.select select {
-  border: 1px solid #999999;
-  border-radius: 2px;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  font-size: 18px;
   height: 56px;
   margin: 0 0 0 100px;
-  width: 100%;
+  width: 150px;
+}
+main form div.select select option {
+  font-size: 18px;
 }
 main form div.select label {
   color: #999999;
+}
+main form .checkbox div {
+  display: flex;
+  flex-direction: row;
 }
 body {
   margin: 0;

@@ -6,16 +6,22 @@
 
     <div class="row justify_between">
         <h1>Les événements</h1>
-        {% if app.user %}
-
-            <a href="{{ path('profile.events') }}" class="contained">MES INSCRIPTIONS</a>
-        {% endif %}
+        <div class="row">
+            {% if app.user %}
+                <a href="{{ path('profile.events') }}" class="contained_no-width">MES INSCRIPTIONS</a>
+            {% endif %}
+            {% if is_granted('ROLE_ADMIN') %}
+                <span class="separate_buttons"></span>
+                <span class="separate_buttons"></span>
+                <a href="{{ path('admin.events.new') }}" class="contained_no-width"><i class="material-icons">add</i> NOUVEL ÉVÉNEMENT</a>
+            {% endif %}
+        </div>
     </div>
     <section>
         <div class="search_type" style="margin-bottom: 32px">
             <h3>Personnaliser la recherche</h3>
             <div class="row justify_between align_center">
-                <div class="grower">
+                <div class="grower" style="width: initial">
                     {{ form_start(form) }}
                     <div class="group off half">
                         {{ form_row(form.maxPrice) }}
@@ -23,12 +29,12 @@
                     <div class="group half select">
                         {{ form_rest(form) }}
                     </div>
-                    <button type="submit" class="contained"><i class="material-icons">search</i></button>
+                </div>
+                <div>
+                    <button type="submit" class="contained_no-width"><i class="material-icons">search</i></button>
                     {{ form_end(form) }}
                 </div>
-                {% if is_granted('ROLE_ADMIN') %}
-                    <a href="{{ path('admin.events.new') }}" class="contained"><i class="material-icons">add</i> NOUVEL ÉVÉNEMENT</a>
-                {% endif %}
+
             </div>
         </div>
         <div class="product-container">
