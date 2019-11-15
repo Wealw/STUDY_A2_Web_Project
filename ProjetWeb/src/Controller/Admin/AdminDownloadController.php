@@ -3,12 +3,10 @@
 
 namespace App\Controller\Admin;
 
-
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use ZipArchive;
-
 
 class AdminDownloadController extends AbstractController
 {
@@ -18,16 +16,14 @@ class AdminDownloadController extends AbstractController
      */
     public function downloadProd()
     {
-        $path = explode("\src", __DIR__ );
+        $path = explode("\src", __DIR__);
         $imagesProds = scandir($path[0] . '\public\assets\images\products');
         $imgPath = $path[0] . '\public\assets\images\products';
         $zipPath = $path[0] . '\public\assets\downloadimages.zip';
         $zip = new ZipArchive();
         $zip->open($zipPath, ZIPARCHIVE::CREATE | ZIPARCHIVE::OVERWRITE);
-        foreach ($imagesProds as $key=>$imagesProd)
-        {
-            if($key > 1)
-            {
+        foreach ($imagesProds as $key => $imagesProd) {
+            if ($key > 1) {
                 $zip->addFile($zipPath, $imagesProd);
             }
         }
@@ -41,16 +37,14 @@ class AdminDownloadController extends AbstractController
      */
     public function downloadEv()
     {
-        $path = explode("\src", __DIR__ );
+        $path = explode("\src", __DIR__);
         $imagesEvs = scandir($path[0] . '\public\assets\images\events');
         $imgPath = $path[0] . '\public\assets\images\events';
         $zipPath = $path[0] . '\public\assets\downloadevents.zip';
         $zip = new ZipArchive();
         $zip->open($zipPath, ZIPARCHIVE::CREATE | ZIPARCHIVE::OVERWRITE);
-        foreach ($imagesEvs as $key=>$imagesEv)
-        {
-            if($key > 1)
-            {
+        foreach ($imagesEvs as $key => $imagesEv) {
+            if ($key > 1) {
                 $zip->addFile($zipPath, $imagesEv);
             }
         }
@@ -65,16 +59,14 @@ class AdminDownloadController extends AbstractController
      */
     public function downloadPic()
     {
-        $path = explode("\src", __DIR__ );
+        $path = explode("\src", __DIR__);
         $imagesPics = scandir($path[0] . '\public\assets\images\pictures');
         $imgPath = $path[0] . '\public\assets\images\pictures';
         $zipPath = $path[0] . '\public\assets\downloadpictures.zip';
         $zip = new ZipArchive();
         $zip->open($zipPath, ZIPARCHIVE::CREATE | ZIPARCHIVE::OVERWRITE);
-        foreach ($imagesPics as $key=>$imagesPic)
-        {
-            if($key > 1)
-            {
+        foreach ($imagesPics as $key => $imagesPic) {
+            if ($key > 1) {
                 $zip->addFile($zipPath, $imagesPic);
             }
         }
