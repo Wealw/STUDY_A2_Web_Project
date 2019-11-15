@@ -1,9 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
+{% block title 'Nouvelle illustration d\'événement | BDE-CESI' %}
 
+{% block body %}
+<h1>Ajouter une illustration à l'événement</h1>
 <div class="form">
-    <h3 class="form">AJOUTER UNE PHOTO</h3>
     {{ form_start(form) }}
         <div class="group off">{{ form_row(form.picture_name) }}</div>
         <div class="group off">{{ form_row(form.picture_description) }}</div>

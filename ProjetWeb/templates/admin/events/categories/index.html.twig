@@ -1,15 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title 'Administrer les événements | BDE.CESI' %}
+{% block title 'Les catégories d\'événement - Admin | BDE-CESI' %}
 
 {% block body %}
 
-    <h1>Liste des événements :</h1>
+    <h1>Liste des catégories d'événement :</h1>
 
     <div class="column">
         <div class="row justify_between">
-            <p>Ensemble des événements</p>
-            <a href="{{ path('admin.events.new') }}" class="contained"><i class="material-icons">add</i> AJOUTER UN EVENEMENT</a>
+            <p>Liste des catégories d'événement</p>
+            <a href="{{ path('admin.categories.new') }}" class="contained_no-width"><i class="material-icons">add</i> AJOUTER UNE CATÉGORIE</a>
         </div>
         <table class="admin_list">
             <thead>

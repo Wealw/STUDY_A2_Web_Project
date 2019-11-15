@@ -1,7 +1,9 @@
 {% extends 'base.html.twig' %}
 
+{% block title 'Liste des commandes - Admin | BDE-CESI' %}
+
 {% block body %}
-     <a href="{{ path('admin.index') }}"><button>Go Back</button></a>
+     <a href="{{ path('admin.index') }}">Go Back</a>
     <div class="tabOverflowContainer">
     <table class="admin_list">
         <thead>
@@ -10,7 +12,6 @@
             <th>Date</th>
             <th>UserID</th>
             <th>In Details</th>
-
         </tr>
         </thead>
         <tbody class="command">
@@ -19,13 +20,7 @@
                 <td>{{ command.Id }}</td>
                 <td>{{ command.commandOrderedAt | date('d:m:Y - H:i | e') }}</td>
                 <td>{{ command.commandUserId }}</td>
-                <td>
-                    <a class="button-container" href="{{ path('admin.merch.command.show', {id: command.Id}) }}">
-                        <button>
-                            Details
-                        </button>
-                    </a>
-                </td>
+                <td><a class="button-container" href="{{ path('admin.merch.command.show', {id: command.Id}) }}">Details</a></td>
             </tr>
         {% endfor %}
         </tbody>

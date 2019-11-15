@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class User
@@ -24,7 +25,12 @@ class User implements UserInterface
     private $user_postal_code;
     private $user_address;
     private $user_city;
+
+    /**
+     * @Assert\EqualTo(propertyPath="confirm_password", message="La confirmation du mot de passe n'est pas bonne")
+     */
     private $user_password;
+    private $confirm_password;
 
     /**
      * @var File|null
@@ -416,6 +422,25 @@ class User implements UserInterface
     {
         return $this->user_password;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getConfirmPassword()
+    {
+        return $this->confirm_password;
+    }
+
+    /**
+     * @param mixed $confirm_password
+     * @return User
+     */
+    public function setConfirmPassword($confirm_password)
+    {
+        $this->confirm_password = $confirm_password;
+        return $this;
+    }
+
 
     /**
      * @see UserInterface

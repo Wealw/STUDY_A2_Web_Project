@@ -1,9 +1,24 @@
 {% extends 'base.html.twig' %}
 
+{% block title 'Editer un produit - Admin | BDE-CESI' %}
+
 {% block body %}
+    <h1>Editer {{ product.productName }}</h1>
+
     {{ form_start(form) }}
-    {{ form_rest(form) }}
-    <button>Editer</button>
+    <div class="group off">{{ form_row(form.productName) }}</div>
+    <div class="groups">
+        <div class="group off" style="margin-right: 50px;">{{ form_row(form.productPrice) }}</div>
+        <div class="group off">{{ form_row(form.productInventory) }}</div>
+    </div>
+    <div class="group off">{{ form_row(form.productDescription) }}</div>
+    <div class="group off">{{ form_row(form.imageFile) }}</div>
+    <div class="group off">{{ form_row(form.isOrderable) }}</div>
+    <div class="group off">{{ form_row(form.productType) }}</div>
+    <button type="submit" class="contained">Editer</button>
     {{ form_end(form) }}
 {% endblock %}
 
+{% block javascripts %}
+    <script src="{{ asset('assets/js/form.js') }}"></script>
+{% endblock %}
