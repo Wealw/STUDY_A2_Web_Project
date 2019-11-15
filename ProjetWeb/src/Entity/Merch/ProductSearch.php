@@ -3,13 +3,14 @@
 
 namespace App\Entity\Merch;
 
-
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 
 class ProductSearch
 {
     /**
      * @var int|null
+     * @Assert\Range(min=10)
      */
     private $maxPrice;
 
