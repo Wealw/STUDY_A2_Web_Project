@@ -538,6 +538,10 @@ main div.form_justify form {
   display: flex;
   justify-content: space-between;
 }
+main div.event_option {
+  background-color: #fafafa;
+  padding: 8px;
+}
 main .column {
   display: flex;
   flex-direction: column;
@@ -991,6 +995,10 @@ main form div.select label {
 main form .checkbox div {
   display: flex;
   flex-direction: row;
+}
+main form .checkbox input {
+  height: 20px;
+  width: 20px;
 }
 body {
   margin: 0;
