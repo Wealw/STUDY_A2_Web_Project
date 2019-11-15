@@ -36,7 +36,6 @@ class CartController extends AbstractController
 
         $this->getCart($session, $request);
         $cart = $session->get('cart', []);
-        new CHCookieConsentBundle();
         $cartWithData = [];
 
         foreach ($cart as $id => $quantity) {

@@ -482,6 +482,10 @@ main button .contained i {
   align-items: center;
   justify-content: center;
 }
+
+main a.contained:hover {
+    background-color: #c49000;
+}
 main div.search_type h3 {
   color: #fbc02d;
   font-size: 24px;
@@ -1033,6 +1037,20 @@ main form .checkbox div {
 main form .checkbox input {
   height: 20px;
   width: 20px;
+}
+
+.cookie {
+    box-shadow: 0 0 3px #424242;
+    background-color: #fafafa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: sticky;
+    bottom: 0;
+    padding: 0 2em;
+    min-height: 4em;
+    width: 100%;
 }
 body {
   margin: 0;
