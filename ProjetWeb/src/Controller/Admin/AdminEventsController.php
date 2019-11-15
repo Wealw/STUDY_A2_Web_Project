@@ -10,14 +10,15 @@ use App\Form\AdminEventSearchType;
 use App\Form\EventType;
 use App\Repository\CommentRepository;
 use App\Repository\EventRepository;
-use App\Repository\EventTypeRepository;
 use Doctrine\Common\Persistence\ObjectManager;
-use Knp\Component\Pager\PaginatorInterface;
+use GuzzleHttp\Client;
+use mysql_xdevapi\Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
 class AdminEventsController extends AbstractController
@@ -142,5 +143,43 @@ class AdminEventsController extends AbstractController
 
         return $this->json($jsonEvents, 200, ['Content-Type' => 'application/json']);
     }
+
+    /**
+     * @Route("/admin/events/csvize/{id}", name="admin.events.csvize", methods={"GET"})
+     * @param Event $event
+     * @param Request $request
+     * @return Response
+     */
+    public function csvize(Event $event, Request $request)
+    {
+        try {
+            $csvName = $event->getId() . '_' . $event->getEventName();
+            $event = $this->repository->find($event->getId());
+            $participations = $event->getParticipation()->getValues();
+            $response = new StreamedResponse(static function () use ($participations) {
+                $client = new Client();
+                $handle = fopen('php://output', 'r+');
+                fprintf($handle, chr(0xEF) . chr(0xBB) . chr(0xBF));
+                foreach ($participations as $participation) {
+                    $response = $client->request('GET', 'http://127.0.0.1:3000/api/users/' . $participation->getParticipationUserId());
+                    if ($response->getStatusCode() !== 200) {
+                        throw new Exception('External error');
+                    }
+                    $data = json_decode($response->getBody(), true, 512, JSON_THROW_ON_ERROR);
+                    $tab = array($data['user_first_name'], $data['user_last_name']);
+                    fputcsv($handle, $tab, ';');
+                }
+                fclose($handle);
+            });
+            $response->headers->set('Content-Type', 'application/force-download');
+            $response->headers->set('Content-Disposition', 'attachment; filename="' . $csvName . '".csv"');
+            return $response;
+        } catch (Exception $e) {
+            return $this->redirectToRoute('admin.events.index');
+        }
+
+
+    }
+
 
 }
