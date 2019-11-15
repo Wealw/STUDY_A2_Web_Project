@@ -2,14 +2,20 @@
 
 namespace App\Controller\Admin;
 
+use App\Repository\CommandRepository;
+use App\Repository\CommentRepository;
 use App\Repository\EventRepository;
 use App\Repository\PictureRepository;
+use App\Repository\ProductRepository;
+use App\Repository\ProductTypeRepository;
 use League\Flysystem\Filesystem;
 use League\Flysystem\ZipArchive\ZipArchiveAdapter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
+use ZipArchive;
 
 class AdminController extends AbstractController
 {
@@ -36,15 +42,31 @@ class AdminController extends AbstractController
 
     /**
      * @Route("/admin", name="admin.index")
+     * @param EventRepository $eventRepository
+     * @param CommentRepository $commentRepository
+     * @param ProductTypeRepository $productTypeRepository
+     * @param ProductRepository $productRepository
+     * @param CommandRepository $commandRepository
+     * @return Response
      */
-    public function index()
+    public function index(EventRepository $eventRepository, CommentRepository $commentRepository, ProductTypeRepository $productTypeRepository, ProductRepository $productRepository, CommandRepository $commandRepository)
     {
-        $events = $this->eventRepository->findNextVisible();
-        $pictures = $this->pictureRepository->findLatestPosted();
+        $eventType = $eventRepository->findAll();
+        $events = $this->eventRepository->findAll();
+        $pictures = $this->pictureRepository->findAll();
+        $comments = $commentRepository->findAll();
+        $productType = $productTypeRepository->findAll();
+        $products = $productRepository->findAll();
+        $commands = $commandRepository->findAll();
 
         return $this->render("admin/index.html.twig", [
+            'event_categories' => $eventType,
             'events' => $events,
-            'pictures' => $pictures
+            'pictures' => $pictures,
+            'comments' => $comments,
+            'product_categories' => $productType,
+            'products' => $products,
+            'commands' => $commands
         ]);
     }
 
@@ -58,7 +80,7 @@ class AdminController extends AbstractController
      */
     public function downloadImages()
     {
-        $zip = new \ZipArchive();
+        $zip = new ZipArchive();
         $zipName = time() . ".zip";
 
 

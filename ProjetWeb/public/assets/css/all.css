@@ -540,6 +540,15 @@ main div.event_option {
   background-color: #fafafa;
   padding: 8px;
 }
+main section.admin {
+  margin: 24px 0 50px 24px;
+}
+main div.admin_categories {
+  margin-left: 24px;
+}
+main div.admin_categories h3 {
+  color: #555555;
+}
 main .column {
   display: flex;
   flex-direction: column;
@@ -636,6 +645,7 @@ main .link {
   justify-content: center;
   align-items: center;
   width: 100%;
+  transition: 0.2s all;
 }
 main .register {
   display: flex;
@@ -646,6 +656,7 @@ main .register {
 }
 main .link:hover {
   background-color: #c7c7c7;
+  transition: 0.2s all;
 }
 main .product-shower {
   width: 100%;
@@ -722,6 +733,31 @@ main div.event_item a {
 main div.event_item a:hover {
   color: #c49000;
   transition: 0.2s all;
+}
+main div.file {
+  position: relative;
+  width: 100%;
+}
+main div.file input {
+  display: none;
+}
+main div.file button.file {
+  background-color: #fbc02d;
+  border-radius: 50%;
+  color: #FFFFFF;
+  height: 56px;
+  width: 56px;
+}
+main div.file button.file i {
+  font-size: 28px;
+  margin-top: 2px;
+}
+main div.file span.custom_text {
+  color: #424242;
+  border-bottom: 1px solid #aaaaaa;
+  font-size: 18px;
+  padding: 0 0 2px 2px;
+  margin-left: 6px;
 }
 main .tabOverflowContainer {
   max-width: 100%;
