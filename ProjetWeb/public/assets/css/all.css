@@ -390,9 +390,9 @@ main div.card_body img {
     padding: 0 5vh;
   }
 
-    main span.little_display_none {
-        display: none;
-    }
+  main span.little_display_none {
+    display: none;
+  }
 }
 @media screen and (max-width: 720px) {
   main div.container {
@@ -416,7 +416,7 @@ main a.option i.material-icons:active {
   color: #fbc02d;
 }
 main p.event_date {
-    margin: 8px 0;
+  margin: 8px 0;
 }
 main p.event_description {
   color: #555555;
@@ -461,13 +461,14 @@ main div.search_type #checkboxDebug div {
   }
 }
 main div.search_type #checkboxDebug div label {
+  background-color: transparent;
   margin-left: 16px;
   justify-content: flex-start;
   left: 0;
 }
 main div.search_type #checkboxDebug div input {
   justify-content: flex-end;
-  margin-left: 56px;
+  margin-left: 80px;
   height: 20px;
   width: 20px;
 }
@@ -487,7 +488,7 @@ main button .contained i {
   justify-content: center;
 }
 main a.contained:hover {
-    background-color: #c49000;
+  background-color: #c49000;
 }
 main div.search_type h3 {
   color: #fbc02d;
@@ -557,19 +558,19 @@ main div.admin_categories h3 {
   color: #555555;
 }
 main div.resize_img {
-    height: 200px;
-    overflow: hidden;
+  height: 200px;
+  overflow: hidden;
 }
 main .product-price {
-    padding-bottom: 32px;
+  padding-bottom: 32px;
 }
 main article.product {
-    position: relative;
+  position: relative;
 }
 main .sticky_bottom {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
 }
 main .column {
   display: flex;
@@ -1033,9 +1034,8 @@ main form div.select div {
   display: flex;
   align-items: center;
 }
-
 main form div.select > div {
-    margin-bottom: 50px;
+  margin-bottom: 50px;
 }
 main form div.select select {
   border: 1px solid #cccccc;
@@ -1048,9 +1048,24 @@ main form div.select select {
 main form div.select select option {
   font-size: 18px;
 }
+
+main form div.chekbox {
+  position: relative;
+  margin-left: 12px;
+}
+
+main form div.chekbox label {
+  position: absolute;
+  left: 0;
+}
+
+main form div.chekbox input[type=checkbox] {
+  position: absolute;
+  left: 500px;
+}
 main form div.select label {
   color: #999999;
-    left: 100px;
+  left: 100px;
 }
 main form .checkbox div {
   display: flex;
@@ -1061,17 +1076,17 @@ main form .checkbox input {
   width: 20px;
 }
 .cookie {
-    box-shadow: 0 0 3px #424242;
-    background-color: #fafafa;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    position: sticky;
-    bottom: 0;
-    padding: 0 2em;
-    min-height: 4em;
-    width: 100%;
+  box-shadow: 0 0 3px #424242;
+  background-color: #fafafa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: sticky;
+  bottom: 0;
+  padding: 0 2em;
+  min-height: 4em;
+  width: 100%;
 }
 body {
   margin: 0;
