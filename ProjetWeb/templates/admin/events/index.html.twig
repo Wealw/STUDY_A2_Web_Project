@@ -5,12 +5,15 @@
 {% block body %}
 
     <h1>Liste des événements</h1>
-
     <div class="column">
         <div class="row justify_between">
-            <p>Ensemble des événements</p>
-            <a href="{{ path('admin.events.new') }}" class="contained_no-width"><i class="material-icons">add</i> AJOUTER UN
-                EVENEMENT</a>
+            <p>Panneau d'administration des événements.</p>
+            <div class="row">
+                <a href="{{ path('download.events') }}" class="contained_no-width"><i class="material-icons">get_app</i> TÉLÉCHARGER TOUTES LES IMAGES DES ÉVÉNEMENTS</a>
+                <span class="separate_buttons"></span>
+                <a href="{{ path('admin.events.new') }}" class="contained_no-width"><i class="material-icons">add</i> AJOUTER UN
+                    ÉVÉNEMENT</a>
+            </div>
         </div>
         <div class="search_type" style="margin-bottom: 32px">
             <h3>Personnaliser la recherche</h3>

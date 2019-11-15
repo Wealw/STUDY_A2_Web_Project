@@ -50,7 +50,7 @@ class AdminEventTypesController extends AbstractController
     }
 
     /**
-     * @Route("/admin/categories/create", name="admin.categories.new")
+     * @Route("/admin/categories/new", name="admin.categories.new")
      * @param Request $request
      * @return Response
      */

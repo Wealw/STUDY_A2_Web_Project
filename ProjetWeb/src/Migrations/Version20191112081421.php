@@ -33,20 +33,20 @@ final class Version20191112081421 extends AbstractMigration
         $this->addSql('CREATE TABLE event_type (id INT AUTO_INCREMENT NOT NULL, event_type_name VARCHAR(25) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE impression (id INT AUTO_INCREMENT NOT NULL, impression_user_id INT NOT NULL, impression_type VARCHAR(50) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE participation (id INT AUTO_INCREMENT NOT NULL, event_id INT NOT NULL, participation_user_id INT NOT NULL, INDEX IDX_AB55E24F71F7E88B (event_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
-        $this->addSql('CREATE TABLE picture (id INT AUTO_INCREMENT NOT NULL, event_id INT NOT NULL, picture_name VARCHAR(50) DEFAULT NULL, picture_description LONGTEXT DEFAULT NULL, picture_posted_at DATETIME NOT NULL, picture_modified_at DATETIME DEFAULT NULL, picture_path VARCHAR(255) NOT NULL, picture_user_id INT NOT NULL, is_visible TINYINT(1) NOT NULL, INDEX IDX_16DB4F8971F7E88B (event_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE pictures (id INT AUTO_INCREMENT NOT NULL, event_id INT NOT NULL, picture_name VARCHAR(50) DEFAULT NULL, picture_description LONGTEXT DEFAULT NULL, picture_posted_at DATETIME NOT NULL, picture_modified_at DATETIME DEFAULT NULL, picture_path VARCHAR(255) NOT NULL, picture_user_id INT NOT NULL, is_visible TINYINT(1) NOT NULL, INDEX IDX_16DB4F8971F7E88B (event_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE picture_impression (picture_id INT NOT NULL, impression_id INT NOT NULL, INDEX IDX_88BF1B6EE45BDBF (picture_id), INDEX IDX_88BF1B6A3BA46B6 (impression_id), PRIMARY KEY(picture_id, impression_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('ALTER TABLE command_product ADD CONSTRAINT FK_3C20574E33E1689A FOREIGN KEY (command_id) REFERENCES command (id)');
         $this->addSql('ALTER TABLE command_product ADD CONSTRAINT FK_3C20574E4584665A FOREIGN KEY (product_id) REFERENCES product (id)');
         $this->addSql('ALTER TABLE product ADD CONSTRAINT FK_D34A04AD14959723 FOREIGN KEY (product_type_id) REFERENCES product_type (id)');
-        $this->addSql('ALTER TABLE comment ADD CONSTRAINT FK_9474526CEE45BDBF FOREIGN KEY (picture_id) REFERENCES picture (id)');
+        $this->addSql('ALTER TABLE comment ADD CONSTRAINT FK_9474526CEE45BDBF FOREIGN KEY (picture_id) REFERENCES pictures (id)');
         $this->addSql('ALTER TABLE comment_impression ADD CONSTRAINT FK_A6BA3B91F8697D13 FOREIGN KEY (comment_id) REFERENCES comment (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE comment_impression ADD CONSTRAINT FK_A6BA3B91A3BA46B6 FOREIGN KEY (impression_id) REFERENCES impression (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE event ADD CONSTRAINT FK_3BAE0AA7401B253C FOREIGN KEY (event_type_id) REFERENCES event_type (id)');
         $this->addSql('ALTER TABLE event_impression ADD CONSTRAINT FK_7CB5689E71F7E88B FOREIGN KEY (event_id) REFERENCES event (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE event_impression ADD CONSTRAINT FK_7CB5689EA3BA46B6 FOREIGN KEY (impression_id) REFERENCES impression (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE participation ADD CONSTRAINT FK_AB55E24F71F7E88B FOREIGN KEY (event_id) REFERENCES event (id)');
-        $this->addSql('ALTER TABLE picture ADD CONSTRAINT FK_16DB4F8971F7E88B FOREIGN KEY (event_id) REFERENCES event (id)');
-        $this->addSql('ALTER TABLE picture_impression ADD CONSTRAINT FK_88BF1B6EE45BDBF FOREIGN KEY (picture_id) REFERENCES picture (id) ON DELETE CASCADE');
+        $this->addSql('ALTER TABLE pictures ADD CONSTRAINT FK_16DB4F8971F7E88B FOREIGN KEY (event_id) REFERENCES event (id)');
+        $this->addSql('ALTER TABLE picture_impression ADD CONSTRAINT FK_88BF1B6EE45BDBF FOREIGN KEY (picture_id) REFERENCES pictures (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE picture_impression ADD CONSTRAINT FK_88BF1B6A3BA46B6 FOREIGN KEY (impression_id) REFERENCES impression (id) ON DELETE CASCADE');
     }
 
@@ -61,7 +61,7 @@ final class Version20191112081421 extends AbstractMigration
         $this->addSql('ALTER TABLE comment_impression DROP FOREIGN KEY FK_A6BA3B91F8697D13');
         $this->addSql('ALTER TABLE event_impression DROP FOREIGN KEY FK_7CB5689E71F7E88B');
         $this->addSql('ALTER TABLE participation DROP FOREIGN KEY FK_AB55E24F71F7E88B');
-        $this->addSql('ALTER TABLE picture DROP FOREIGN KEY FK_16DB4F8971F7E88B');
+        $this->addSql('ALTER TABLE pictures DROP FOREIGN KEY FK_16DB4F8971F7E88B');
         $this->addSql('ALTER TABLE event DROP FOREIGN KEY FK_3BAE0AA7401B253C');
         $this->addSql('ALTER TABLE comment_impression DROP FOREIGN KEY FK_A6BA3B91A3BA46B6');
         $this->addSql('ALTER TABLE event_impression DROP FOREIGN KEY FK_7CB5689EA3BA46B6');
@@ -79,7 +79,7 @@ final class Version20191112081421 extends AbstractMigration
         $this->addSql('DROP TABLE event_type');
         $this->addSql('DROP TABLE impression');
         $this->addSql('DROP TABLE participation');
-        $this->addSql('DROP TABLE picture');
+        $this->addSql('DROP TABLE pictures');
         $this->addSql('DROP TABLE picture_impression');
     }
 }
