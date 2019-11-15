@@ -6,6 +6,7 @@ use App\Security\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -21,7 +22,8 @@ class SignUpType extends AbstractType
             ->add('user_postal_code')
             ->add('user_address')
             ->add('user_city')
-            ->add('user_password')
+            ->add('user_password', PasswordType::class)
+            ->add('confirm_password', PasswordType::class)
             ->add('centerId', ChoiceType::class, [
                 'mapped' => false,
                 'label' => 'Centre CESI',

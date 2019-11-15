@@ -15,7 +15,10 @@
                 <div class="group off" style="margin-right: 50px">{{ form_row(form.user_first_name) }}</div>
                 <div class="group off" >{{ form_row(form.user_last_name) }}</div>
             </div>
-            <div class="group off">{{ form_row(form.user_password) }}</div>
+            <div class="groups" style="margin: 50px 0">
+                <div class="group off" style="margin-right: 50px">{{ form_row(form.user_password) }}</div>
+                <div class="group off">{{ form_row(form.confirm_password) }}</div>
+            </div>
             <div class="groups">
                 <div class="group off" style="margin-right: 50px">{{ form_row(form.user_postal_code) }}</div>
                 <div class="group off" style="margin-right: 50px">{{ form_row(form.user_address) }}</div>
