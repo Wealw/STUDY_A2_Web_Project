@@ -1,24 +1,36 @@
 {% extends 'base.html.twig' %}
 
-{% block title 'Inscription | BDE.CESI' %}
+{% block title 'Formulaire d\'inscription | BDE.CESI' %}
 
 {% block body %}
+    <h1>Formulaire d'inscription à BDE-CESI</h1>
 
     <div class="form">
         {{ form_start(form) }}
-            {{ form_row(form.user_mail) }}
-            {{ form_row(form.user_first_name) }}
-            {{ form_row(form.user_last_name) }}
-            {{ form_row(form.user_password) }}
-            {{ form_row(form.user_phone) }}
-            {{ form_row(form.user_postal_code) }}
-            {{ form_row(form.user_address) }}
-            {{ form_row(form.user_city) }}
-            {{ form_row(form.centerId) }}
+            <div class="groups" style="margin: 50px 0">
+                <div class="group off" style="margin-right: 50px">{{ form_row(form.user_mail) }}</div>
+                <div class="group off">{{ form_row(form.user_phone) }}</div>
+            </div>
+            <div class="groups">
+                <div class="group off" style="margin-right: 50px">{{ form_row(form.user_first_name) }}</div>
+                <div class="group off" >{{ form_row(form.user_last_name) }}</div>
+            </div>
+            <div class="groups" style="margin: 50px 0">
+                <div class="group off" style="margin-right: 50px">{{ form_row(form.user_password) }}</div>
+                <div class="group off">{{ form_row(form.confirm_password) }}</div>
+            </div>
+            <div class="groups">
+                <div class="group off" style="margin-right: 50px">{{ form_row(form.user_postal_code) }}</div>
+                <div class="group off" style="margin-right: 50px">{{ form_row(form.user_address) }}</div>
+                <div class="group off">{{ form_row(form.user_city) }}</div>
+            </div>
+            <div class="group off">{{ form_row(form.centerId) }}</div>
             {{ form_rest(form) }}
             <button type="submit" class="contained">S'INSCRIRE</button>
         {{ form_end(form) }}
     </div>
-
 {% endblock %}
 
+{% block javascripts %}
+    <script src="{{ asset('assets/js/form.js') }}"></script>
+{% endblock %}

@@ -30,14 +30,13 @@ app.use(bodyParser.urlencoded({
 
 // Default route
 app.get('/', function (req, res) {
-    return res.send({error: true, message: 'default'})
+    return res.send("This page will display informations about the basic usage of this API.");
 });
 
 // Authentication routes
 // Login function
 app.post('/api/login', function login(req, res) {
     try {
-        console.log('Incomming login request.')
         let email = req.body.user_mail;
         let password = req.body.user_password;
         let user_id = null;
@@ -114,7 +113,6 @@ app.get('/api/logout', function (req, res) {
 app.get('/api/users', function usersGet(req, res) {
     try {
         database.query('SELECT *  FROM users;', function (error, results, fields) {
-            console.log(error);
             if (error) return res.status(404).send();
             res.status(200).set('Content-type', 'application/json').send(results);
         });
@@ -137,8 +135,7 @@ app.post('/api/users', function usersPost(req, res) {
         let user_image_path = req.body.user_image_path;
         let center_id = req.body.center_id;
         let role_id = req.body.role_id;
-        console.log(!( role_id));
-        if (!(user_first_name && user_last_name && user_mail && user_phone && user_postal_code && user_address && user_city && user_password && user_image_path && center_id && role_id)) {
+        if (!(user_first_name && user_last_name && user_mail && user_phone && user_postal_code && user_address && user_city && user_password && user_image_path && center_id && role_id && RegExp("^\\w+([-+.']\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$").test(user_mail) && RegExp("^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\w\d\s:])([^\s]){8,16}$").test(req.body.user_password))) {
             return res.status(422).send();
         }
 
@@ -323,13 +320,13 @@ app.patch('/users', function usersPatch(req, res) {
 // Give information about one user
 app.get('/api/users/:id', function userGet(req, res) {
     try {
-            let user_id = req.params.id;
-            if (!user_id) return res.status(422).send();
+        let user_id = req.params.id;
+        if (!user_id) return res.status(422).send();
         database.query("SELECT * FROM users WHERE user_id= ? ;", [user_id], function (error, results, fields) {
-                if (error) return res.status(404).send();
-                if (results[0] === undefined) return res.status(410).send();
-                return res.status(200).set('Content-type', 'application/json').send(results[0]);
-            });
+            if (error) return res.status(404).send();
+            if (results[0] === undefined) return res.status(410).send();
+            return res.status(200).set('Content-type', 'application/json').send(results[0]);
+        });
     } catch (e) {
         return res.status(500).send();
     }
@@ -379,7 +376,8 @@ app.put('/api/users/:id', function userPut(req, res) {
                 let user_password = req.body.user_password;
                 let user_image_path = req.body.user_image_path;
                 let center_id = req.body.center_id;
-                if (!(user_first_name && user_last_name && user_mail && user_phone && user_postal_code && user_address && user_city && user_password && user_image_path && center_id && role_id)) {
+                let role_id = req.body.role_id
+                if (!(user_first_name && user_last_name && user_mail && user_phone && user_postal_code && user_address && user_city && user_password && user_image_path && center_id && role_id && RegExp("^\\w+([-+.']\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$").test(user_mail) && RegExp("^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\w\d\s:])([^\s]){8,16}$").test(req.body.user_password))) {
                     return res.status(422).send();
                 }
                 database.query("SELECT * FROM users WHERE user_id= ? ;", [user_id], function (error, results, fields) {
@@ -426,7 +424,7 @@ app.patch('/api/users/:id', function userPatch(req, res) {
                     });
                 }
                 let user_mail = req.body.user_mail;
-                if (user_mail) {
+                if (user_mail && RegExp("^\\w+([-+.']\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$").test(user_mail)) {
                     database.query('UPDATE bde_users_api.users SET user_mail= ? WHERE user_id = ? ;', [user_mail, user_id], function (error, results, fields) {
                         if (error) return res.status(422).send();
                     });
@@ -456,7 +454,7 @@ app.patch('/api/users/:id', function userPatch(req, res) {
                     });
                 }
                 let user_password = req.body.user_password;
-                if (user_password) {
+                if (user_password && RegExp("^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\w\d\s:])([^\s]){8,16}$").test(req.body.user_password)) {
                     database.query('UPDATE bde_users_api.users SET  user_password= ? WHERE user_id = ? ;', [user_password, user_id], function (error, results, fields) {
                         if (error) return res.status(422).send();
                     });
@@ -523,7 +521,7 @@ app.patch('/api/centers', function notAllowed(req, res) {
     return res.status(501).send();
 });
 // Center route
-// Give informations on the specified center
+// Give information on the specified center
 app.get('/api/centers/:id', function usersGet(req, res) {
     try {
         let center_id = req.params.id;
@@ -570,8 +568,6 @@ app.get('/api/roles', function usersGet(req, res) {
 app.post('/api/roles', function usersPost(req, res) {
     try {
         let role_name = req.body.role_name;
-
-
         database.query("INSERT INTO bde_users_api.roles(role_name) VALUES (?);", [role_name], function (error, results, fields) {
             if (error) return res.status(500).send();
             return res.status(202).send();
@@ -623,8 +619,8 @@ app.put('/api/roles/:id', function notAllowed(req, res) {
 app.patch('/api/roles/:id', function notAllowed(req, res) {
     return res.status(501).send();
 });
+
 // set port
 app.listen(3000, function () {
-    console.log('Node app is running on port 3000');
 });
 module.exports = app;

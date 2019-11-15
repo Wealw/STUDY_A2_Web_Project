@@ -20,7 +20,9 @@ class ProductType extends AbstractType
             ->add('productPrice')
             ->add('productInventory')
             ->add('productDescription')
-            ->add('imageFile', FileType::class, [])
+            ->add('imageFile', FileType::class, [
+                'label' => false
+            ])
             ->add('isOrderable')
             ->add('productType', EntityType::class,
                 [

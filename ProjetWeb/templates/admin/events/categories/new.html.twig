@@ -1,8 +1,10 @@
 {% extends 'base.html.twig' %}
 
+{% block title 'Nouvelle catégorie d\'événement - Admin | BDE-CESI ' %}
+
 {% block body %}
+    <h1>Nouvelle catégorie d'événements</h1>
     <div class="form">
-        <h3 class="form">NOUVELLE CATÉGORIE</h3>
         {{ form_start(form) }}
         <div class="group off">{{ form_row(form.event_type_name) }}</div>
         <button type="submit" class="contained">CRÉER LA CATÉGORIE</button>

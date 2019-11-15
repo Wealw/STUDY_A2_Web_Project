@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
+{% block title 'BDE-CESI' %}
+
 {% block body %}
     <h1>Projet Weeb</h1>
     <section>
@@ -17,13 +19,13 @@
                             ({{ prod.productType.productTypeName }})
                         </div>
 
-                        <img src = "{{ prod.productImagePath }}">
+                        <img src = "{{ prod.productImagePath }}" alt="Produit">
 
                         <div class="product-price">
                             {{ prod.productPrice }} €
                         </div>
                         <br><br>
-                        <a href="{{ path('merch.show', {id: prod.Id}) }}"><button> Check This</button></a>
+                        <a href="{{ path('merch.show', {id: prod.Id}) }}" class="contained">VOIR</a>
                     </div>
                 {% endif %}
             {% endfor %}
@@ -39,7 +41,7 @@
                         {{ event.eventName }}
                     </div>
                     <div class="item_body column">
-                        <img src="{{ event.eventImagePath }}" alt="">
+                        <img src="{{ event.eventImagePath }}" alt="Evénement">
                     </div>
                     <div class="item_footer">
                         <p>{{ event.eventDescription }}</p>

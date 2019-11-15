@@ -127,6 +127,10 @@ div.groups {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+
+  div.group {
+    margin: 0;
+  }
 }
 
 div.half, div.third {
@@ -194,13 +198,24 @@ div.select div {
 }
 
 div.select select {
-  border: 1px solid #999999;
-  border-radius: 2px;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  font-size: 18px;
   height: 56px;
   margin: 0 0 0 100px;
-  width: 100%;
+  width: 150px;
+
+  option {
+    font-size: 18px;
+  }
+
 }
 
 div.select label {
   color: #999999;
+}
+
+.checkbox div {
+  display: flex;
+  flex-direction: row;
 }

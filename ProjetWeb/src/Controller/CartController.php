@@ -31,10 +31,13 @@ class CartController extends AbstractController
      * @Route("/cart", name="cart.index")
      * @param SessionInterface $session
      * @param ProductRepository $productRepository
+     * @param Request $request
      * @return Response
      */
-    public function index(SessionInterface $session, ProductRepository $productRepository)
+    public function index(SessionInterface $session, ProductRepository $productRepository, Request $request)
     {
+
+        $this->getCart($session, $request);
         $cart = $session->get('cart', []);
 
         $cartWithData = [];
@@ -67,7 +70,7 @@ class CartController extends AbstractController
      * @param SessionInterface $session
      * @return RedirectResponse
      */
-    public function add($id, SessionInterface $session)
+    public function add($id, SessionInterface $session, Request $request)
     {
         $cart = $session->get('cart', []);
 
@@ -81,6 +84,8 @@ class CartController extends AbstractController
 
         $session->set('cart', $cart);
 
+        $this->persist($session, $request);
+
         return $this->redirectToRoute('cart.index');
     }
 
@@ -88,9 +93,10 @@ class CartController extends AbstractController
      * @Route("/cart/delete/{id}", name="cart.delete")
      * @param $id
      * @param SessionInterface $session
+     * @param Request $request
      * @return RedirectResponse
      */
-    public function delete($id, SessionInterface $session)
+    public function delete($id, SessionInterface $session, Request $request)
     {
         $cart = $session->get('cart', []);
 
@@ -99,16 +105,19 @@ class CartController extends AbstractController
             unset($cart[$id]);
         }
         $session->set('cart', $cart);
+
+        $this->persist($session, $request);
+
         return $this->redirectToRoute("cart.index");
     }
 
     /**
      * @Route("/cart/delete", name="cart.delete.all")
-     * @param $id
      * @param SessionInterface $session
+     * @param Request $request
      * @return RedirectResponse
      */
-    public function deleteAll(SessionInterface $session)
+    public function deleteAll(SessionInterface $session, Request $request)
     {
         $cart = $session->get('cart', []);
 
@@ -117,11 +126,13 @@ class CartController extends AbstractController
             unset($cart[$id]);
         }
         $session->set('cart', $cart);
+
+        $this->persist($session, $request);
+
         return $this->redirectToRoute("cart.index");
     }
 
     /**
-     * @Route("/cart/persist", name="cart.persist")
      * @param SessionInterface $session
      * @param Request $request
      * @return RedirectResponse
@@ -133,6 +144,14 @@ class CartController extends AbstractController
         {
             if($cart == null)
             {
+                $cookie = new Cookie(
+                    'cart',
+                    '',
+                    time() + ( 2 * 365 * 24 * 60 * 60)
+                );
+                $res = new Response();
+                $res->headers->setCookie($cookie);
+                $res->send();
                 return $this->redirectToRoute('cart.index');
             }
         }
@@ -152,7 +171,6 @@ class CartController extends AbstractController
     }
 
     /**
-     * @Route("/cart/get", name="cart.getCart")
      * @param SessionInterface $session
      * @param Request $request
      * @return RedirectResponse
@@ -207,7 +225,14 @@ class CartController extends AbstractController
     public function order(ProductRepository $productRepository, SessionInterface $session, Swift_Mailer $mailer)
     {
         $cart = $session->get('cart', []);
-
+        foreach ($cart as $id => $quantity)
+        {
+            $product = $productRepository->findOneBy(['id' => $id]);
+            if (($product->getProductInventory()) < $cart[$id] )
+            {
+                return $this->redirectToRoute("cart.index");
+            }
+        }
         if($this->getUser())
         {
             $command = new Command();
@@ -225,11 +250,15 @@ class CartController extends AbstractController
 
                 $product = $productRepository->findOneBy(['id' => $id]);
 
+                $product
+                    ->setProductInventory(($product->getProductInventory()) - $cart[$id]);
+
                 $commandProduct
                     ->setCommand($command)
                     ->setProduct($product)
                     ->setQuantity($cart[$id]);
 
+                $this->getDoctrine()->getManager()->persist($product);
                 $this->getDoctrine()->getManager()->persist($commandProduct);
 
             }
@@ -247,10 +276,10 @@ class CartController extends AbstractController
                 if($dataRole['role_name'] == "Membre BDE")
                 {
                     // Create a message
-                    $message = (new Swift_Message('Wonderful Subject'))
+                    $message = (new Swift_Message('New Order Made'))
                         ->setFrom('projetweeb@gmail.com')
                         ->setTo($dataUser['user_mail'])
-                        ->setBody('New command made ! Check it in the ADMIN/MERCH/COMMAND');
+                        ->setBody('New command made ! Check it in the ADMIN/COMMAND');
 
                     // Send the message
                     $mailer->send($message);
@@ -261,6 +290,4 @@ class CartController extends AbstractController
             return $this->redirectToRoute("security.login");
         }
     }
-
-
 }

@@ -1,23 +1,25 @@
 {% extends 'base.html.twig' %}
 
-{% block title 'Administrer les événements | BDE.CESI' %}
+{% block title 'Administrer les événements | BDE-CESI' %}
 
 {% block body %}
 
-    <h1>Liste des événements :</h1>
+    <h1>Liste des événements</h1>
 
     <div class="column">
         <div class="row justify_between">
             <p>Ensemble des événements</p>
-            <a href="{{ path('admin.events.new') }}" class="contained"><i class="material-icons">add</i> AJOUTER UN
+            <a href="{{ path('admin.events.new') }}" class="contained_no-width"><i class="material-icons">add</i> AJOUTER UN
                 EVENEMENT</a>
         </div>
         <div class="search_type" style="margin-bottom: 32px">
             <h3>Personnaliser la recherche</h3>
-            {{ form_start(form) }}
-            <div class="group off half search_bar">{{ form_rest(form) }}</div>
-            <button type="submit" class="contained">RECHERCHER</button>
-            {{ form_end(form) }}
+            <div class="form_justify">
+                {{ form_start(form) }}
+                <div class="group off half search_bar">{{ form_rest(form) }}</div>
+                <button type="submit" class="contained_no-width"><i class="material-icons">search</i>RECHERCHER</button>
+                {{ form_end(form) }}
+            </div>
         </div>
         <div class="tabOverflowContainer">
             <table class="admin_list">
@@ -27,6 +29,7 @@
                     <th>Date de l'événement</th>
                     <th>Ajouté le</th>
                     <th>Auteur</th>
+                    <th>Participants</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
@@ -37,6 +40,7 @@
                         <td>{{ event.eventDate | date('d F Y H:i') }}</td>
                         <td>{{ event.eventCreatedAt | date('d F Y') }}</td>
                         <td>{{ event.eventCreatedBy }}</td>
+                        <td><a href="{{ path('admin.events.csvize', {id: event.id}) }}" class="contained">CSV</a></td>
                         <td class="row">
                             {% if event.eventIsVisible == 1 %}
                                 <a href="{{ path('admin.events.edit', {id: event.id}) }}" class="contained">EDITER</a>
