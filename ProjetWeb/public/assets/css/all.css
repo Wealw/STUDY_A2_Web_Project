@@ -556,20 +556,16 @@ main div.admin_categories {
 main div.admin_categories h3 {
   color: #555555;
 }
-
 main div.resize_img {
     height: 200px;
     overflow: hidden;
 }
-
 main .product-price {
     padding-bottom: 32px;
 }
-
 main article.product {
     position: relative;
 }
-
 main .sticky_bottom {
     position: absolute;
     bottom: 0;
@@ -1035,8 +1031,11 @@ main form h4.form {
 }
 main form div.select div {
   display: flex;
-  justify-content: center;
   align-items: center;
+}
+
+main form div.select > div {
+    margin-bottom: 50px;
 }
 main form div.select select {
   border: 1px solid #cccccc;
@@ -1051,6 +1050,7 @@ main form div.select select option {
 }
 main form div.select label {
   color: #999999;
+    left: 100px;
 }
 main form .checkbox div {
   display: flex;
