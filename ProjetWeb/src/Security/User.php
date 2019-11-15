@@ -77,7 +77,8 @@ class User implements UserInterface
             $payload['created_at'],
             $payload['modified_at'],
             $payload['center_id'],
-            $payload['role_id']
+            $payload['role_id'],
+            true
         );
     }
 
@@ -483,7 +484,7 @@ class User implements UserInterface
     {
         $this->imageFile = $imageFile;
         if ($this->imageFile instanceof UploadedFile) {
-            $this->event_modified_at = new \DateTime('now');
+            $this->modified_at = new \DateTime('now');
         }
         return $this;
     }
