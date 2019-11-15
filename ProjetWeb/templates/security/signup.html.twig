@@ -25,6 +25,12 @@
                 <div class="group off">{{ form_row(form.user_city) }}</div>
             </div>
             <div class="group off">{{ form_row(form.centerId) }}</div>
+            <div class="row">
+                <div class="checkbox">
+                    {{ form_row(form.cgu) }}
+                </div>
+                <p>J'accepte les <a href="{{ path('legal.cgu') }}">Conditions Générales d'Utilisation</a></p>
+            </div>
             {{ form_rest(form) }}
             <button type="submit" class="contained">S'INSCRIRE</button>
         {{ form_end(form) }}

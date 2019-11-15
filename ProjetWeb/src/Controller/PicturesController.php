@@ -103,6 +103,7 @@ class PicturesController extends AbstractController
         }
 
         return $this->render("pictures/new.html.twig", [
+            'picture' => $picture,
             'form' => $form->createView()
         ]);
     }
