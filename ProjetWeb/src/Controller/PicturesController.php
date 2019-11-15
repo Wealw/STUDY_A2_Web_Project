@@ -103,7 +103,7 @@ class PicturesController extends AbstractController
         }
 
         return $this->render("pictures/new.html.twig", [
-            'picture' => $picture,
+            'pictures' => $picture,
             'form' => $form->createView()
         ]);
     }
@@ -119,6 +119,7 @@ class PicturesController extends AbstractController
         if ($picture === null) {
             return $this->redirectToRoute('events.index', [], 302);
         }
+        dump($picture);
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
@@ -165,7 +166,7 @@ class PicturesController extends AbstractController
     }
 
     /**
-     * @Route("events/picture/{id}/like", name="pictures.like")
+     * @Route("events/pictures/{id}/like", name="pictures.like")
      * @param Picture $picture
      * @param ImpressionRepository $impressionRepository
      * @return JsonResponse|RedirectResponse
@@ -215,7 +216,7 @@ class PicturesController extends AbstractController
     }
 
     /**
-     * @Route("events/picture/{id}/dislike", name="pictures.dislike")
+     * @Route("events/pictures/{id}/dislike", name="pictures.dislike")
      * @param Picture $picture
      * @param ImpressionRepository $impressionRepository
      * @return JsonResponse|RedirectResponse

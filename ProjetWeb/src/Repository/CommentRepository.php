@@ -22,7 +22,7 @@ class CommentRepository extends ServiceEntityRepository
     public function findCommentsByPictures($id)
     {
         return $this->createQueryBuilder('c')
-            ->andWhere("c.picture = $id")
+            ->andWhere("c.pictures = $id")
             ->andWhere("c.is_visible = 1")
             ->getQuery()
             ->getResult();

@@ -1,6 +1,6 @@
-let realButton = document.querySelector("div.file input.file")
+let realButton = document.querySelector("div.file input")
 let customButton = document.querySelector("div.file button")
-let span = document.querySelector('span.custom_text')
+let span = document.querySelector('div.file span.custom_text')
 
 customButton.addEventListener("click", function (e) {
     e.preventDefault()

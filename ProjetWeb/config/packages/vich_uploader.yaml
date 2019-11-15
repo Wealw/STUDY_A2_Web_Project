@@ -2,19 +2,14 @@ vich_uploader:
     db_driver: orm
 
     mappings:
-        user_image:
-            uri_prefix: /assets/images/users
-            upload_destination: '%kernel.project_dir%/public/assets/images/users'
-            namer: Vich\UploaderBundle\Naming\UniqidNamer
-
         event_image:
             uri_prefix: /assets/images/events
             upload_destination: '%kernel.project_dir%/public/assets/images/events'
             namer: Vich\UploaderBundle\Naming\UniqidNamer
 
         picture_image:
-            uri_prefix: /assets/images/picture
-            upload_destination: '%kernel.project_dir%/public/assets/images/picture'
+            uri_prefix: /assets/images/pictures
+            upload_destination: '%kernel.project_dir%/public/assets/images/pictures'
             namer: Vich\UploaderBundle\Naming\UniqidNamer
 
         product_image:

@@ -1,8 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}
-    Editer {{ event.eventName }} - Admin | BDE-CESI
-{% endblock %}
+{% block title 'Editer ' ~ {{ event.eventName }} ~ ' - Admin | BDE-CESI'{% endblock %}
 
 {% block body %}
     <h1>Editer l'événement "{{ event.eventName }}"</h1>
