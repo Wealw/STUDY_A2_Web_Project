@@ -18,7 +18,9 @@ class PictureType extends AbstractType
             ->add('picture_description', TextareaType::class, [
                 'required' => false
             ])
-            ->add('picture_path', FileType::class)
+            ->add('picture_path', FileType::class, [
+                'label' => false
+            ])
         ;
     }
 
@@ -26,6 +28,7 @@ class PictureType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Picture::class,
+            'translation_domain' => 'forms'
         ]);
     }
 }

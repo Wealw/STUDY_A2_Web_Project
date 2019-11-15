@@ -1,18 +1,20 @@
 {% extends 'base.html.twig' %}
 
+{% block title 'Les produits - Admin | BDE-CESI' %}
+
 {% block body %}
-    <a href="{{ path('admin.index') }}">
-        <button>Go Back</button>
-    </a>
-    <a href="{{ path('admin.merch.product.add') }}">
-        <button>Add Product</button>
-    </a>
+    <h1>Les produits</h1>
+
+    <a href="{{ path('admin.index') }}">Go Back</a>
+    <a href="{{ path('admin.merch.product.add') }}">Add Product</a>
     <div class="search_type" style="margin-bottom: 32px">
         <h3>Personnaliser la recherche</h3>
-        {{ form_start(form) }}
-        <div class="group off half search_bar">{{ form_rest(form) }}</div>
-        <button type="submit" class="contained">RECHERCHER</button>
-        {{ form_end(form) }}
+        <div class="form_justify">
+            {{ form_start(form) }}
+            <div class="group off half search_bar">{{ form_rest(form) }}</div>
+            <button type="submit" class="contained_no-width">RECHERCHER</button>
+            {{ form_end(form) }}
+        </div>
     </div>
     <div class="tabOverflowContainer">
         <table class="admin_list">
@@ -23,7 +25,6 @@
                 <th>€</th>
                 <th>Description</th>
                 <th>Qty</th>
-
             </tr>
             </thead>
             <tbody class="product">

@@ -1,12 +1,20 @@
 {% extends 'base.html.twig' %}
 
-
+{% block title 'Nouvelle catégorie - Admin | BDE-CESI' %}
 
 {% block body %}
-    <a href="{{ path('admin.merch.type.index') }}"><button>Go Back</button></a>
+    <h1>Nouvelle catégorie de produit</h1>
+
+    <div class="row justify_between">
+        <p>Formulaire de création de catégorie de produit</p>
+        <a href="{{ path('admin.merch.type.index') }}" class="contained_no-width">< Retour</a>
+    </div>
     {{ form_start(form) }}
-    {{ form_rest(form) }}
-    <button>Ajouter</button>
+    <div class="group off">{{ form_row(form.productTypeName) }}</div>
+    <button type="submit" class="contained">Créer</button>
     {{ form_end(form) }}
 {% endblock %}
 
+{% block javascripts %}
+    <script src="{{ asset('assets/js/form.js') }}"></script>
+{% endblock %}

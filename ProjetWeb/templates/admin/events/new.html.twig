@@ -1,8 +1,11 @@
 {% extends 'base.html.twig' %}
 
+{% block title 'Nouvel événement - Admin | BDE-CESI' %}
+
 {% block body %}
+    <h1>Créer un nouvel événement</h1>
+
     <div class="form">
-        <h3 class="form">NOUVEL ÉVÉNEMENT</h3>
         {{ form_start(form) }}
             {% include("admin/events/_form.html.twig") %}
             <button type="submit" class="contained"><i class="material-icons">add</i> AJOUTER</button>

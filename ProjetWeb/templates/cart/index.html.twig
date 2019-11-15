@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
 
+{% block title 'Votre panier | BDE-CESI' %}
+
 {% block body %}
 
-    <h1>Votre panier</h1>
-    <a href="{{ path('cart.persist') }}">Persist</a>
-    <a href="{{ path('cart.getCart') }}">GetCart</a>
+<h1>Votre panier</h1>
 {% if items | length > 0 %}
 <div class="tabOverflowContainer">
     <table>

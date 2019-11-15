@@ -3,6 +3,7 @@
 namespace App\Entity\Social;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ParticipationRepository")
@@ -18,6 +19,7 @@ class Participation
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Positive
      */
     private $participation_user_id;
 
