@@ -5,10 +5,13 @@ namespace App\Entity\Social;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\{File, UploadedFile};
 use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PictureRepository")
+ * @Vich\Uploadable()
  */
 class Picture
 {
@@ -40,6 +43,12 @@ class Picture
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $picture_modified_at;
+
+    /**
+     * @var File|null
+     * @Vich\UploadableField(mapping="picture_image", fileNameProperty="picture_path")
+     */
+    private $imageFile;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -146,6 +155,28 @@ class Picture
     {
         $this->picture_path = $picture_path;
 
+        return $this;
+    }
+
+    /**
+     * @return File|null
+     */
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    /**
+     * @param File|null $imageFile
+     * @return Picture
+     * @throws \Exception
+     */
+    public function setImageFile(?File $imageFile): Picture
+    {
+        $this->imageFile = $imageFile;
+        if ($this->imageFile instanceof UploadedFile){
+            $this->picture_modified_at = new \DateTime();
+        }
         return $this;
     }
 
