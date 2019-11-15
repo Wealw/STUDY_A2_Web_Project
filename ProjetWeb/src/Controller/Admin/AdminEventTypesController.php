@@ -89,7 +89,7 @@ class AdminEventTypesController extends AbstractController
         }
 
         return $this->render("/admin/events/categories/edit.html.twig", [
-            'event' => $eventType,
+            'event_type' => $eventType,
             'form' => $form->createView()
         ]);
     }

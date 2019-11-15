@@ -66,6 +66,10 @@ class HomeController extends AbstractController
      */
     public function signUp(Request $request): Response
     {
+        if ($this->getUser()) {
+            return $this->redirectToRoute("index", [], 302);
+        }
+
         $user = new User(null, null, null, null, null, null, null, null, null, null, null, null, 1, 1);
         $form = $this->createForm(SignUpType::class, $user);
         $form->handleRequest($request);

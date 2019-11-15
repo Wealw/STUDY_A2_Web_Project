@@ -1,8 +1,12 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}
+    Editer {{ event.eventName }} - Admin | BDE-CESI
+{% endblock %}
+
 {% block body %}
+    <h1>Editer l'événement "{{ event.eventName }}"</h1>
     <div class="form">
-        <h3 class="form">NOUVEL ÉVÉNEMENT</h3>
         {{ form_start(form) }}
         {% include("admin/events/_form.html.twig") %}
         <button type="submit" class="contained"><i class="material-icons">edit</i> EDITER</button>

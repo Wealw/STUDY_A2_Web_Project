@@ -1,7 +1,10 @@
 {% extends 'base.html.twig' %}
 
+{% block title 'Illustration d\'événement "' ~ picture.pictureName ~ '" | BDE-CESI' %}
+
+
 {% block body %}
-    <h1>Photo</h1>
+    <h1>Illustration d'événement</h1>
 
     <section>
         <div class="row">
@@ -92,7 +95,7 @@
         {% if app.user %}
             <div class="add_comment">
                 {{ form_start(form) }}
-                    {{ form_row(form.commentText) }}
+                    <div class="group off">{{ form_row(form.commentText) }}</div>
                     <button type="submit" class="contained">AJOUTER</button>
                 {{ form_end(form) }}
             </div>
@@ -102,4 +105,5 @@
 
 {% block javascripts %}
     <script src="{{ asset('assets/js/ajaxLikes.js') }}"></script>
+    <script src="{{ asset('assets/js/form.js') }}"></script>
 {% endblock %}

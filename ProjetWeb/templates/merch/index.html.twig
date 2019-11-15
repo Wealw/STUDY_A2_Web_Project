@@ -1,29 +1,32 @@
 {% extends 'base.html.twig' %}
 
+{% block title 'Magasin | BDE-CESI' %}
+
 {% block body %}
-        <div class="search_type" style="margin-bottom: 32px">
-            <h3>Personnaliser la recherche</h3>
-        <div class="row justify_between align_center">
-                {{ form_start(form) }}
-            <div class="group off  searchElement">
-                    {{ form_row(form.maxPrice) }}
+    <h1>Magasin</h1>
+    <div class="search_type" style="margin-bottom: 32px">
+        <h3>Personnaliser la recherche</h3>
+        <div class="row justify_between align_center form_justify">
+            {{ form_start(form) }}
+                <div class="row" style="justify-content: flex-start; width: initial">
+                    <div class="group off  searchElement">
+                        {{ form_row(form.maxPrice) }}
+                    </div>
+                    <div class="group select checkbox searchElement" id="checkboxDebug">
+                        {{ form_row(form.inStock) }}
+                    </div>
+                    <div class="group select  searchElement">
+                        {{ form_rest(form) }}
+                    </div>
                 </div>
-            <div class="group select checkbox searchElement" id="checkboxDebug">
-                <div>
-                    {{ form_row(form.inStock) }}
-                </div>
-                </div>
-            <div class="group select  searchElement">
-                    {{ form_rest(form) }}
-                </div>
-                <button type="submit" class="contained"><i class="material-icons">search</i></button>
-                {{ form_end(form) }}
-            </div>
+                <button type="submit" class="contained_no-width"><i class="material-icons">search</i></button>
+            {{ form_end(form) }}
+        </div>
     </div>
     <div class="product-container">
-            {% for product in products %}
-                    {% include 'product/_product.html.twig' %}
-            {% endfor %}
+        {% for product in products %}
+            {% include 'product/_product.html.twig' %}
+        {% endfor %}
     </div>
     <div>
         {{ knp_pagination_render(products) }}

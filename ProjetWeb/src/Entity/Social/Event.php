@@ -43,11 +43,13 @@ class Event
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Length(min="3", max="255")
      */
     private $event_image_path;
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Assert\Length(min="3", max="255")
      */
     private $event_location;
 
@@ -59,12 +61,13 @@ class Event
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\DateTime
      */
     private $event_date;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Assert\DateTime()
+     * @Assert\DateTime
      */
     private $event_created_at;
 

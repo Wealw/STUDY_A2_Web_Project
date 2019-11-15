@@ -33,7 +33,7 @@
             </div>
             <div class="rightAlign">
                 {% if app.user %}
-                    <p>{{ app.user.usermail }}</p>
+                    <p class="username">{{ app.user.usermail }}</p>
                     <a href="{{ path('logout') }}" class="header contained colorSecondary">
                         <div class="button "> DECONNECTER</div>
                     </a>

@@ -31,20 +31,19 @@ class AdminTypeController extends AbstractController
     }
 
     /**
-     * @Route("admin/productType", name="admin.merch.type.index")
+     * @Route("admin/producttype", name="admin.merch.type.index")
      * @return Response
      */
     public function index() : Response
     {
         $productTypes = $this->productTypeRepository->findAll();
-        return $this->render('admin/merch/type/index.html.twig',
-            [
-                'types' => $productTypes
-            ]);
+        return $this->render('admin/merch/type/index.html.twig', [
+            'types' => $productTypes
+        ]);
     }
 
     /**
-     * @Route("admin/productType/add", name="admin.merch.type.add")
+     * @Route("admin/producttype/new", name="admin.merch.type.add")
      * @param Request $request
      * @return Response
      */
@@ -70,7 +69,7 @@ class AdminTypeController extends AbstractController
     }
 
     /**
-     * @Route("admin/productType/{id}/edit", name="admin.merch.type.edit")
+     * @Route("admin/producttype/{id}/edit", name="admin.merch.type.edit")
      * @param Request $request
      * @param ProductType $productType
      * @return Response
