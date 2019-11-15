@@ -3,10 +3,13 @@
 {% block title 'Les catégories de produits - Admin | BDE-CESI' %}
 
 {% block body %}
-    <h1>Les catégories des produits</h1>
+    <div class="row justify_between">
+        <h1>Les catégories des produits</h1>
 
-    <a href="{{ path('admin.index') }}">Go Back</a>
-    <a href="{{ path('admin.merch.type.add') }}">Add Type</a>
+        <a href="{{ path('admin.merch.type.add') }}" class="contained_no-width"><i class="material-icons">add</i>
+            AJOUTER UNE CATÉGORIE</a>
+    </div>
+
     <div class="tabOverflowContainer">
     <table class="admin_list">
         <thead>
