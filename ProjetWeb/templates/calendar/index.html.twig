@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title 'Calendrier - BDE.CESI' %}
+{% block title 'Calendrier des événements - BDE.CESI' %}
 
 {% block body %}
 
-    <h1>Calendrier - {{ start | date('m/Y') }}</h1>
+    <h1>Calendrier des événements- {{ start | date('m/Y') }}</h1>
     <div class="navigation row justify_between" style="margin-bottom: 24px">
         <div class="row">
             <a href="{{ path('events.calendar.other', {monthNumber: prevMonth, yearNumber: prevYear}) }}" class="contained" style="white-space: nowrap; padding-right: 24px">

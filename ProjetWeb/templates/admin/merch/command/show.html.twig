@@ -1,7 +1,13 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}
+    Commande {{ command.commandUserId }} - Admin | BDE-CESI
+{% endblock %}
+
 {% block body %}
-    <a href="{{ path('admin.merch.command.index') }}"><button>Go Back</button></a>
+    <h1>Commande {{ command.commandUserId }}</h1>
+
+    <a href="{{ path('admin.merch.command.index') }}">Go Back</a>
     <div>
         Command N° : {{ command.id }}
         <div>

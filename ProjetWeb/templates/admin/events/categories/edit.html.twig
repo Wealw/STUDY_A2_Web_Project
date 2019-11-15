@@ -1,8 +1,10 @@
 {% extends 'base.html.twig' %}
 
+{% block title 'Editer la catégorie - Administration | BDE-CESI' %}
+
 {% block body %}
+    <h1>Editer la catégorie - {{ event_type.eventTypeName }}</h1>
     <div class="form">
-        <h3 class="form">ÉDITER UNE CATÉGORIE</h3>
         {{ form_start(form) }}
         <div class="group off">{{ form_row(form.event_type_name) }}</div>
         <button type="submit" class="contained">ÉDITER LA CATÉGORIE</button>

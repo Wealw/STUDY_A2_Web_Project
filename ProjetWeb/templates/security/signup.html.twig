@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title 'Inscription | BDE.CESI' %}
+{% block title 'Formulaire d\'inscription | BDE.CESI' %}
 
 {% block body %}
+    <h1>Formulaire d'inscription à BDE-CESI</h1>
 
     <div class="form">
         {{ form_start(form) }}
-            <h3 class="form">FORMULAIRE D'INSCRIPTION</h3>
             <div class="groups" style="margin: 50px 0">
                 <div class="group off" style="margin-right: 50px">{{ form_row(form.user_mail) }}</div>
                 <div class="group off">{{ form_row(form.user_phone) }}</div>
@@ -29,7 +29,6 @@
             <button type="submit" class="contained">S'INSCRIRE</button>
         {{ form_end(form) }}
     </div>
-
 {% endblock %}
 
 {% block javascripts %}

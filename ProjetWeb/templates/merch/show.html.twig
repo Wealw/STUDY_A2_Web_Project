@@ -1,14 +1,16 @@
 {% extends 'base.html.twig' %}
 
+{% block title 'Produit ' ~ product.productName ~ ' | BDE-CESI' %}
+
 {% block body %}
     <h1>Produit - {{ product.productName }}</h1>
     <section>
         <article>
             <div class="product-image">
-                <img src="{{ vich_uploader_asset(product, 'imageFile') }}">
+                <img src="{{ vich_uploader_asset(product, 'imageFile') }}" alt="Produit">
             </div>
             <div class="product-description">
-                <p>                {{ product.productDescription }}</p>
+                <p>{{ product.productDescription }}</p>
 
             </div>
             <div class="product-information">
@@ -19,9 +21,6 @@
             <a href="{{ path('cart.add', {'id': product.Id}) }}" class="contained">Ajouter au panier</a>
         </article>
     </section>
-
-
-
 
 {% endblock %}
 
