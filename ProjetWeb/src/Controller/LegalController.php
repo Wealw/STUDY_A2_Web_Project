@@ -23,4 +23,12 @@ class LegalController extends AbstractController
     {
         return $this->render('legal/cgv.html.twig');
     }
+
+    /**
+     * @Route("/legal/cgu", name="legal.cgu")
+     */
+    public function cgu()
+    {
+        return $this->render('legal/cgu.html.twig');
+    }
 }
