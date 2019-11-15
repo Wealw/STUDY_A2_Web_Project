@@ -7,7 +7,6 @@ use App\Entity\Merch\Command;
 use App\Entity\Merch\CommandProduct;
 use App\Notification\CommandNotification;
 use App\Repository\ProductRepository;
-use ConnectHolland\CookieConsentBundle\CHCookieConsentBundle;
 use DateTime;
 use Exception;
 use GuzzleHttp\Client;

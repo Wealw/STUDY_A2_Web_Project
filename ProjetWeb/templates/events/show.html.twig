@@ -17,29 +17,35 @@
                     <p>{{ event.eventDescription }}</p>
                 </div>
             </div>
-            <p>Prix : {{ event.eventPrice }} €</p>
-            <p>Type de l'événement : <a
-                        href="{{ path('events.index') }}?category={{ event.eventType.id }}">{{ event.eventType.eventTypeName }}</a>
-            </p>
-            <div class="row likes">
-                {% if action == 'like' %}
-                    <a href="{{ path('events.like', {id: event.id}) }}" class="option active"><i class="material-icons">thumb_up</i><span>{{ count_like }}</span></a>
-                    <a href="{{ path('events.dislike', {id: event.id}) }}" class="option"><i class="material-icons">thumb_down</i><span>{{ count_dislike }}</span></a>
-                {% elseif action == 'dislike' %}
-                    <a href="{{ path('events.like', {id: event.id}) }}" class="option"><i class="material-icons">thumb_up</i><span>{{ count_like }}</span></a>
-                    <a href="{{ path('events.dislike', {id: event.id}) }}" class="option active"><i
-                                class="material-icons">thumb_down</i><span>{{ count_dislike }}</span></a>
-                {% else %}
-                    <a href="{{ path('events.like', {id: event.id}) }}" class="option"><i class="material-icons">thumb_up</i><span>{{ count_like }}</span></a>
-                    <a href="{{ path('events.dislike', {id: event.id}) }}" class="option"><i class="material-icons">thumb_down</i><span>{{ count_dislike }}</span></a>
-                {% endif %}
-            </div>
-            <div class="participation">
-                {% if has_participated == true %}
-                    <a href="#" class="disabled">INSCRIT</a>
-                {% else %}
-                    <a href="{{ path('events.participate', {id: event.id}) }}" class="contained">S'INSCRIRE</a>
-                {% endif %}
+            <div class="event_option">
+                <p style="margin-bottom: 0">Prix : {{ event.eventPrice }} €</p>
+                <p style="margin-top: 0">Type de l'événement :
+                    <a href="{{ path('events.index') }}?category={{ event.eventType.id }}">{{ event.eventType.eventTypeName }}</a>
+                </p>
+                <div class="row likes">
+                    {% if action == 'like' %}
+                        <a href="{{ path('events.like', {id: event.id}) }}" class="option active"><i class="material-icons">thumb_up</i><span>{{ count_like }}</span></a>
+                        <a href="{{ path('events.dislike', {id: event.id}) }}" class="option"><i class="material-icons">thumb_down</i><span>{{ count_dislike }}</span></a>
+                    {% elseif action == 'dislike' %}
+                        <a href="{{ path('events.like', {id: event.id}) }}" class="option"><i class="material-icons">thumb_up</i><span>{{ count_like }}</span></a>
+                        <a href="{{ path('events.dislike', {id: event.id}) }}" class="option active"><i
+                                    class="material-icons">thumb_down</i><span>{{ count_dislike }}</span></a>
+                    {% else %}
+                        <a href="{{ path('events.like', {id: event.id}) }}" class="option"><i class="material-icons">thumb_up</i><span>{{ count_like }}</span></a>
+                        <a href="{{ path('events.dislike', {id: event.id}) }}" class="option"><i class="material-icons">thumb_down</i><span>{{ count_dislike }}</span></a>
+                    {% endif %}
+                </div>
+                <div class="participation">
+                    {% if has_participated == true %}
+                        {% if event.eventDate > today %}
+                            <a href="#" class="disabled">INSCRIT</a>
+                        {% else %}
+                            <a href="{{ path('pictures.new', {event: event.id}) }}" class="contained<"><i class="material-icons">add</i>AJOUTER UNE PHOTO</a>
+                        {% endif %}
+                    {% else %}
+                        <a href="{{ path('events.participate', {id: event.id}) }}" class="contained_no-width">S'INSCRIRE</a>
+                    {% endif %}
+                </div>
             </div>
         </article>
     </section>
@@ -49,7 +55,7 @@
             {% for picture in event.pictures %}
                 <div class="card">
                     <div class="card_body">
-                        <img src="{{ picture.picturePath }}" alt="">
+                        <img src="{{ vich_uploader_asset(picture, 'imageFile') }}" alt="">
                     </div>
                     <div class="card_footer">
                         <a href="{{ path('pictures.show', {'id': picture.id}) }}" class="contained">COMMENTER</a>
