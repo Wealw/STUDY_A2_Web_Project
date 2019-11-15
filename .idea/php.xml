@@ -140,6 +140,11 @@
       <path value="$PROJECT_DIR$/ProjetWeb/vendor/guzzlehttp/guzzle" />
       <path value="$PROJECT_DIR$/ProjetWeb/vendor/ralouphie/getallheaders" />
       <path value="$PROJECT_DIR$/ProjetWeb/vendor/psr/http-message" />
+      <path value="$PROJECT_DIR$/ProjetWeb/vendor/lexik/jwt-authentication-bundle" />
+      <path value="$PROJECT_DIR$/ProjetWeb/vendor/lcobucci/jwt" />
+      <path value="$PROJECT_DIR$/ProjetWeb/vendor/namshi/jose" />
+      <path value="$PROJECT_DIR$/ProjetWeb/vendor/wa72/htmlpagedom" />
+      <path value="$PROJECT_DIR$/ProjetWeb/vendor/connectholland/cookie-consent-bundle" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.1" />

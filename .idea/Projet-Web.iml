@@ -6,6 +6,7 @@
       <sourceFolder url="file://$MODULE_DIR$/ProjetWeb/src" isTestSource="false" packagePrefix="App\" />
       <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/behat/transliterator" />
       <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/composer" />
+      <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/connectholland/cookie-consent-bundle" />
       <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/doctrine/annotations" />
       <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/doctrine/cache" />
       <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/doctrine/collections" />
@@ -139,6 +140,7 @@
       <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/symfony/yaml" />
       <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/twig/twig" />
       <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/vich/uploader-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/wa72/htmlpagedom" />
       <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/webmozart/assert" />
       <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/zendframework/zend-code" />
       <excludeFolder url="file://$MODULE_DIR$/ProjetWeb/vendor/zendframework/zend-eventmanager" />
