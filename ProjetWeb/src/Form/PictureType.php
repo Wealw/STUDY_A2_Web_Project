@@ -18,7 +18,7 @@ class PictureType extends AbstractType
             ->add('picture_description', TextareaType::class, [
                 'required' => false
             ])
-            ->add('picture_path', FileType::class, [
+            ->add('imageFile', FileType::class, [
                 'label' => false
             ])
         ;

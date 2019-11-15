@@ -9,9 +9,14 @@ use App\Entity\Social\Picture;
 use App\Repository\PictureRepository;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Component\HttpFoundation\File\MimeType\FileinfoMimeTypeGuesser;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use ZipArchive;
 
 class AdminPicturesController extends AbstractController
 {
@@ -62,5 +67,6 @@ class AdminPicturesController extends AbstractController
         }
         return $this->redirectToRoute("admin.pictures.index", [], 302);
     }
+
 
 }

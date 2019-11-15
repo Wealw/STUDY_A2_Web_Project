@@ -177,9 +177,5 @@ class AdminEventsController extends AbstractController
         } catch (Exception $e) {
             return $this->redirectToRoute('admin.events.index');
         }
-
-
     }
-
-
 }

@@ -27,6 +27,7 @@ class User implements UserInterface
     private $user_city;
 
     /**
+     * @Assert\Length(min="8", max="255")
      * @Assert\EqualTo(propertyPath="confirm_password", message="La confirmation du mot de passe n'est pas bonne")
      */
     private $user_password;
@@ -45,6 +46,11 @@ class User implements UserInterface
     private $role_id;
     private $center_name;
     private $roles;
+
+    /**
+     * @Assert\NotBlank()
+     */
+    private $cgu;
     private $token = null;
 
     /**
@@ -75,7 +81,7 @@ class User implements UserInterface
         );
     }
 
-    public function __construct($user_id, $user_first_name, $user_last_name, $user_mail, $user_phone, $user_postal_code, $user_address, $user_city, $user_password, $user_image_path, $created_at, $modified_at, $center_id, $role_id)
+    public function __construct($user_id, $user_first_name, $user_last_name, $user_mail, $user_phone, $user_postal_code, $user_address, $user_city, $user_password, $user_image_path, $created_at, $modified_at, $center_id, $role_id, $cgu)
     {
         $this->user_id = $user_id;
         $this->user_first_name = $user_first_name;
@@ -91,6 +97,7 @@ class User implements UserInterface
         $this->modified_at = $modified_at;
         $this->center_id = $center_id;
         $this->role_id = $role_id;
+        $this->cgu = $cgu;
         $client = new Client();
         $response = $client->request('GET', 'http://127.0.0.1:3000/api/centers/' . $center_id);
         $datas = json_decode($response->getBody(), true, 512, JSON_THROW_ON_ERROR);
@@ -478,6 +485,24 @@ class User implements UserInterface
         if ($this->imageFile instanceof UploadedFile) {
             $this->event_modified_at = new \DateTime('now');
         }
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCgu()
+    {
+        return $this->cgu;
+    }
+
+    /**
+     * @param mixed $cgu
+     * @return User
+     */
+    public function setCgu($cgu)
+    {
+        $this->cgu = $cgu;
         return $this;
     }
 
