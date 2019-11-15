@@ -70,40 +70,4 @@ class AdminController extends AbstractController
         ]);
     }
 
-    public function csv()
-    {
-
-    }
-
-    /**
-     * @Route("/admin/images/download", name="admin.images.download")
-     */
-    public function downloadImages()
-    {
-        $zip = new ZipArchive();
-        $zipName = time() . ".zip";
-
-
-
-        /*$zipFile = 'assets/files';
-        $zip = new Filesystem(new ZipArchiveAdapter($zipFile));
-        $i = 0;
-        $attachments = scandir('assets/images/');
-        foreach ($attachments as $k => $attachment) {
-            if ($attachment > 1) {
-                $zip->write(
-                    $attachment,
-                    file_get_contents($attachment)
-                );
-            }
-        }*/
-
-        $zip->getAdapter()->getArchive()->close();
-        $response = new BinaryFileResponse($zipFile);
-        $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT,
-            $response->getFile()->getFilename());
-        $response->deleteFileAfterSend(true);
-        return $response;
-    }
-
 }
