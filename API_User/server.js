@@ -135,7 +135,7 @@ app.post('/api/users', function usersPost(req, res) {
         let user_image_path = req.body.user_image_path;
         let center_id = req.body.center_id;
         let role_id = req.body.role_id;
-        if (!(user_first_name && user_last_name && user_mail && user_phone && user_postal_code && user_address && user_city && user_password && user_image_path && center_id && role_id && RegExp("^\\w+([-+.']\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$").test(user_mail) && RegExp("^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\w\d\s:])([^\s]){8,16}$").test(req.body.user_password))) {
+        if (!(user_first_name && user_last_name && user_mail && user_phone && user_postal_code && user_address && user_city && user_password && user_image_path && center_id && role_id && RegExp("^\\w+([-+.']\\w+)*@\\w+([-.]\w+)*\\.\\w+([-.]\\w+)*$").test(user_mail) && RegExp("^(?=.{10,}$)(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\\W).*$").test(req.body.user_password))) {
             return res.status(422).send();
         }
 
@@ -377,7 +377,7 @@ app.put('/api/users/:id', function userPut(req, res) {
                 let user_image_path = req.body.user_image_path;
                 let center_id = req.body.center_id;
                 let role_id = req.body.role_id
-                if (!(user_first_name && user_last_name && user_mail && user_phone && user_postal_code && user_address && user_city && user_password && user_image_path && center_id && role_id && RegExp("^\\w+([-+.']\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$").test(user_mail) && RegExp("^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\w\d\s:])([^\s]){8,16}$").test(req.body.user_password))) {
+                if (!(user_first_name && user_last_name && user_mail && user_phone && user_postal_code && user_address && user_city && user_password && user_image_path && center_id && role_id && RegExp("^\\w+([-+.']\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$").test(user_mail) && RegExp("^(?=.{10,}$)(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\\W).*$").test(req.body.user_password))) {
                     return res.status(422).send();
                 }
                 database.query("SELECT * FROM users WHERE user_id= ? ;", [user_id], function (error, results, fields) {
@@ -454,7 +454,7 @@ app.patch('/api/users/:id', function userPatch(req, res) {
                     });
                 }
                 let user_password = req.body.user_password;
-                if (user_password && RegExp("^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\w\d\s:])([^\s]){8,16}$").test(req.body.user_password)) {
+                if (user_password && RegExp("^(?=.{10,}$)(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\\W).*$").test(req.body.user_password)) {
                     database.query('UPDATE bde_users_api.users SET  user_password= ? WHERE user_id = ? ;', [user_password, user_id], function (error, results, fields) {
                         if (error) return res.status(422).send();
                     });

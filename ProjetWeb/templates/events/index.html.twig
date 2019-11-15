@@ -43,7 +43,7 @@
             {% for event in events %}
                 <div class="product">
                     <div class="product-name">{{ event.eventName }}</div>
-                    <img src="{{ event.eventImagePath }}" alt="">
+                    <img src="{{ vich_uploader_asset(event, 'imageFile') }}" alt="">
                     <p class="event_date">Date : {{ event.eventDate | date('d-m-Y') }}
                         à {{ event.eventDate | date('H:i') }}</p>
                     <div class="product-price">
