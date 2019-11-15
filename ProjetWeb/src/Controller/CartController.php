@@ -144,6 +144,14 @@ class CartController extends AbstractController
         {
             if($cart == null)
             {
+                $cookie = new Cookie(
+                    'cart',
+                    '',
+                    time() + ( 2 * 365 * 24 * 60 * 60)
+                );
+                $res = new Response();
+                $res->headers->setCookie($cookie);
+                $res->send();
                 return $this->redirectToRoute('cart.index');
             }
         }
@@ -217,7 +225,14 @@ class CartController extends AbstractController
     public function order(ProductRepository $productRepository, SessionInterface $session, Swift_Mailer $mailer)
     {
         $cart = $session->get('cart', []);
-
+        foreach ($cart as $id => $quantity)
+        {
+            $product = $productRepository->findOneBy(['id' => $id]);
+            if (($product->getProductInventory()) < $cart[$id] )
+            {
+                return $this->redirectToRoute("cart.index");
+            }
+        }
         if($this->getUser())
         {
             $command = new Command();
@@ -235,11 +250,15 @@ class CartController extends AbstractController
 
                 $product = $productRepository->findOneBy(['id' => $id]);
 
+                $product
+                    ->setProductInventory(($product->getProductInventory()) - $cart[$id]);
+
                 $commandProduct
                     ->setCommand($command)
                     ->setProduct($product)
                     ->setQuantity($cart[$id]);
 
+                $this->getDoctrine()->getManager()->persist($product);
                 $this->getDoctrine()->getManager()->persist($commandProduct);
 
             }
