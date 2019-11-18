@@ -74,9 +74,7 @@ class HomeController extends AbstractController
         $form = $this->createForm(SignUpType::class, $user);
         $form->handleRequest($request);
 
-        dump($user);
         if ($form->isSubmitted() && $form->isValid()) {
-            dd($user);
             $user->setUserImagePath("assets/images/user.png");
 
             $userJson = [
@@ -95,6 +93,8 @@ class HomeController extends AbstractController
 
             $clientPost = new Client();
             $response = $clientPost->request('POST', 'http://127.0.0.1:3000/api/users', ['json' => $userJson]);
+
+            return $this->redirectToRoute("login", [], 302);
         }
 
         $client = new Client();
