@@ -33,12 +33,11 @@ class CalendarController extends AbstractController
         $thisMonth = new DateTime();
         $weeks = $month->getWeeks();
 
-        $start = $month->getStartingDay();
-        $start = $start->format('N') == 1 ? $start : $month->getStartingDay()->modify('last monday');
+        $firstDay = $month->getStartingDay();
+        $start = $firstDay->format('N') == 1 ? $firstDay : $month->getStartingDay()->modify('last monday');
         $lastDay = $start->modify("+" . (6 + 7 * ($weeks -1)) . " days");
 
         $events = $this->eventsByDay($start, $lastDay);
-        //$events = $this->eventsByDay(new \DateTime('2020-08-01'), new \DateTime('2020-08-31'));
 
         $navigation = $this->getPrevNext($thisMonth->format('m'), $thisMonth->format('Y'));
 
@@ -46,6 +45,7 @@ class CalendarController extends AbstractController
             'month' => $month,
             'weeks' => $weeks,
             'start' => $start,
+            'firstDay' => $firstDay,
             'days' => $month->getDays(),
             'events' => $events,
             'prevMonth' => $navigation[0],

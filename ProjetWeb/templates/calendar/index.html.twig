@@ -4,7 +4,7 @@
 
 {% block body %}
 
-    <h1>Calendrier des événements- {{ start | date('m/Y') }}</h1>
+    <h1>Calendrier des événements- {{ firstDay | date('m/Y') }}</h1>
     <div class="navigation row justify_between" style="margin-bottom: 24px">
         <div class="row">
             <a href="{{ path('events.calendar.other', {monthNumber: prevMonth, yearNumber: prevYear}) }}" class="contained" style="white-space: nowrap; padding-right: 24px">
