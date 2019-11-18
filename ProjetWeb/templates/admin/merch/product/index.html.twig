@@ -5,15 +5,23 @@
 {% block body %}
     <h1>Les produits</h1>
 
-    <a href="{{ path('admin.index') }}">Go Back</a>
-    <a href="{{ path('admin.merch.product.add') }}">Add Product</a>
-    <a href="{{ path('download.products') }}">DL All Products Images</a>
+    <div class="row justify_between">
+        <p>Panneau d'administration des produits</p>
+        <div class="row">
+            <a href="{{ path('download.products') }}" class="contained_no-width"><i class="material-icons">get_app</i>
+                <span class="little_display_none">TÉLÉCHARGER TOUTES LES IMAGES DES PRODUITS</span></a>
+            <span class="separate_buttons"></span>
+            <a href="{{ path('admin.merch.product.add') }}" class="contained_no-width"><i class="material-icons">add</i>
+                AJOUTER UN
+                PRODUIT</a>
+        </div>
+    </div>
     <div class="search_type" style="margin-bottom: 32px">
         <h3>Personnaliser la recherche</h3>
         <div class="form_justify">
             {{ form_start(form) }}
             <div class="group off half search_bar">{{ form_rest(form) }}</div>
-            <button type="submit" class="contained_no-width">RECHERCHER</button>
+            <button type="submit" class="contained_no-width"><i class="material-icons">search</i> RECHERCHER</button>
             {{ form_end(form) }}
         </div>
     </div>
@@ -24,7 +32,6 @@
                 <th>Nom</th>
                 <th>Type</th>
                 <th>€</th>
-                <th>Description</th>
                 <th>Qty</th>
             </tr>
             </thead>
@@ -34,7 +41,6 @@
                     <td><a href="{{ path('admin.merch.product.id', {id: product.Id}) }}">{{ product.productName }}</a></td>
                     <td>{{ product.productType.productTypeName }}</td>
                     <td>{{ product.productPrice }}</td>
-                    <td><p><a>{{ product.productDescription }}</a></p></td>
                     <td>{{ product.productInventory }}</td>
                 </tr>
             {% endfor %}

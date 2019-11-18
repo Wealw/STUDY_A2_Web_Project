@@ -11,6 +11,7 @@ use App\Repository\EventRepository;
 use App\Repository\ProductRepository;
 use App\Security\User;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -49,8 +50,6 @@ class HomeController extends AbstractController
         $commandProducts = $this->commandProductRepository->findMostSold();
         $products = $this->productRepository->findAll();
 
-        dump($this->getUser());
-
         return $this->render('home/index.html.twig', [
             'next_events' => $nextEvents,
             'commandProducts' => $commandProducts,
@@ -62,7 +61,7 @@ class HomeController extends AbstractController
      * @Route("/signup", name="security.signup")
      * @param Request $request
      * @return Response
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws GuzzleException
      */
     public function signUp(Request $request): Response
     {
@@ -70,10 +69,9 @@ class HomeController extends AbstractController
             return $this->redirectToRoute("index", [], 302);
         }
 
-        $user = new User(null, null, null, null, null, null, null, null, null, null, null, null, 1, 1, null);
+        $user = new User(null, null, null, null, null, null, null, null, null, null, null, null, 1, 3, null);
         $form = $this->createForm(SignUpType::class, $user);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $user->setUserImagePath("assets/images/user.png");
 

@@ -2,11 +2,12 @@
 
 namespace App\Entity\Merch;
 
-use Symfony\Component\Validator\Constraints as Assert;
-use App\Entity\Social\Event;
+use DateTime;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Exception;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
@@ -140,7 +141,7 @@ class Product
         return $this->productImagePath;
     }
 
-    public function setProductImagePath(string $productImagePath): self
+    public function setProductImagePath(?string $productImagePath): self
     {
         $this->productImagePath = $productImagePath;
 
@@ -205,13 +206,13 @@ class Product
     /**
      * @param File|null $imageFile
      * @return Product
-     * @throws \Exception
+     * @throws Exception
      */
     public function setImageFile(?File $imageFile): Product
     {
         $this->imageFile = $imageFile;
         if ($this->imageFile instanceof UploadedFile) {
-            $this->productModifiedAt = new \DateTime('now');
+            $this->productModifiedAt = new DateTime('now');
         }
         return $this;
     }
@@ -224,12 +225,12 @@ class Product
         return $this->imageFile;
     }
 
-    public function getProductModifiedAt(): ?\DateTimeInterface
+    public function getProductModifiedAt(): ?DateTimeInterface
     {
         return $this->productModifiedAt;
     }
 
-    public function setProductModifiedAt(?\DateTimeInterface $productModifiedAt): self
+    public function setProductModifiedAt(?DateTimeInterface $productModifiedAt): self
     {
         $this->productModifiedAt = $productModifiedAt;
 

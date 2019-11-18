@@ -21,6 +21,7 @@ class ProductType extends AbstractType
             ->add('productInventory')
             ->add('productDescription')
             ->add('imageFile', FileType::class, [
+                'required' => false,
                 'label' => false
             ])
             ->add('isOrderable')

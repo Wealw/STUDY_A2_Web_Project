@@ -3,7 +3,6 @@
 {% block title 'Liste des commandes - Admin | BDE-CESI' %}
 
 {% block body %}
-     <a href="{{ path('admin.index') }}">Go Back</a>
     <div class="tabOverflowContainer">
     <table class="admin_list">
         <thead>
@@ -18,7 +17,7 @@
         {% for command in commands %}
             <tr class="admin_command admin-style">
                 <td>{{ command.Id }}</td>
-                <td>{{ command.commandOrderedAt | date('d:m:Y - H:i | e') }}</td>
+                <td>{{ command.commandOrderedAt | date('d-m-Y - H:i | e') }}</td>
                 <td>{{ command.commandUserId }}</td>
                 <td><a class="button-container" href="{{ path('admin.merch.command.show', {id: command.Id}) }}">Details</a></td>
             </tr>

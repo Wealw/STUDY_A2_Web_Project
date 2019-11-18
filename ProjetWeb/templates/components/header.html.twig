@@ -35,7 +35,7 @@
                 {% if app.user %}
                     <p class="username">{{ app.user.usermail }}</p>
                     <a href="{{ path('logout') }}" class="header contained colorSecondary">
-                        <div class="button "> DECONNECTER</div>
+                        <div class="button ">SE DECONNECTER</div>
                     </a>
 
                 {% else %}
@@ -43,7 +43,6 @@
                     <a href="{{ path('security.signup') }}" class="header colorSecondaryLight">
                         <div class="button">S'INSCRIRE</div>
                     </a>
-
 
                     <a href="{{ path('security.login') }}" class="header contained colorSecondary">
                         <div class="button">SE CONNECTER</div>

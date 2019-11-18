@@ -190,7 +190,7 @@ a.option i.material-icons:active {
   color: #fbc02d;
 }
 p.event_date {
-  margin: 0;
+  margin: 8px 0;
 }
 p.event_description {
   color: #555555;

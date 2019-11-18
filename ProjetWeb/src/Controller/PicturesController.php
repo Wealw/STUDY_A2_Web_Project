@@ -119,6 +119,7 @@ class PicturesController extends AbstractController
         if ($picture === null) {
             return $this->redirectToRoute('events.index', [], 302);
         }
+        dump($picture);
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
@@ -154,7 +155,7 @@ class PicturesController extends AbstractController
         $comments = $picture->getComments();
 
         return $this->render('pictures/show.html.twig', [
-            'pictures' => $picture,
+            'picture' => $picture,
             'picturesRelated' => $pictureRelated,
             'comments' => $comments,
             'form' => $form->createView(),
