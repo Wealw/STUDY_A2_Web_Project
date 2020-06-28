@@ -18,6 +18,10 @@ class User implements UserInterface
 {
 
     private $user_id;
+
+    /**
+     * @Assert\Email
+     */
     private $user_mail;
     private $user_first_name;
     private $user_last_name;

@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Merch\Product;
 use App\Entity\Merch\ProductType as Type;
+use Doctrine\DBAL\Types\IntegerType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -16,7 +17,7 @@ class ProductType extends AbstractType
     {
         $builder
             ->add('productName')
-            ->add('productPrice')
+            ->add('productPrice', IntegerType::class)
             ->add('productInventory')
             ->add('productDescription')
             ->add('imageFile', FileType::class, [

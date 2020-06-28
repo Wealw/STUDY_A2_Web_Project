@@ -389,7 +389,6 @@ main div.card_body img {
   main div.container {
     padding: 0 5vh;
   }
-
   main span.little_display_none {
     display: none;
   }
@@ -1048,17 +1047,14 @@ main form div.select select {
 main form div.select select option {
   font-size: 18px;
 }
-
 main form div.chekbox {
   position: relative;
   margin-left: 12px;
 }
-
 main form div.chekbox label {
   position: absolute;
   left: 0;
 }
-
 main form div.chekbox input[type=checkbox] {
   position: absolute;
   left: 500px;
